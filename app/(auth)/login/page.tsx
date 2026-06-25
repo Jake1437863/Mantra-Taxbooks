@@ -1,16 +1,25 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get('registered') === '1') {
+      setSuccess('Account created! Please sign in.')
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,6 +59,7 @@ export default function LoginPage() {
         <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: 5 }}>Welcome Back</h2>
         <p style={{ color: '#666', fontSize: '.85rem', marginBottom: 22 }}>Sign in to your account to continue</p>
 
+        {success && <div className="alert alert-ok"><i className="fas fa-check-circle" /> {success}</div>}
         {error && <div className="alert alert-err"><i className="fas fa-exclamation-circle" /> {error}</div>}
 
         <form onSubmit={handleSubmit}>
@@ -81,8 +91,8 @@ export default function LoginPage() {
         </form>
 
         <div style={{ textAlign: 'center', marginTop: 18, fontSize: '.85rem', color: '#666' }}>
-          New to Mantra Taxbooks?{' '}
-          <Link href="/#contact" style={{ color: 'var(--red)', textDecoration: 'none', fontWeight: 600 }}>Contact Us</Link>
+          Don't have an account?{' '}
+          <Link href="/register" style={{ color: 'var(--red)', textDecoration: 'none', fontWeight: 600 }}>Register here</Link>
         </div>
         <div style={{ textAlign: 'center', marginTop: 10, fontSize: '.78rem', color: '#aaa' }}>
           Admin?{' '}
@@ -90,5 +100,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="auth-page"><div className="auth-card" style={{ textAlign: 'center' }}><i className="fas fa-spinner fa-spin" /></div></div>}>
+      <LoginForm />
+    </Suspense>
   )
 }
