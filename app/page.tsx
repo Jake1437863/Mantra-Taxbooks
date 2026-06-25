@@ -122,8 +122,8 @@ export default function HomePage() {
           </ul>
 
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-            <Link href="/login" className="btn btn-outline btn-sm">Login</Link>
-            <button onClick={() => scrollTo('contact')} className="btn btn-primary btn-sm">Get Started</button>
+            <Link href="/login" className="btn btn-outline btn-sm hide-mobile"><i className="fas fa-sign-in-alt" /> Login</Link>
+            <Link href="/register" className="btn btn-primary btn-sm hide-mobile"><i className="fas fa-user-plus" /> Get Started</Link>
             <button onClick={() => setMenuOpen(!menuOpen)} style={{ display: 'none', background: 'none', border: 'none', color: '#ccc', fontSize: '1.2rem', cursor: 'pointer' }} className="show-mobile">
               <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`} />
             </button>
@@ -139,6 +139,14 @@ export default function HomePage() {
                 {item}
               </button>
             ))}
+            <div style={{ display: 'flex', gap: 10, paddingTop: 14 }}>
+              <Link href="/login" className="btn btn-outline btn-sm" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
+                <i className="fas fa-sign-in-alt" /> Login
+              </Link>
+              <Link href="/register" className="btn btn-primary btn-sm" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
+                <i className="fas fa-user-plus" /> Register
+              </Link>
+            </div>
           </div>
         )}
       </nav>
@@ -157,9 +165,9 @@ export default function HomePage() {
             From ITR filing to GST compliance, company registration to tax planning — we handle your finances so you can focus on what matters.
           </p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <button onClick={() => scrollTo('pricing')} className="btn btn-primary btn-lg">
-              <i className="fas fa-rocket" /> Get Started
-            </button>
+            <Link href="/register" className="btn btn-primary btn-lg">
+              <i className="fas fa-file-alt" /> File ITR Now
+            </Link>
             <button onClick={() => scrollTo('contact')} className="btn btn-outline btn-lg">
               <i className="fas fa-phone" /> Talk to CA
             </button>
@@ -226,7 +234,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <button onClick={() => scrollTo('contact')} className="btn btn-primary btn-block"><i className="fas fa-file-alt" /> Get Started</button>
+              <Link href="/register" className="btn btn-primary btn-block"><i className="fas fa-file-alt" /> Get Started</Link>
             </div>
           ))}
         </div>
