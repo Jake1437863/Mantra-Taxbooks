@@ -3,44 +3,76 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const services = [
-  { icon: 'fa-file-invoice', title: 'ITR Filing', desc: 'Accurate income tax return filing for individuals, HUFs, and businesses across all ITR forms.' },
-  { icon: 'fa-percentage', title: 'GST Compliance', desc: 'End-to-end GST registration, return filing (GSTR-1, 3B), reconciliation, and advisory.' },
-  { icon: 'fa-building', title: 'Company Registration', desc: 'Pvt Ltd, LLP, OPC and partnership firm registration with MCA compliance.' },
-  { icon: 'fa-book', title: 'Accounting & Bookkeeping', desc: 'Monthly bookkeeping, financial statements, P&L, balance sheet preparation.' },
-  { icon: 'fa-search-dollar', title: 'Tax Advisory', desc: 'Strategic tax planning, investment advice, and deduction optimization.' },
-  { icon: 'fa-balance-scale', title: 'Legal Compliance', desc: 'ROC filings, TDS returns, PF/ESI compliance, and audit support.' },
+  { icon: 'fa-file-invoice-dollar', title: 'Income Tax Return (ITR)', desc: 'CA-reviewed ITR filing for salaried individuals, business owners, NRIs and professionals with all income types.' },
+  { icon: 'fa-receipt', title: 'GST Compliance', desc: 'GSTR-1, GSTR-3B preparation, ITC reconciliation, annual returns GSTR-9 and GSTR-9C.' },
+  { icon: 'fa-building', title: 'ROC / MCA Filings', desc: 'Annual return MGT-7, AOC-4, Director KYC, DPT-3, MSME-1 and all event-based company filings.' },
+  { icon: 'fa-percentage', title: 'TDS Compliance', desc: 'TDS working, deduction register, 26Q/24Q quarterly returns, TDS challan preparation.' },
+  { icon: 'fa-users', title: 'PF & ESI Compliance', desc: 'Monthly PF and ESI workings, ECR challan data, employer and employee contribution calculations.' },
+  { icon: 'fa-landmark', title: 'Professional Tax', desc: 'State-wise PT computation from salary register, PT challan preparation and returns.' },
+  { icon: 'fa-chart-line', title: 'Business Accounting', desc: 'Monthly bookkeeping, Tally management, MIS reports and financial statement preparation.' },
+  { icon: 'fa-search-dollar', title: 'Tax Planning & Advisory', desc: 'Strategic tax planning, deduction optimization under 80C/80D, advance tax computation.' },
 ]
 
 const packages = [
   {
-    name: 'Salary Basic',
-    price: '₹499',
-    per: '/year',
-    tax: '+ GST',
-    desc: 'For salaried individuals with a single employer.',
+    name: 'Salary (Nil Return)',
+    price: '799',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    desc: 'Single salary income with total income ≤ ₹12,75,000',
     featured: false,
     badge: null,
-    features: ['ITR-1 Filing', 'Form 16 processing', 'Standard deductions', 'Email support', 'Filing acknowledgement'],
+    features: ['Single Employer', 'Income from other sources', 'Total income ≤ ₹12,75,000', 'CA reviewed filing'],
   },
   {
-    name: 'Salary Plus',
-    price: '₹999',
-    per: '/year',
-    tax: '+ GST',
-    desc: 'For multiple employers, HRA, and other income.',
+    name: 'Salary & Property',
+    price: '1,499',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    desc: 'Salary + House Property income',
+    featured: false,
+    badge: null,
+    features: ['Single or multiple employers', 'Single or multiple house properties', 'Income from other sources', 'CA reviewed filing'],
+  },
+  {
+    name: 'Capital Gains',
+    price: '1,999',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    desc: 'Salary + Rent + Capital Gains (shares, MFs, properties)',
     featured: true,
     badge: 'Most Popular',
-    features: ['ITR-1 / ITR-2 Filing', 'Multiple Form 16s', 'HRA & 80C optimization', 'Capital gains reporting', 'Phone + Email support', 'Quick turnaround'],
+    features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes (shares, MFs, properties)', 'Other sources', 'CA reviewed filing'],
   },
   {
-    name: 'Business Pro',
-    price: '₹2,499',
-    per: '/year',
-    tax: '+ GST',
-    desc: 'For business owners, freelancers, and professionals.',
+    name: 'Business / Professional Income',
+    price: '2,499',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    desc: 'Salary + Rent + Capital Gains + Business/Professional Income',
     featured: false,
     badge: null,
-    features: ['ITR-3 / ITR-4 Filing', 'Business income & expenses', 'Presumptive taxation', 'Depreciation calculation', 'Audit support', 'Dedicated CA', 'Priority support'],
+    features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes', 'Business/Professional Income (Non-Audit) — without B/S & P&L', 'Other sources', 'CA reviewed filing'],
+  },
+  {
+    name: 'Futures & Options / Cryptocurrency',
+    price: '2,999',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    desc: 'All income types including F&O and Crypto',
+    featured: false,
+    badge: null,
+    features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes', 'Business/Professional Income (Non-Audit) — without B/S & P&L', 'Revenue from F&O / Crypto', 'Other sources', 'CA reviewed filing'],
+  },
+  {
+    name: 'NRI / Foreign Income',
+    price: '5,999',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    desc: 'NRI with Indian income or Resident with foreign income',
+    featured: false,
+    badge: null,
+    features: ['Single or multiple employers', 'Multiple house properties', 'Multiple capital gain incomes', 'Business & Professional Income (Non-Audit)', 'Revenue from F&O / Crypto', 'DTAA Tax Relief', 'Foreign salary (including foreign tax relief)', 'Other sources', 'CA reviewed filing'],
   },
 ]
 
@@ -149,8 +181,8 @@ export default function HomePage() {
       <section id="services" style={{ padding: '80px 5%', background: '#F5F5F5' }}>
         <div style={{ textAlign: 'center', marginBottom: 52 }}>
           <span style={{ display: 'inline-block', background: 'rgba(196,30,58,.1)', color: 'var(--red)', padding: '5px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Our Services</span>
-          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12 }}>Complete Tax & Compliance Solutions</h2>
-          <p style={{ color: '#666', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>Everything you need to stay compliant and tax-efficient.</p>
+          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12 }}>Comprehensive Financial Services</h2>
+          <p style={{ color: '#666', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>From individual ITR filing to complex corporate compliance — we handle it all with precision and expertise.</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(250px,1fr))', gap: 22 }}>
           {services.map((s) => (
@@ -169,11 +201,11 @@ export default function HomePage() {
       {/* PRICING */}
       <section id="pricing" style={{ padding: '80px 5%', background: '#1A1A1A' }}>
         <div style={{ textAlign: 'center', marginBottom: 52 }}>
-          <span style={{ display: 'inline-block', background: 'rgba(196,30,58,.2)', color: '#E8334A', padding: '5px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Pricing</span>
-          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12, color: '#fff' }}>Transparent, Affordable Pricing</h2>
-          <p style={{ color: '#A0A0A0', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>No hidden charges. Pay only for what you need.</p>
+          <span style={{ display: 'inline-block', background: 'rgba(196,30,58,.2)', color: '#E8334A', padding: '5px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>ITR Filing Plans</span>
+          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12, color: '#fff' }}>Transparent Pricing for AY 2026-27</h2>
+          <p style={{ color: '#A0A0A0', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>CA-reviewed filing at honest prices. Choose the plan that matches your income type.</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(270px,1fr))', gap: 18, maxWidth: 900, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(270px,1fr))', gap: 18 }}>
           {packages.map((pkg) => (
             <div key={pkg.name} style={{ background: pkg.featured ? 'linear-gradient(145deg,rgba(196,30,58,.18),rgba(139,0,0,.1))' : 'rgba(255,255,255,.04)', border: `1px solid ${pkg.featured ? '#C41E3A' : 'rgba(192,192,192,.15)'}`, borderRadius: 14, padding: 26, position: 'relative', transition: 'all .3s' }}>
               {pkg.badge && (
@@ -182,10 +214,11 @@ export default function HomePage() {
               <h3 style={{ fontSize: '.95rem', fontWeight: 700, color: '#E8E8E8', marginBottom: 6 }}>{pkg.name}</h3>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 3, margin: '10px 0 3px' }}>
                 <span style={{ fontSize: '1.1rem', marginTop: 5, color: '#E8334A', fontWeight: 700 }}>₹</span>
-                <span style={{ fontSize: '2.2rem', fontWeight: 900, color: '#E8334A' }}>{pkg.price.replace('₹', '')}</span>
+                <span style={{ fontSize: '2.2rem', fontWeight: 900, color: '#E8334A' }}>{pkg.price}</span>
               </div>
-              <div style={{ fontSize: '.78rem', color: '#A0A0A0' }}>{pkg.per} &nbsp; <span style={{ opacity: .7 }}>{pkg.tax}</span></div>
-              <p style={{ fontSize: '.78rem', color: '#A0A0A0', lineHeight: 1.5, margin: '10px 0 16px', paddingBottom: 14, borderBottom: '1px solid rgba(255,255,255,.07)' }}>{pkg.desc}</p>
+              <div style={{ fontSize: '.78rem', color: '#A0A0A0' }}>{pkg.per}</div>
+              <div style={{ fontSize: '.72rem', color: '#A0A0A0', opacity: .7, marginBottom: 14 }}>{pkg.tax}</div>
+              <p style={{ fontSize: '.78rem', color: '#A0A0A0', lineHeight: 1.5, margin: '0 0 16px', paddingBottom: 14, borderBottom: '1px solid rgba(255,255,255,.07)' }}>{pkg.desc}</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 22px' }}>
                 {pkg.features.map((f) => (
                   <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: '.8rem', color: '#A0A0A0', marginBottom: 7 }}>
@@ -193,10 +226,11 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <button onClick={() => scrollTo('contact')} className="btn btn-primary btn-block">Get Started <i className="fas fa-arrow-right" /></button>
+              <button onClick={() => scrollTo('contact')} className="btn btn-primary btn-block"><i className="fas fa-file-alt" /> Get Started</button>
             </div>
           ))}
         </div>
+        <p style={{ textAlign: 'center', color: '#A0A0A0', fontSize: '.78rem', marginTop: 22 }}>* All prices exclusive of GST &nbsp;|&nbsp; CA reviewed filing included in all plans</p>
       </section>
 
       {/* WHY US */}
