@@ -3,6 +3,7 @@ import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { useTheme } from '@/lib/useTheme'
 
 const navItems = [
   { section: 'Overview', items: [{ href: '/admin/dashboard', icon: 'fa-tachometer-alt', label: 'Dashboard' }] },
@@ -22,6 +23,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { data: session } = useSession()
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { theme, toggle } = useTheme()
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
@@ -44,6 +46,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
             <span className="hide-mobile">{session?.user?.name}</span>
           </span>
+          <button onClick={toggle} title={theme === 'dark' ? 'Light mode' : 'Dark mode'} style={{ background: 'rgba(255,255,255,.08)', border: '1px solid rgba(255,255,255,.14)', color: '#ccc', width: 34, height: 34, borderRadius: 7, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.85rem', flexShrink: 0 }}>
+            <i className={`fas fa-${theme === 'dark' ? 'sun' : 'moon'}`} />
+          </button>
           <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className="btn btn-secondary btn-sm">
             <i className="fas fa-sign-out-alt" />
           </button>
