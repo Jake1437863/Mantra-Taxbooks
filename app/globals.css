@@ -277,6 +277,62 @@ tr:hover td { background: rgba(196,30,58,.02); }
   .pg-title { font-size: .95rem; }
 }
 
+/* ─── SHARED LANDING / PUBLIC PAGE STYLES ─────────────────────────────────── */
+/* Used by landing page (app/page.tsx) and public pages like /file-itr         */
+
+/* Show/hide helpers */
+.hide-mobile { display: flex; }
+.show-mobile { display: none; }
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: flex !important; }
+}
+@media (min-width: 769px) {
+  .show-mobile { display: none !important; }
+}
+
+/* NAV */
+.lp-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(20,20,20,.97); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(196,30,58,.35); box-shadow: 0 2px 20px rgba(0,0,0,.4); }
+.lp-nav-inner { padding: 12px 5%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.lp-nav-links { display: flex; align-items: center; gap: 24px; list-style: none; margin: 0; padding: 0; }
+.lp-nav-btn { background: none; border: none; color: #ccc; font-size: .875rem; font-weight: 500; cursor: pointer; letter-spacing: .3px; font-family: inherit; transition: color .2s; text-decoration: none; }
+.lp-nav-btn:hover { color: #E8334A; }
+.lp-nav-cta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.lp-hamburger { background: none; border: none; color: #ccc; font-size: 1.2rem; cursor: pointer; }
+.lp-mobile-menu { background: #1a1a1a; border-top: 1px solid rgba(196,30,58,.2); padding: 12px 5%; }
+.lp-mobile-link { display: block; width: 100%; text-align: left; padding: 10px 0; background: none; border: none; color: #ccc; font-size: .9rem; cursor: pointer; font-family: inherit; border-bottom: 1px solid rgba(255,255,255,.05); text-decoration: none; }
+.lp-mobile-auth { display: flex; gap: 10px; padding-top: 14px; }
+
+/* Dropdown (Services submenu) */
+.lp-dropdown-wrap { position: relative; }
+.lp-dropdown-trigger { display: flex; align-items: center; gap: 6px; }
+.lp-caret { font-size: .65rem; transition: transform .2s; }
+.lp-caret.open { transform: rotate(180deg); }
+.lp-dropdown { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: #1C1C1C; border: 1px solid rgba(196,30,58,.3); border-radius: 10px; padding: 6px; min-width: 220px; box-shadow: 0 8px 32px rgba(0,0,0,.5); z-index: 2000; }
+.lp-dropdown-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 7px; text-decoration: none; transition: background .15s; color: #E0E0E0; }
+.lp-dropdown-item:hover { background: rgba(196,30,58,.12); color: #E8334A; }
+.lp-dropdown-label { font-weight: 700; font-size: .85rem; }
+.lp-dropdown-sub { font-size: .72rem; color: #888; margin-top: 1px; }
+
+/* FOOTER */
+.lp-footer { background: #1A1A1A; color: #A0A0A0; padding: 60px 5% 24px; }
+.lp-footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 36px; }
+.lp-footer-brand p { font-size: .83rem; line-height: 1.7; margin-top: 12px; color: #A0A0A0; }
+.lp-footer h4 { color: #E8E8E8; font-size: .85rem; font-weight: 700; margin-bottom: 14px; }
+.lp-footer ul { list-style: none; padding: 0; margin: 0; }
+.lp-footer ul li { margin-bottom: 7px; }
+.lp-footer ul li a, .lp-footer ul li button { color: #A0A0A0; text-decoration: none; font-size: .82rem; cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; transition: color .2s; }
+.lp-footer ul li a:hover, .lp-footer ul li button:hover { color: #E8334A; }
+.lp-footer-bottom { border-top: 1px solid rgba(192,192,192,.1); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: .78rem; }
+
+@media (max-width: 900px) {
+  .lp-footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
+@media (max-width: 560px) {
+  .lp-footer-grid { grid-template-columns: 1fr; gap: 20px; }
+  .lp-footer-bottom { flex-direction: column; text-align: center; }
+}
+
 /* ── DARK MODE OVERRIDES ────────────────────────────── */
 [data-theme="dark"] body { background: var(--bg); color: var(--text); }
 

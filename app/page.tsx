@@ -101,7 +101,7 @@ export default function HomePage() {
               </button>
               {servicesOpen && (
                 <div className="lp-dropdown">
-                  <Link href="/pricing" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
+                  <Link href="/file-itr" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
                     <i className="fas fa-file-invoice-dollar" />
                     <div>
                       <div className="lp-dropdown-label">File ITR</div>
@@ -135,7 +135,7 @@ export default function HomePage() {
               Services <i className={`fas fa-chevron-${mobileServicesOpen ? 'up' : 'down'}`} style={{ fontSize: '.75rem', color: '#888' }} />
             </button>
             {mobileServicesOpen && (
-              <Link href="/pricing" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#E8334A', fontWeight: 600 }}>
+              <Link href="/file-itr" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#E8334A', fontWeight: 600 }}>
                 <i className="fas fa-file-invoice-dollar" style={{ fontSize: '.8rem' }} /> File ITR
               </Link>
             )}
@@ -344,7 +344,7 @@ export default function HomePage() {
             <h4>Quick Links</h4>
             <ul>
               <li><button onClick={() => scrollTo('hero')}>Home</button></li>
-              <li><Link href="/pricing">Pricing</Link></li>
+              <li><Link href="/file-itr">Pricing</Link></li>
               <li><button onClick={() => scrollTo('about')}>About Us</button></li>
               <li><button onClick={() => scrollTo('contact')}>Contact</button></li>
               <li><Link href="/login">Login</Link></li>
