@@ -20,6 +20,8 @@ export default function ProfilePage() {
     address: '', city: '', state: '', pincode: '',
   })
   const [email, setEmail] = useState('')
+  const [emailVerified, setEmailVerified] = useState(false)
+  const [resendStatus, setResendStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null)
@@ -41,6 +43,7 @@ export default function ProfilePage() {
       .then(d => {
         if (d.user) {
           setEmail(d.user.email || '')
+          setEmailVerified(d.user.emailVerified ?? false)
           setAvatarSignedUrl(d.user.avatarSignedUrl || null)
           setForm({
             name: d.user.name || '',
@@ -74,6 +77,14 @@ export default function ProfilePage() {
     setSaving(false)
     if (res.ok) setMsg({ type: 'ok', text: 'Profile updated successfully.' })
     else setMsg({ type: 'err', text: d.error || 'Failed to update profile.' })
+  }
+
+  const handleResend = async () => {
+    setResendStatus('loading')
+    const res = await fetch('/api/auth/resend-verification', { method: 'POST' })
+    const d = await res.json()
+    setResendStatus(res.ok ? 'ok' : 'err')
+    if (!res.ok) console.error(d.error)
   }
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -226,9 +237,26 @@ export default function ProfilePage() {
                     <input className="form-control" value={form.name} onChange={e => set('name', e.target.value)} required disabled={isDelegate} />
                   </div>
                   <div className="form-group">
-                    <label>Email Address</label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      Email Address
+                      {emailVerified
+                        ? <span style={{ background: '#d4edda', color: '#155724', padding: '2px 8px', borderRadius: 8, fontSize: '.68rem', fontWeight: 700 }}><i className="fas fa-check-circle" style={{ marginRight: 3 }} />Verified</span>
+                        : <span style={{ background: '#fff3cd', color: '#856404', padding: '2px 8px', borderRadius: 8, fontSize: '.68rem', fontWeight: 700 }}><i className="fas fa-exclamation-circle" style={{ marginRight: 3 }} />Not Verified</span>
+                      }
+                    </label>
                     <input className="form-control" value={email} disabled style={{ background: '#f9f9f9', color: '#888' }} />
-                    <span style={{ fontSize: '.72rem', color: '#999', marginTop: 4, display: 'block' }}>Contact support to change email.</span>
+                    {!emailVerified && !isDelegate && (
+                      <div style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '.75rem', color: '#856404' }}>Check your inbox for the verification link.</span>
+                        {resendStatus === 'ok'
+                          ? <span style={{ fontSize: '.75rem', color: '#27AE60', fontWeight: 600 }}><i className="fas fa-check" /> Email sent!</span>
+                          : <button type="button" onClick={handleResend} disabled={resendStatus === 'loading'} style={{ background: 'none', border: 'none', color: 'var(--red)', fontSize: '.75rem', fontWeight: 700, cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}>
+                              {resendStatus === 'loading' ? <><i className="fas fa-spinner fa-spin" /> Sending…</> : 'Resend verification email'}
+                            </button>
+                        }
+                      </div>
+                    )}
+                    {emailVerified && <span style={{ fontSize: '.72rem', color: '#999', marginTop: 4, display: 'block' }}>Contact support to change email.</span>}
                   </div>
                   <div className="form-group">
                     <label>Phone Number</label>

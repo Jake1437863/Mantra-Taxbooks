@@ -13,6 +13,31 @@ const transporter = nodemailer.createTransport({
 const FROM = process.env.SMTP_FROM || 'Mantra Taxbooks <noreply@mantrataxbooks.com>'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
+export async function sendVerificationEmail(email: string, name: string, token: string) {
+  const verifyUrl = `${APP_URL}/verify-email?token=${token}`
+  await transporter.sendMail({
+    from: FROM,
+    to: email,
+    subject: 'Verify Your Email – Mantra Taxbooks',
+    html: `
+      <div style="font-family:Inter,Arial,sans-serif;max-width:520px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e0e0e0">
+        <div style="background:linear-gradient(135deg,#8B0000,#C41E3A);padding:28px 32px">
+          <span style="color:#C0C0C0;font-weight:900;font-size:1.1rem;letter-spacing:3px">MANTRA</span>
+          <span style="color:#E8E8E8;font-weight:900;font-size:1.1rem;letter-spacing:3px"> TAXBOOKS</span>
+        </div>
+        <div style="padding:32px">
+          <h2 style="margin:0 0 8px;font-size:1.3rem;color:#1A1A1A">Verify Your Email Address</h2>
+          <p style="color:#666;margin:0 0 8px">Hi ${name}, welcome to Mantra Taxbooks!</p>
+          <p style="color:#666;margin:0 0 24px">Please click the button below to verify your email address. This link expires in 24 hours.</p>
+          <a href="${verifyUrl}" style="display:inline-block;background:linear-gradient(135deg,#C41E3A,#8B0000);color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9rem">Verify Email Address</a>
+          <p style="margin:24px 0 0;font-size:.8rem;color:#999">If you did not create this account, you can ignore this email.</p>
+          <p style="margin:8px 0 0;font-size:.75rem;color:#bbb;word-break:break-all">${verifyUrl}</p>
+        </div>
+      </div>
+    `,
+  })
+}
+
 export async function sendPasswordResetEmail(email: string, name: string, token: string) {
   const resetUrl = `${APP_URL}/reset-password?token=${token}`
 

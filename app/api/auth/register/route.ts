@@ -1,7 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { apiOk, apiError } from '@/lib/utils'
+import { sendVerificationEmail } from '@/lib/email'
 import { z } from 'zod'
 import bcrypt from 'bcryptjs'
+import { randomBytes } from 'crypto'
 
 const schema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100),
@@ -21,6 +23,8 @@ export async function POST(req: Request) {
   if (existing) return apiError('An account with this email already exists.', 409)
 
   const passwordHash = await bcrypt.hash(password, 12)
+  const emailVerifyToken = randomBytes(32).toString('hex')
+  const emailVerifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24h
 
   const user = await prisma.user.create({
     data: {
@@ -29,9 +33,16 @@ export async function POST(req: Request) {
       phone: phone || null,
       passwordHash,
       role: 'CLIENT',
+      emailVerifyToken,
+      emailVerifyExpires,
     },
     select: { id: true, name: true, email: true, role: true },
   })
+
+  // Send verification email — non-blocking (don't fail registration if SMTP not configured)
+  try {
+    await sendVerificationEmail(user.email, user.name, emailVerifyToken)
+  } catch {}
 
   return apiOk({ user }, 201)
 }
