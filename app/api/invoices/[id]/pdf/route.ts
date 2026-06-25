@@ -4,18 +4,18 @@ import { prisma } from '@/lib/prisma'
 import { generateInvoicePDF } from '@/lib/pdf'
 import { apiError } from '@/lib/utils'
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions)
   if (!session) return apiError('Unauthorized', 401)
 
+  const { id } = await params
   const invoice = await prisma.invoice.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { client: { select: { id: true, name: true, email: true, phone: true, company: true, gstNumber: true, cinNumber: true, address: true, city: true, state: true, pincode: true } } },
   })
 
   if (!invoice) return apiError('Invoice not found.', 404)
 
-  // Clients can only download their own invoices
   if (session.user.role === 'CLIENT' && invoice.clientId !== session.user.id) {
     return apiError('Forbidden', 403)
   }
@@ -35,7 +35,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     notes: invoice.notes,
   })
 
-  return new Response(pdfBuffer, {
+  return new Response(new Uint8Array(pdfBuffer), {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `attachment; filename="${invoice.invoiceNo}.pdf"`,

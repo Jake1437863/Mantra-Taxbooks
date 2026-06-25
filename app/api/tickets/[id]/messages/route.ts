@@ -6,11 +6,12 @@ import { z } from 'zod'
 
 const schema = z.object({ message: z.string().min(1).max(5000) })
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions)
   if (!session) return apiError('Unauthorized', 401)
 
-  const ticket = await prisma.ticket.findUnique({ where: { id: params.id } })
+  const { id } = await params
+  const ticket = await prisma.ticket.findUnique({ where: { id } })
   if (!ticket) return apiError('Ticket not found.', 404)
 
   const canReply =
@@ -27,16 +28,15 @@ export async function POST(req: Request, { params }: { params: { id: string } })
 
   const message = await prisma.ticketMessage.create({
     data: {
-      ticketId: params.id,
+      ticketId: id,
       senderId: session.user.id,
       message: parsed.data.message,
     },
     include: { sender: { select: { id: true, name: true, role: true } } },
   })
 
-  // Update ticket updatedAt
   await prisma.ticket.update({
-    where: { id: params.id },
+    where: { id },
     data: { status: ticket.status === 'OPEN' && session.user.role !== 'CLIENT' ? 'IN_PROGRESS' : ticket.status },
   })
 

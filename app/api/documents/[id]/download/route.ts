@@ -4,14 +4,14 @@ import { prisma } from '@/lib/prisma'
 import { getPresignedDownloadUrl } from '@/lib/s3'
 import { apiOk, apiError } from '@/lib/utils'
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions)
   if (!session) return apiError('Unauthorized', 401)
 
-  const doc = await prisma.document.findUnique({ where: { id: params.id } })
+  const { id } = await params
+  const doc = await prisma.document.findUnique({ where: { id } })
   if (!doc) return apiError('Document not found.', 404)
 
-  // Access control
   const isAdmin = session.user.role === 'ADMIN'
   const isEmployee = ['SUPPORT', 'PAYMENTS'].includes(session.user.role)
   const isOwner = doc.clientId === session.user.id

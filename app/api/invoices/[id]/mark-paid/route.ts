@@ -4,12 +4,13 @@ import { prisma } from '@/lib/prisma'
 import { sendInvoiceEmail } from '@/lib/email'
 import { generateInvoiceNo, apiOk, apiError } from '@/lib/utils'
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions)
   if (!session || session.user.role !== 'ADMIN') return apiError('Forbidden', 403)
 
+  const { id } = await params
   const proforma = await prisma.invoice.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { client: true },
   })
 

@@ -3,12 +3,13 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { apiOk, apiError } from '@/lib/utils'
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions)
   if (!session) return apiError('Unauthorized', 401)
 
+  const { id } = await params
   const ticket = await prisma.ticket.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       client: { select: { id: true, name: true, email: true, role: true } },
       assignee: { select: { id: true, name: true, role: true } },
@@ -31,21 +32,22 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   return apiOk({ ticket, messages: ticket.messages })
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions)
   if (!session) return apiError('Unauthorized', 401)
 
   const canModify = ['ADMIN', 'SUPPORT'].includes(session.user.role)
   if (!canModify) return apiError('Forbidden', 403)
 
-  const ticket = await prisma.ticket.findUnique({ where: { id: params.id } })
+  const { id } = await params
+  const ticket = await prisma.ticket.findUnique({ where: { id } })
   if (!ticket) return apiError('Ticket not found.', 404)
 
   const body = await req.json()
   const { status, assignedTo, priority } = body
 
   const updated = await prisma.ticket.update({
-    where: { id: params.id },
+    where: { id },
     data: {
       ...(status && { status }),
       ...(assignedTo !== undefined && { assignedTo: assignedTo || null }),
