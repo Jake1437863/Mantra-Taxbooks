@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { apiOk, apiError } from '@/lib/utils'
+import { getPresignedViewUrl } from '@/lib/s3'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -22,10 +23,15 @@ export async function GET() {
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { id: true, name: true, email: true, phone: true, company: true, gstNumber: true, cinNumber: true, address: true, city: true, state: true, pincode: true },
+    select: { id: true, name: true, email: true, phone: true, company: true, gstNumber: true, cinNumber: true, address: true, city: true, state: true, pincode: true, avatarUrl: true },
   })
 
-  return apiOk({ user })
+  let avatarSignedUrl: string | null = null
+  if (user?.avatarUrl) {
+    try { avatarSignedUrl = await getPresignedViewUrl(user.avatarUrl) } catch {}
+  }
+
+  return apiOk({ user: { ...user, avatarSignedUrl } })
 }
 
 export async function PATCH(req: Request) {

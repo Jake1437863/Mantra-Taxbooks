@@ -71,6 +71,27 @@ export async function getPresignedDownloadUrl(s3Key: string, filename: string): 
   return getSignedUrl(s3, command, { expiresIn: DOWNLOAD_EXPIRES })
 }
 
+export async function getPresignedViewUrl(s3Key: string): Promise<string> {
+  const command = new GetObjectCommand({ Bucket: BUCKET, Key: s3Key })
+  return getSignedUrl(s3, command, { expiresIn: DOWNLOAD_EXPIRES })
+}
+
 export async function deleteS3Object(s3Key: string): Promise<void> {
   await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: s3Key }))
+}
+
+const ALLOWED_AVATAR_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+const MAX_AVATAR_SIZE = 2 * 1024 * 1024
+
+export function validateAvatar(mimeType: string, size: number) {
+  if (!ALLOWED_AVATAR_TYPES.includes(mimeType)) {
+    throw new Error('Only JPG, PNG, or WebP images allowed.')
+  }
+  if (size > MAX_AVATAR_SIZE) {
+    throw new Error('Image too large. Maximum size is 2 MB.')
+  }
+}
+
+export function buildAvatarKey(userId: string, ext: string): string {
+  return `avatars/${userId}/${randomUUID()}${ext}`
 }

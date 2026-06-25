@@ -11,7 +11,6 @@ const navItems = [
   { href: '/tickets', icon: 'fa-headset', label: 'Support Tickets' },
   { href: '/delegates', icon: 'fa-user-friends', label: 'Delegate Access' },
   { href: '/profile', icon: 'fa-user-edit', label: 'My Profile' },
-  { href: '/change-password', icon: 'fa-key', label: 'Change Password' },
 ]
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
@@ -79,8 +78,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             {item.label}
           </Link>
         ))}
-        <div className="sb-section">Quick Links</div>
-        <Link href="/" className="sb-link"><i className="fas fa-globe" /> Main Website</Link>
       </aside>
 
       {/* Main content */}

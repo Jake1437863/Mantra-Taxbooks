@@ -221,3 +221,37 @@ tr:hover td { background: rgba(196,30,58,.02); }
   .btn:hover { transform: none; box-shadow: none; }
   .btn-primary:hover { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
 }
+
+/* AVATAR */
+.avatar-circle { width: 90px; height: 90px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg,#C41E3A,#8B0000); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 3px solid var(--border); }
+.avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-initials { color: #fff; font-size: 2.2rem; font-weight: 700; }
+
+/* RESPONSIVE — additional fixes */
+@media (max-width: 768px) {
+  /* Avatar section on mobile: stack vertically */
+  .avatar-upload-row { flex-direction: column !important; align-items: flex-start !important; }
+
+  /* Float buttons: smaller on mobile */
+  .float-btns { bottom: 16px; right: 16px; gap: 8px; }
+  .fb { width: 44px; height: 44px; font-size: 1.05rem; }
+
+  /* Prevent horizontal overflow on tables */
+  table { min-width: 480px; }
+  .tbl-wrap { width: 100%; overflow-x: auto; }
+
+  /* Form full-width on mobile */
+  .form-group { margin-bottom: 12px; }
+
+  /* Card section spacing */
+  .card { margin-bottom: 16px; }
+}
+
+@media (max-width: 480px) {
+  /* Avatar smaller on tiny screens */
+  .avatar-circle { width: 70px; height: 70px; }
+  .avatar-initials { font-size: 1.7rem; }
+
+  /* Make nav bar tighter */
+  .pg-title { font-size: .95rem; }
+}
