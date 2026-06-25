@@ -22,6 +22,7 @@ export async function POST(req: Request) {
 
   const user = await prisma.user.findUnique({ where: { id: session.user.id } })
   if (!user) return apiError('User not found.', 404)
+  if (!user.passwordHash) return apiError('This account uses Google sign-in. Password change is not available.')
 
   const valid = await bcrypt.compare(currentPassword, user.passwordHash)
   if (!valid) return apiError('Current password is incorrect.')
