@@ -10,6 +10,7 @@ const navItems = [
   { href: '/documents', icon: 'fa-folder-open', label: 'My Documents' },
   { href: '/tickets', icon: 'fa-headset', label: 'Support Tickets' },
   { href: '/delegates', icon: 'fa-user-friends', label: 'Delegate Access' },
+  { href: '/profile', icon: 'fa-user-edit', label: 'My Profile' },
   { href: '/change-password', icon: 'fa-key', label: 'Change Password' },
 ]
 

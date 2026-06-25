@@ -52,12 +52,16 @@ export default function AdminClients() {
     fetchClients(search)
   }
 
+  const viewAsClient = (id: string) => {
+    window.open(`/admin/clients/${id}/view`, '_blank')
+  }
+
   const loginAsClient = async (id: string) => {
     setImpersonating(id)
     const res = await fetch(`/api/admin/clients/${id}/impersonate`, { method: 'POST' })
     const d = await res.json()
     setImpersonating(null)
-    if (d.token) router.push(`/impersonate?token=${d.token}`)
+    if (d.token) window.open(`/impersonate?token=${d.token}`, '_blank')
     else alert(d.error || 'Failed to impersonate.')
   }
 
@@ -134,11 +138,14 @@ export default function AdminClients() {
                       <td>{c._count?.invoices ?? 0}</td>
                       <td>{formatDate(c.createdAt)}</td>
                       <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                        <button className="btn btn-secondary btn-sm" onClick={() => setViewClient(c)} title="View details">
-                          <i className="fas fa-eye" />
+                        <button className="btn btn-secondary btn-sm" onClick={() => setViewClient(c)} title="Quick details">
+                          <i className="fas fa-info-circle" />
                         </button>
-                        <button className="btn btn-sm" style={{ background: '#1565C0', color: '#fff' }} onClick={() => loginAsClient(c.id)} disabled={impersonating === c.id || !c.isActive} title="Login as this client">
-                          {impersonating === c.id ? <i className="fas fa-spinner fa-spin" /> : <><i className="fas fa-user-secret" /> Login as</>}
+                        <button className="btn btn-sm" style={{ background: '#1565C0', color: '#fff' }} onClick={() => viewAsClient(c.id)} title="View client portal in new tab">
+                          <i className="fas fa-eye" /> View
+                        </button>
+                        <button className="btn btn-sm" style={{ background: '#6A1B9A', color: '#fff' }} onClick={() => loginAsClient(c.id)} disabled={impersonating === c.id || !c.isActive} title="Login as client (changes session)">
+                          {impersonating === c.id ? <i className="fas fa-spinner fa-spin" /> : <i className="fas fa-user-secret" />}
                         </button>
                         <button className={`btn btn-sm ${c.isActive ? 'btn-danger' : 'btn-success'}`} onClick={() => toggleActive(c.id, c.isActive)}>
                           {c.isActive ? 'Disable' : 'Enable'}

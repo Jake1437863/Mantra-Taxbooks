@@ -54,5 +54,7 @@ export const config = {
     '/documents/:path*',
     '/tickets/:path*',
     '/change-password',
+    '/profile',
+    '/delegates',
   ],
 }
