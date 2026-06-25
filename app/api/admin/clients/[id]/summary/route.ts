@@ -4,12 +4,13 @@ import { prisma } from '@/lib/prisma'
 import { apiOk, apiError } from '@/lib/utils'
 import { computeHealth } from '@/lib/finance'
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const session = await getServerSession(authOptions)
   if (!session || session.user.role !== 'ADMIN') return apiError('Forbidden', 403)
 
   const client = await prisma.user.findUnique({
-    where: { id: params.id },
+    where: { id },
     select: { id: true, name: true, email: true, financialSummary: true },
   })
   if (!client) return apiError('Client not found', 404)
