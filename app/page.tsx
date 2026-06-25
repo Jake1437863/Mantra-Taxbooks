@@ -15,77 +15,60 @@ const services = [
 
 const packages = [
   {
-    name: 'Salary (Nil Return)',
-    price: '799',
-    per: 'per year',
-    tax: 'Exclusive of GST',
+    name: 'Salary (Nil Return)', price: '799', per: 'per year', tax: 'Exclusive of GST',
     desc: 'Single salary income with total income ≤ ₹12,75,000',
-    featured: false,
-    badge: null,
+    featured: false, badge: null,
     features: ['Single Employer', 'Income from other sources', 'Total income ≤ ₹12,75,000', 'CA reviewed filing'],
   },
   {
-    name: 'Salary & Property',
-    price: '1,499',
-    per: 'per year',
-    tax: 'Exclusive of GST',
+    name: 'Salary & Property', price: '1,499', per: 'per year', tax: 'Exclusive of GST',
     desc: 'Salary + House Property income',
-    featured: false,
-    badge: null,
+    featured: false, badge: null,
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Income from other sources', 'CA reviewed filing'],
   },
   {
-    name: 'Capital Gains',
-    price: '1,999',
-    per: 'per year',
-    tax: 'Exclusive of GST',
+    name: 'Capital Gains', price: '1,999', per: 'per year', tax: 'Exclusive of GST',
     desc: 'Salary + Rent + Capital Gains (shares, MFs, properties)',
-    featured: true,
-    badge: 'Most Popular',
+    featured: true, badge: 'Most Popular',
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes (shares, MFs, properties)', 'Other sources', 'CA reviewed filing'],
   },
   {
-    name: 'Business / Professional Income',
-    price: '2,499',
-    per: 'per year',
-    tax: 'Exclusive of GST',
+    name: 'Business / Professional Income', price: '2,499', per: 'per year', tax: 'Exclusive of GST',
     desc: 'Salary + Rent + Capital Gains + Business/Professional Income',
-    featured: false,
-    badge: null,
+    featured: false, badge: null,
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes', 'Business/Professional Income (Non-Audit) — without B/S & P&L', 'Other sources', 'CA reviewed filing'],
   },
   {
-    name: 'Futures & Options / Cryptocurrency',
-    price: '2,999',
-    per: 'per year',
-    tax: 'Exclusive of GST',
+    name: 'Futures & Options / Cryptocurrency', price: '2,999', per: 'per year', tax: 'Exclusive of GST',
     desc: 'All income types including F&O and Crypto',
-    featured: false,
-    badge: null,
+    featured: false, badge: null,
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes', 'Business/Professional Income (Non-Audit) — without B/S & P&L', 'Revenue from F&O / Crypto', 'Other sources', 'CA reviewed filing'],
   },
   {
-    name: 'NRI / Foreign Income',
-    price: '5,999',
-    per: 'per year',
-    tax: 'Exclusive of GST',
+    name: 'NRI / Foreign Income', price: '5,999', per: 'per year', tax: 'Exclusive of GST',
     desc: 'NRI with Indian income or Resident with foreign income',
-    featured: false,
-    badge: null,
+    featured: false, badge: null,
     features: ['Single or multiple employers', 'Multiple house properties', 'Multiple capital gain incomes', 'Business & Professional Income (Non-Audit)', 'Revenue from F&O / Crypto', 'DTAA Tax Relief', 'Foreign salary (including foreign tax relief)', 'Other sources', 'CA reviewed filing'],
   },
 ]
 
 const whyUs = [
-  { icon: 'fa-user-graduate', title: 'Expert CAs', desc: 'Our team of qualified Chartered Accountants brings decades of combined experience.' },
-  { icon: 'fa-shield-alt', title: '100% Secure', desc: 'Bank-level encryption for all your financial data and documents.' },
-  { icon: 'fa-clock', title: 'On-Time Filing', desc: 'We track all deadlines so you never pay a late fee.' },
-  { icon: 'fa-headset', title: '24/7 Support', desc: 'Round-the-clock support via phone, email, and WhatsApp.' },
+  { icon: 'fa-user-tie', title: 'CA Reviewed', desc: 'Every return is reviewed by a qualified Chartered Accountant before filing.' },
+  { icon: 'fa-lock', title: '100% Secure', desc: 'Bank-grade AES-256 encryption protects all your documents and personal data.' },
+  { icon: 'fa-clock', title: 'Fast Turnaround', desc: 'Most returns filed within 24–48 hours of complete document submission.' },
+  { icon: 'fa-headset', title: 'Dedicated Support', desc: 'Reach us via WhatsApp, call or email. We respond within business hours.' },
+]
+
+const contactItems = [
+  { icon: 'fa-envelope', label: 'Email', value: 'info@demandassociatesllp.com' },
+  { icon: 'fa-phone', label: 'Phone', value: '+91 98765 43210' },
+  { icon: 'fab fa-whatsapp', label: 'WhatsApp', value: 'Chat with us instantly' },
+  { icon: 'fa-map-marker-alt', label: 'Office', value: 'India' },
 ]
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' })
+  const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', subject: '', message: '' })
   const [contactStatus, setContactStatus] = useState<'idle' | 'ok' | 'err'>('idle')
 
   const scrollTo = (id: string) => {
@@ -100,46 +83,39 @@ export default function HomePage() {
 
   return (
     <>
-      {/* NAVBAR */}
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, background: 'rgba(20,20,20,.97)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(196,30,58,.35)', boxShadow: '0 2px 20px rgba(0,0,0,.4)' }}>
-        <div style={{ padding: '12px 5%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div className="logo">
+      {/* ── NAVBAR ── */}
+      <nav className="lp-nav">
+        <div className="lp-nav-inner">
+          <div className="logo" onClick={() => scrollTo('hero')} style={{ cursor: 'pointer' }}>
             <span className="logo-m">MANTRA</span>
             <span className="logo-t">TAXBOOKS</span>
           </div>
 
-          {/* Desktop nav */}
-          <ul style={{ display: 'flex', alignItems: 'center', gap: 24, listStyle: 'none', margin: 0, padding: 0 }} className="hide-mobile">
-            {['Services', 'Pricing', 'Why Us', 'Contact'].map((item) => (
-              <li key={item}>
-                <button onClick={() => scrollTo(item.toLowerCase().replace(' ', ''))} style={{ background: 'none', border: 'none', color: '#ccc', fontSize: '.875rem', fontWeight: 500, cursor: 'pointer', letterSpacing: '.3px', transition: 'color .2s', fontFamily: 'inherit' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#E8334A')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#ccc')}>
-                  {item}
-                </button>
-              </li>
+          <ul className="lp-nav-links hide-mobile">
+            {[['Home', 'hero'], ['Services', 'services'], ['Pricing', 'pricing'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
+              <li key={id}><button className="lp-nav-btn" onClick={() => scrollTo(id)}>{label}</button></li>
             ))}
           </ul>
 
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-            <Link href="/login" className="btn btn-outline btn-sm hide-mobile"><i className="fas fa-sign-in-alt" /> Login</Link>
-            <Link href="/register" className="btn btn-primary btn-sm hide-mobile"><i className="fas fa-user-plus" /> Get Started</Link>
-            <button onClick={() => setMenuOpen(!menuOpen)} style={{ display: 'none', background: 'none', border: 'none', color: '#ccc', fontSize: '1.2rem', cursor: 'pointer' }} className="show-mobile">
+          <div className="lp-nav-cta">
+            <Link href="/login" className="btn btn-outline btn-sm hide-mobile">
+              <i className="fas fa-sign-in-alt" /> Login
+            </Link>
+            <Link href="/register" className="btn btn-primary btn-sm hide-mobile">
+              <i className="fas fa-user-plus" /> Register
+            </Link>
+            <button className="lp-hamburger show-mobile" onClick={() => setMenuOpen(!menuOpen)}>
               <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`} />
             </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
         {menuOpen && (
-          <div style={{ background: '#1a1a1a', borderTop: '1px solid rgba(196,30,58,.2)', padding: '12px 5%' }}>
-            {['Services', 'Pricing', 'Why Us', 'Contact'].map((item) => (
-              <button key={item} onClick={() => scrollTo(item.toLowerCase().replace(' ', ''))}
-                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 0', background: 'none', border: 'none', color: '#ccc', fontSize: '.9rem', cursor: 'pointer', fontFamily: 'inherit', borderBottom: '1px solid rgba(255,255,255,.05)' }}>
-                {item}
-              </button>
+          <div className="lp-mobile-menu">
+            {[['Home', 'hero'], ['Services', 'services'], ['Pricing', 'pricing'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
+              <button key={id} className="lp-mobile-link" onClick={() => scrollTo(id)}>{label}</button>
             ))}
-            <div style={{ display: 'flex', gap: 10, paddingTop: 14 }}>
+            <div className="lp-mobile-auth">
               <Link href="/login" className="btn btn-outline btn-sm" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
                 <i className="fas fa-sign-in-alt" /> Login
               </Link>
@@ -151,230 +127,373 @@ export default function HomePage() {
         )}
       </nav>
 
-      {/* HERO */}
-      <section style={{ minHeight: '100vh', background: 'linear-gradient(135deg,#0d0d0d 0%,#2a0810 50%,#0d0d0d 100%)', display: 'flex', alignItems: 'center', padding: '100px 5% 60px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 20% 50%,rgba(196,30,58,.12) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(192,192,192,.05) 0%,transparent 40%)' }} />
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 600 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(196,30,58,.15)', border: '1px solid rgba(196,30,58,.4)', color: '#E8334A', padding: '6px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 22 }}>
-            <i className="fas fa-star" /> Trusted by 10,000+ Taxpayers
+      {/* ── HERO ── */}
+      <section id="hero" className="lp-hero">
+        <div className="lp-hero-bg" />
+        <div className="lp-hero-content">
+          <div className="lp-hero-badge">
+            <i className="fas fa-shield-alt" /> Trusted CA Firm Since 2010
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem,5vw,3rem)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: 20 }}>
-            Expert CA Services <span style={{ color: '#E8334A' }}>for Every Indian</span>
+          <h1 className="lp-hero-h1">
+            Expert <span style={{ color: '#E8334A' }}>Tax Filing</span> &amp; Financial Compliance Services
           </h1>
-          <p style={{ fontSize: '1.05rem', color: '#A0A0A0', lineHeight: 1.75, marginBottom: 36 }}>
-            From ITR filing to GST compliance, company registration to tax planning — we handle your finances so you can focus on what matters.
+          <p className="lp-hero-p">
+            CA-reviewed ITR filing, GST compliance, ROC filings, and complete financial services tailored for individuals and businesses across India.
           </p>
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+          <div className="lp-hero-actions">
             <Link href="/register" className="btn btn-primary btn-lg">
               <i className="fas fa-file-alt" /> File ITR Now
             </Link>
-            <button onClick={() => scrollTo('contact')} className="btn btn-outline btn-lg">
-              <i className="fas fa-phone" /> Talk to CA
+            <button className="btn btn-outline btn-lg" onClick={() => scrollTo('contact')}>
+              <i className="fas fa-calendar-alt" /> Book Free Meeting
             </button>
           </div>
         </div>
-
-        {/* Stats grid */}
-        <div style={{ position: 'absolute', right: '5%', top: '50%', transform: 'translateY(-50%)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, zIndex: 1 }} className="hide-mobile">
-          {[['10K+', 'Returns Filed'], ['₹50Cr+', 'Tax Saved'], ['98%', 'Client Satisfaction'], ['15+', 'Years Experience']].map(([n, l]) => (
-            <div key={l} style={{ background: 'rgba(255,255,255,.04)', border: '1px solid rgba(192,192,192,.18)', borderRadius: 12, padding: '20px', textAlign: 'center', backdropFilter: 'blur(6px)' }}>
-              <span style={{ fontSize: '2rem', fontWeight: 900, color: '#E8334A', display: 'block' }}>{n}</span>
-              <span style={{ fontSize: '.72rem', color: '#A0A0A0', textTransform: 'uppercase', letterSpacing: 1, marginTop: 4, display: 'block' }}>{l}</span>
+        <div className="lp-hero-stats hide-mobile">
+          {[['5000+', 'Happy Clients'], ['15+', 'Years Experience'], ['99%', 'On-time Filing'], ['100%', 'CA Reviewed']].map(([n, l]) => (
+            <div key={l} className="lp-stat-card">
+              <span className="lp-stat-n">{n}</span>
+              <span className="lp-stat-l">{l}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section id="services" style={{ padding: '80px 5%', background: '#F5F5F5' }}>
-        <div style={{ textAlign: 'center', marginBottom: 52 }}>
-          <span style={{ display: 'inline-block', background: 'rgba(196,30,58,.1)', color: 'var(--red)', padding: '5px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Our Services</span>
-          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12 }}>Comprehensive Financial Services</h2>
-          <p style={{ color: '#666', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>From individual ITR filing to complex corporate compliance — we handle it all with precision and expertise.</p>
+      {/* ── SERVICES ── */}
+      <section id="services" className="lp-section lp-section-bg">
+        <div className="lp-sec-head">
+          <div className="lp-sec-tag">Our Services</div>
+          <h2>Comprehensive Financial Services</h2>
+          <p>From individual ITR filing to complex corporate compliance — we handle it all with precision and expertise.</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(250px,1fr))', gap: 22 }}>
+        <div className="lp-services-grid">
           {services.map((s) => (
-            <div key={s.title} className="svc-card" style={{ background: '#fff', borderRadius: 12, padding: 26, border: '1px solid #E0E0E0', transition: 'all .3s', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: 'linear-gradient(to bottom,#C41E3A,#8B0000)' }} />
-              <div style={{ width: 48, height: 48, background: 'linear-gradient(135deg,#C41E3A,#8B0000)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '1.2rem', marginBottom: 14 }}>
-                <i className={`fas ${s.icon}`} />
-              </div>
-              <h3 style={{ fontSize: '.95rem', fontWeight: 700, marginBottom: 8 }}>{s.title}</h3>
-              <p style={{ fontSize: '.83rem', color: '#666', lineHeight: 1.6, margin: 0 }}>{s.desc}</p>
+            <div key={s.title} className="lp-svc-card">
+              <div className="lp-svc-bar" />
+              <div className="lp-svc-icon"><i className={`fas ${s.icon}`} /></div>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* PRICING */}
-      <section id="pricing" style={{ padding: '80px 5%', background: '#1A1A1A' }}>
-        <div style={{ textAlign: 'center', marginBottom: 52 }}>
-          <span style={{ display: 'inline-block', background: 'rgba(196,30,58,.2)', color: '#E8334A', padding: '5px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>ITR Filing Plans</span>
-          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12, color: '#fff' }}>Transparent Pricing for AY 2026-27</h2>
-          <p style={{ color: '#A0A0A0', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>CA-reviewed filing at honest prices. Choose the plan that matches your income type.</p>
+      {/* ── PRICING ── */}
+      <section id="pricing" className="lp-section lp-section-dark">
+        <div className="lp-sec-head lp-sec-head-dark">
+          <div className="lp-sec-tag lp-sec-tag-dark">ITR Filing Plans</div>
+          <h2>Transparent Pricing for AY 2026-27</h2>
+          <p>CA-reviewed filing at honest prices. Choose the plan that matches your income type.</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(270px,1fr))', gap: 18 }}>
+        <div className="lp-pricing-grid">
           {packages.map((pkg) => (
-            <div key={pkg.name} style={{ background: pkg.featured ? 'linear-gradient(145deg,rgba(196,30,58,.18),rgba(139,0,0,.1))' : 'rgba(255,255,255,.04)', border: `1px solid ${pkg.featured ? '#C41E3A' : 'rgba(192,192,192,.15)'}`, borderRadius: 14, padding: 26, position: 'relative', transition: 'all .3s' }}>
-              {pkg.badge && (
-                <div style={{ position: 'absolute', top: -11, left: '50%', transform: 'translateX(-50%)', background: 'linear-gradient(135deg,#C41E3A,#8B0000)', color: '#fff', padding: '3px 14px', borderRadius: 10, fontSize: '.72rem', fontWeight: 700, whiteSpace: 'nowrap' }}>{pkg.badge}</div>
-              )}
-              <h3 style={{ fontSize: '.95rem', fontWeight: 700, color: '#E8E8E8', marginBottom: 6 }}>{pkg.name}</h3>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 3, margin: '10px 0 3px' }}>
-                <span style={{ fontSize: '1.1rem', marginTop: 5, color: '#E8334A', fontWeight: 700 }}>₹</span>
-                <span style={{ fontSize: '2.2rem', fontWeight: 900, color: '#E8334A' }}>{pkg.price}</span>
+            <div key={pkg.name} className={`lp-pkg-card${pkg.featured ? ' featured' : ''}`}>
+              {pkg.badge && <div className="lp-pkg-badge">{pkg.badge}</div>}
+              <h3>{pkg.name}</h3>
+              <div className="lp-pkg-price">
+                <span className="lp-pkg-cur">₹</span>
+                <span className="lp-pkg-amt">{pkg.price}</span>
               </div>
-              <div style={{ fontSize: '.78rem', color: '#A0A0A0' }}>{pkg.per}</div>
-              <div style={{ fontSize: '.72rem', color: '#A0A0A0', opacity: .7, marginBottom: 14 }}>{pkg.tax}</div>
-              <p style={{ fontSize: '.78rem', color: '#A0A0A0', lineHeight: 1.5, margin: '0 0 16px', paddingBottom: 14, borderBottom: '1px solid rgba(255,255,255,.07)' }}>{pkg.desc}</p>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 22px' }}>
+              <div className="lp-pkg-per">{pkg.per}</div>
+              <div className="lp-pkg-tax">{pkg.tax}</div>
+              <p className="lp-pkg-desc">{pkg.desc}</p>
+              <ul className="lp-pkg-feats">
                 {pkg.features.map((f) => (
-                  <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: '.8rem', color: '#A0A0A0', marginBottom: 7 }}>
-                    <i className="fas fa-check-circle" style={{ color: '#27AE60', marginTop: 2, flexShrink: 0, fontSize: '.75rem' }} /> {f}
-                  </li>
+                  <li key={f}><i className="fas fa-check-circle" /> {f}</li>
                 ))}
               </ul>
-              <Link href="/register" className="btn btn-primary btn-block"><i className="fas fa-file-alt" /> Get Started</Link>
+              <Link href="/register" className="btn btn-primary btn-block">
+                <i className="fas fa-file-alt" /> Get Started
+              </Link>
             </div>
           ))}
         </div>
-        <p style={{ textAlign: 'center', color: '#A0A0A0', fontSize: '.78rem', marginTop: 22 }}>* All prices exclusive of GST &nbsp;|&nbsp; CA reviewed filing included in all plans</p>
+        <p className="lp-pricing-note">* All prices exclusive of GST &nbsp;|&nbsp; CA reviewed filing included in all plans</p>
       </section>
 
-      {/* WHY US */}
-      <section id="whyus" style={{ padding: '80px 5%', background: '#fff' }}>
-        <div style={{ textAlign: 'center', marginBottom: 52 }}>
-          <span style={{ display: 'inline-block', background: 'rgba(196,30,58,.1)', color: 'var(--red)', padding: '5px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Why Choose Us</span>
-          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12 }}>India's Most Trusted CA Firm</h2>
-          <p style={{ color: '#666', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>We combine expertise with technology to deliver the best experience.</p>
+      {/* ── WHY US ── */}
+      <section id="about" className="lp-section">
+        <div className="lp-sec-head">
+          <div className="lp-sec-tag">Why Mantra Taxbooks</div>
+          <h2>Your Trusted Financial Partner</h2>
+          <p>We combine technology with CA expertise to deliver fast, accurate compliance at honest prices.</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 24 }}>
+        <div className="lp-why-grid">
           {whyUs.map((w) => (
-            <div key={w.title} style={{ textAlign: 'center', padding: '28px 20px' }}>
-              <div style={{ width: 60, height: 60, background: 'linear-gradient(135deg,#C41E3A,#8B0000)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '1.4rem', margin: '0 auto 16px' }}>
-                <i className={`fas ${w.icon}`} />
-              </div>
-              <h3 style={{ fontSize: '.95rem', fontWeight: 700, marginBottom: 8 }}>{w.title}</h3>
-              <p style={{ fontSize: '.83rem', color: '#666', lineHeight: 1.6, margin: 0 }}>{w.desc}</p>
+            <div key={w.title} className="lp-why-card">
+              <div className="lp-why-icon"><i className={`fas ${w.icon}`} /></div>
+              <h3>{w.title}</h3>
+              <p>{w.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section id="contact" style={{ padding: '80px 5%', background: '#F5F5F5' }}>
-        <div style={{ textAlign: 'center', marginBottom: 52 }}>
-          <span style={{ display: 'inline-block', background: 'rgba(196,30,58,.1)', color: 'var(--red)', padding: '5px 16px', borderRadius: 20, fontSize: '.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Contact Us</span>
-          <h2 style={{ fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800, marginBottom: 12 }}>Get a Free Consultation</h2>
-          <p style={{ color: '#666', maxWidth: 540, margin: '0 auto', lineHeight: 1.7 }}>Talk to our CA experts today. No obligation, no fees for the first call.</p>
+      {/* ── CONTACT ── */}
+      <section id="contact" className="lp-section lp-section-bg">
+        <div className="lp-sec-head">
+          <div className="lp-sec-tag">Get In Touch</div>
+          <h2>We&apos;d Love to Hear From You</h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 40, maxWidth: 900, margin: '0 auto' }}>
-          <div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: 14 }}>Contact Information</h3>
-            <p style={{ color: '#666', lineHeight: 1.7, marginBottom: 28, fontSize: '.9rem' }}>Reach out via any channel. We typically respond within 2 hours on business days.</p>
-            {[
-              { icon: 'fa-phone', title: 'Phone', value: '+91 98765 43210' },
-              { icon: 'fa-envelope', title: 'Email', value: 'info@mantrataxbooks.com' },
-              { icon: 'fa-map-marker-alt', title: 'Office', value: 'India' },
-            ].map((c) => (
-              <div key={c.title} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 18 }}>
-                <div style={{ width: 40, height: 40, background: 'linear-gradient(135deg,#C41E3A,#8B0000)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '.95rem', flexShrink: 0 }}>
-                  <i className={`fas ${c.icon}`} />
-                </div>
+        <div className="lp-contact-grid">
+          <div className="lp-contact-info">
+            <h3>D E M &amp; Associates LLP</h3>
+            <p>CA firm offering expert tax, compliance and financial advisory services. Get in touch to discuss how we can help you stay compliant and save tax.</p>
+            {contactItems.map((c) => (
+              <div key={c.label} className="lp-c-item">
+                <div className="lp-c-icon"><i className={c.icon.startsWith('fab') ? c.icon : `fas ${c.icon}`} /></div>
                 <div>
-                  <strong style={{ display: 'block', fontSize: '.83rem', fontWeight: 600, marginBottom: 2 }}>{c.title}</strong>
-                  <span style={{ fontSize: '.83rem', color: '#666' }}>{c.value}</span>
+                  <strong>{c.label}</strong>
+                  <span>{c.value}</span>
                 </div>
               </div>
             ))}
+            <div className="lp-contact-btns">
+              <button className="btn btn-primary" onClick={() => scrollTo('contact')}>
+                <i className="fas fa-phone" /> Request Callback
+              </button>
+              <button className="btn btn-outline" onClick={() => scrollTo('contact')}>
+                <i className="fas fa-video" /> Book Meeting
+              </button>
+            </div>
           </div>
 
-          <form onSubmit={handleContact} style={{ background: '#fff', borderRadius: 12, padding: 28, border: '1px solid #E0E0E0' }}>
-            {contactStatus === 'ok' && <div className="alert alert-ok"><i className="fas fa-check" /> Message sent! We'll contact you soon.</div>}
-            {contactStatus === 'err' && <div className="alert alert-err"><i className="fas fa-times" /> Something went wrong. Please try again.</div>}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <div className="form-group">
-                <label>Your Name</label>
-                <input className="form-control" placeholder="Rahul Sharma" value={contactForm.name} onChange={e => setContactForm(f => ({ ...f, name: e.target.value }))} required />
-              </div>
-              <div className="form-group">
-                <label>Mobile</label>
-                <input className="form-control" placeholder="+91 98765..." value={contactForm.phone} onChange={e => setContactForm(f => ({ ...f, phone: e.target.value }))} />
-              </div>
+          <div className="card">
+            <div className="card-header"><h3>Send Us a Message</h3></div>
+            <div className="card-body">
+              {contactStatus === 'ok' && (
+                <div className="alert alert-ok"><i className="fas fa-check-circle" /> Message sent! We&apos;ll contact you soon.</div>
+              )}
+              <form onSubmit={handleContact}>
+                <div className="form-grid-2">
+                  <div className="form-group">
+                    <label>Full Name</label>
+                    <input className="form-control" placeholder="Your name" value={contactForm.name} onChange={e => setContactForm(f => ({ ...f, name: e.target.value }))} required />
+                  </div>
+                  <div className="form-group">
+                    <label>Mobile Number</label>
+                    <input className="form-control" placeholder="+91 ..." value={contactForm.phone} onChange={e => setContactForm(f => ({ ...f, phone: e.target.value }))} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>Email Address</label>
+                  <input className="form-control" type="email" placeholder="email@example.com" value={contactForm.email} onChange={e => setContactForm(f => ({ ...f, email: e.target.value }))} required />
+                </div>
+                <div className="form-group">
+                  <label>Subject</label>
+                  <input className="form-control" placeholder="How can we help?" value={contactForm.subject} onChange={e => setContactForm(f => ({ ...f, subject: e.target.value }))} />
+                </div>
+                <div className="form-group">
+                  <label>Message</label>
+                  <textarea className="form-control" placeholder="Describe your query..." value={contactForm.message} onChange={e => setContactForm(f => ({ ...f, message: e.target.value }))} required />
+                </div>
+                <button type="submit" className="btn btn-primary btn-block">
+                  <i className="fas fa-paper-plane" /> Send Message
+                </button>
+              </form>
             </div>
-            <div className="form-group">
-              <label>Email Address</label>
-              <input className="form-control" type="email" placeholder="you@example.com" value={contactForm.email} onChange={e => setContactForm(f => ({ ...f, email: e.target.value }))} required />
-            </div>
-            <div className="form-group">
-              <label>Message</label>
-              <textarea className="form-control" placeholder="Tell us what you need help with..." value={contactForm.message} onChange={e => setContactForm(f => ({ ...f, message: e.target.value }))} required />
-            </div>
-            <button type="submit" className="btn btn-primary btn-block btn-lg">
-              <i className="fas fa-paper-plane" /> Send Message
-            </button>
-          </form>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ background: '#1A1A1A', color: '#A0A0A0', padding: '60px 5% 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 36, marginBottom: 36 }}>
-          <div>
-            <div className="logo" style={{ marginBottom: 14 }}>
+      {/* ── FOOTER ── */}
+      <footer className="lp-footer">
+        <div className="lp-footer-grid">
+          <div className="lp-footer-brand">
+            <div className="logo">
               <span className="logo-m">MANTRA</span>
               <span className="logo-t">TAXBOOKS</span>
             </div>
-            <p style={{ fontSize: '.83rem', lineHeight: 1.7, color: '#A0A0A0', marginTop: 12 }}>Expert CA services for individuals, businesses, and enterprises across India.</p>
+            <p>Expert CA services for individuals, businesses and corporations. Trusted by 5000+ clients across India for ITR filing, GST, ROC and all compliance needs.</p>
           </div>
-          {[
-            { title: 'Services', links: ['ITR Filing', 'GST Compliance', 'Company Registration', 'Accounting', 'Tax Advisory'] },
-            { title: 'Portal', links: ['Client Login', 'Admin Login', 'Track Status', 'Upload Documents'] },
-            { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Refund Policy', 'Disclaimer'] },
-          ].map((col) => (
-            <div key={col.title}>
-              <h4 style={{ color: '#E8E8E8', fontSize: '.85rem', fontWeight: 700, marginBottom: 14 }}>{col.title}</h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {col.links.map((l) => (
-                  <li key={l} style={{ marginBottom: 7 }}>
-                    <span style={{ color: '#A0A0A0', fontSize: '.82rem', cursor: 'pointer' }}>{l}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <h4>Services</h4>
+            <ul>
+              {['ITR Filing', 'GST Compliance', 'ROC Filings', 'TDS Compliance', 'PF & ESI'].map(l => (
+                <li key={l}><button onClick={() => scrollTo('services')}>{l}</button></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>Quick Links</h4>
+            <ul>
+              <li><button onClick={() => scrollTo('hero')}>Home</button></li>
+              <li><button onClick={() => scrollTo('pricing')}>Pricing</button></li>
+              <li><button onClick={() => scrollTo('about')}>About Us</button></li>
+              <li><button onClick={() => scrollTo('contact')}>Contact</button></li>
+              <li><Link href="/login">Login</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:info@demandassociatesllp.com">info@demandassociatesllp.com</a></li>
+              <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+              <li><button onClick={() => scrollTo('contact')}>Request Callback</button></li>
+              <li><button onClick={() => scrollTo('contact')}>Book Free Meeting</button></li>
+            </ul>
+          </div>
         </div>
-        <div style={{ borderTop: '1px solid rgba(192,192,192,.1)', paddingTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, fontSize: '.78rem' }}>
-          <span>© {new Date().getFullYear()} Mantra Taxbooks. All rights reserved.</span>
-          <div style={{ display: 'flex', gap: 16 }}>
-            {['fa-facebook', 'fa-twitter', 'fa-instagram', 'fa-linkedin'].map((icon) => (
-              <span key={icon} style={{ cursor: 'pointer', transition: 'color .2s' }}>
-                <i className={`fab ${icon}`} />
-              </span>
-            ))}
-          </div>
+        <div className="lp-footer-bottom">
+          <span>© 2026 Mantra Taxbooks — D E M &amp; Associates LLP. All rights reserved.</span>
+          <span>CA Services | Tax Filing | GST | ROC</span>
         </div>
       </footer>
 
-      {/* FLOAT BUTTONS */}
+      {/* ── FLOAT BUTTONS ── */}
       <div className="float-btns">
         <a href="https://wa.me/919876543210" className="fb fb-wa" target="_blank" rel="noopener noreferrer" title="WhatsApp">
           <i className="fab fa-whatsapp" />
         </a>
-        <button onClick={() => scrollTo('contact')} className="fb fb-cb" title="Request Callback">
+        <button className="fb fb-cb" onClick={() => scrollTo('contact')} title="Request Callback">
           <i className="fas fa-phone-alt" />
         </button>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .hide-mobile { display: none !important; }
-          .show-mobile { display: flex !important; }
+        /* NAV */
+        .lp-nav { position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(20,20,20,.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(196,30,58,.35);box-shadow:0 2px 20px rgba(0,0,0,.4); }
+        .lp-nav-inner { padding:12px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px; }
+        .lp-nav-links { display:flex;align-items:center;gap:24px;list-style:none;margin:0;padding:0; }
+        .lp-nav-btn { background:none;border:none;color:#ccc;font-size:.875rem;font-weight:500;cursor:pointer;letter-spacing:.3px;font-family:inherit;transition:color .2s; }
+        .lp-nav-btn:hover { color:#E8334A; }
+        .lp-nav-cta { display:flex;align-items:center;gap:10px;flex-shrink:0; }
+        .lp-hamburger { background:none;border:none;color:#ccc;font-size:1.2rem;cursor:pointer; }
+        .lp-mobile-menu { background:#1a1a1a;border-top:1px solid rgba(196,30,58,.2);padding:12px 5%; }
+        .lp-mobile-link { display:block;width:100%;text-align:left;padding:10px 0;background:none;border:none;color:#ccc;font-size:.9rem;cursor:pointer;font-family:inherit;border-bottom:1px solid rgba(255,255,255,.05); }
+        .lp-mobile-auth { display:flex;gap:10px;padding-top:14px; }
+
+        /* HERO */
+        .lp-hero { min-height:100vh;background:linear-gradient(135deg,#0d0d0d 0%,#2a0810 50%,#0d0d0d 100%);display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden; }
+        .lp-hero-bg { position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(196,30,58,.12) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(192,192,192,.05) 0%,transparent 40%); }
+        .lp-hero-content { position:relative;z-index:1;max-width:600px; }
+        .lp-hero-badge { display:inline-flex;align-items:center;gap:8px;background:rgba(196,30,58,.15);border:1px solid rgba(196,30,58,.4);color:#E8334A;padding:6px 16px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px; }
+        .lp-hero-h1 { font-size:clamp(1.8rem,5vw,3rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:20px; }
+        .lp-hero-p { font-size:1.05rem;color:#A0A0A0;line-height:1.75;margin-bottom:36px; }
+        .lp-hero-actions { display:flex;gap:14px;flex-wrap:wrap; }
+        .lp-hero-stats { position:absolute;right:5%;top:50%;transform:translateY(-50%);display:grid;grid-template-columns:1fr 1fr;gap:14px;z-index:1; }
+        .lp-stat-card { background:rgba(255,255,255,.04);border:1px solid rgba(192,192,192,.18);border-radius:12px;padding:20px;text-align:center;backdrop-filter:blur(6px); }
+        .lp-stat-n { font-size:2rem;font-weight:900;color:#E8334A;display:block; }
+        .lp-stat-l { font-size:.72rem;color:#A0A0A0;text-transform:uppercase;letter-spacing:1px;margin-top:4px;display:block; }
+
+        /* SECTIONS */
+        .lp-section { padding:80px 5%; }
+        .lp-section-bg { background:#F5F5F5; }
+        .lp-section-dark { background:#1A1A1A; }
+        .lp-sec-head { text-align:center;margin-bottom:52px; }
+        .lp-sec-tag { display:inline-block;background:rgba(196,30,58,.1);color:#C41E3A;padding:5px 16px;border-radius:20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px; }
+        .lp-sec-tag-dark { background:rgba(196,30,58,.2);color:#E8334A; }
+        .lp-sec-head h2 { font-size:clamp(1.4rem,3vw,2.1rem);font-weight:800;margin-bottom:12px; }
+        .lp-sec-head p { color:#666;font-size:1rem;max-width:540px;margin:0 auto;line-height:1.7; }
+        .lp-sec-head-dark h2 { color:#fff; }
+        .lp-sec-head-dark p { color:#A0A0A0; }
+
+        /* SERVICES */
+        .lp-services-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px; }
+        .lp-svc-card { background:#fff;border-radius:12px;padding:26px;border:1px solid #E0E0E0;transition:all .3s;position:relative;overflow:hidden; }
+        .lp-svc-card:hover { transform:translateY(-4px);box-shadow:0 12px 32px rgba(196,30,58,.1);border-color:rgba(196,30,58,.25); }
+        .lp-svc-bar { position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#C41E3A,#8B0000); }
+        .lp-svc-icon { width:48px;height:48px;background:linear-gradient(135deg,#C41E3A,#8B0000);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;margin-bottom:14px; }
+        .lp-svc-card h3 { font-size:.95rem;font-weight:700;margin-bottom:8px; }
+        .lp-svc-card p { font-size:.83rem;color:#666;line-height:1.6;margin:0; }
+
+        /* PRICING */
+        .lp-pricing-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px; }
+        .lp-pkg-card { background:rgba(255,255,255,.04);border:1px solid rgba(192,192,192,.15);border-radius:14px;padding:26px;position:relative;transition:all .3s; }
+        .lp-pkg-card.featured { background:linear-gradient(145deg,rgba(196,30,58,.18),rgba(139,0,0,.1));border-color:#C41E3A; }
+        .lp-pkg-card:hover { border-color:#C41E3A;box-shadow:0 8px 28px rgba(196,30,58,.22); }
+        .lp-pkg-badge { position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#C41E3A,#8B0000);color:#fff;padding:3px 14px;border-radius:10px;font-size:.72rem;font-weight:700;white-space:nowrap; }
+        .lp-pkg-card h3 { font-size:.95rem;font-weight:700;color:#E8E8E8;margin-bottom:6px; }
+        .lp-pkg-price { display:flex;align-items:flex-start;gap:3px;margin:10px 0 3px; }
+        .lp-pkg-cur { font-size:1.1rem;margin-top:5px;color:#E8334A;font-weight:700; }
+        .lp-pkg-amt { font-size:2.2rem;font-weight:900;color:#E8334A; }
+        .lp-pkg-per { font-size:.78rem;color:#A0A0A0; }
+        .lp-pkg-tax { font-size:.72rem;color:#A0A0A0;opacity:.7;margin-bottom:14px; }
+        .lp-pkg-desc { font-size:.78rem;color:#A0A0A0;line-height:1.5;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07); }
+        .lp-pkg-feats { list-style:none;padding:0;margin:0 0 22px; }
+        .lp-pkg-feats li { display:flex;align-items:flex-start;gap:8px;font-size:.8rem;color:#A0A0A0;margin-bottom:7px; }
+        .lp-pkg-feats li i { color:#27AE60;margin-top:2px;flex-shrink:0;font-size:.75rem; }
+        .lp-pricing-note { text-align:center;color:#A0A0A0;font-size:.78rem;margin-top:22px; }
+
+        /* WHY US */
+        .lp-why-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px; }
+        .lp-why-card { text-align:center;padding:28px 20px; }
+        .lp-why-icon { width:60px;height:60px;background:linear-gradient(135deg,#C41E3A,#8B0000);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;margin:0 auto 16px; }
+        .lp-why-card h3 { font-size:.95rem;font-weight:700;margin-bottom:8px; }
+        .lp-why-card p { font-size:.83rem;color:#666;line-height:1.6;margin:0; }
+
+        /* CONTACT */
+        .lp-contact-grid { display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start; }
+        .lp-contact-info h3 { font-size:1.4rem;font-weight:700;margin-bottom:14px; }
+        .lp-contact-info > p { color:#666;line-height:1.7;margin-bottom:28px;font-size:.9rem; }
+        .lp-c-item { display:flex;align-items:flex-start;gap:14px;margin-bottom:18px; }
+        .lp-c-icon { width:40px;height:40px;background:linear-gradient(135deg,#C41E3A,#8B0000);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;flex-shrink:0; }
+        .lp-c-item strong { display:block;font-size:.83rem;font-weight:600;margin-bottom:2px; }
+        .lp-c-item span { font-size:.83rem;color:#666; }
+        .lp-contact-btns { margin-top:20px;display:flex;gap:10px;flex-wrap:wrap; }
+
+        /* FOOTER */
+        .lp-footer { background:#1A1A1A;color:#A0A0A0;padding:60px 5% 24px; }
+        .lp-footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px; }
+        .lp-footer-brand p { font-size:.83rem;line-height:1.7;margin-top:12px;color:#A0A0A0; }
+        .lp-footer h4 { color:#E8E8E8;font-size:.85rem;font-weight:700;margin-bottom:14px; }
+        .lp-footer ul { list-style:none;padding:0;margin:0; }
+        .lp-footer ul li { margin-bottom:7px; }
+        .lp-footer ul li a, .lp-footer ul li button { color:#A0A0A0;text-decoration:none;font-size:.82rem;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;transition:color .2s; }
+        .lp-footer ul li a:hover, .lp-footer ul li button:hover { color:#E8334A; }
+        .lp-footer-bottom { border-top:1px solid rgba(192,192,192,.1);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.78rem; }
+
+        /* SHOW/HIDE HELPERS */
+        @media (max-width:768px) {
+          .hide-mobile { display:none !important; }
+          .show-mobile { display:flex !important; }
         }
-        @media (min-width: 769px) {
-          .show-mobile { display: none !important; }
+        @media (min-width:769px) {
+          .show-mobile { display:none !important; }
         }
-        .svc-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(196,30,58,.1); border-color: rgba(196,30,58,.25); }
+
+        /* RESPONSIVE — TABLET */
+        @media (max-width:900px) {
+          .lp-hero-stats { display:none; }
+          .lp-contact-grid { grid-template-columns:1fr; gap:32px; }
+          .lp-footer-grid { grid-template-columns:1fr 1fr; }
+        }
+
+        /* RESPONSIVE — MOBILE */
+        @media (max-width:640px) {
+          .lp-hero { padding:90px 5% 50px; min-height:auto; }
+          .lp-hero-h1 { font-size:1.75rem; }
+          .lp-hero-p { font-size:.92rem; }
+          .lp-hero-actions { flex-direction:column; }
+          .lp-hero-actions .btn { width:100%; justify-content:center; }
+
+          .lp-section { padding:52px 5%; }
+          .lp-sec-head { margin-bottom:32px; }
+          .lp-sec-head h2 { font-size:1.3rem; }
+          .lp-sec-head p { font-size:.88rem; }
+
+          .lp-services-grid { grid-template-columns:1fr; gap:14px; }
+          .lp-svc-card { padding:20px 18px; }
+
+          .lp-pricing-grid { grid-template-columns:1fr; }
+          .lp-pkg-card { padding:22px 18px; }
+
+          .lp-why-grid { grid-template-columns:1fr 1fr; gap:16px; }
+          .lp-why-card { padding:20px 12px; }
+          .lp-why-icon { width:48px; height:48px; font-size:1.1rem; }
+
+          .lp-contact-grid { grid-template-columns:1fr; gap:28px; }
+          .lp-contact-btns { flex-direction:column; }
+          .lp-contact-btns .btn { width:100%; justify-content:center; }
+
+          .lp-footer-grid { grid-template-columns:1fr; gap:28px; }
+          .lp-footer-bottom { flex-direction:column; text-align:center; gap:6px; }
+          .lp-footer { padding:40px 5% 20px; }
+        }
+
+        @media (max-width:380px) {
+          .lp-why-grid { grid-template-columns:1fr; }
+        }
       `}</style>
     </>
   )
