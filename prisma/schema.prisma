@@ -23,7 +23,7 @@ model User {
   emailVerified       Boolean   @default(false)
   emailVerifyToken    String?   @unique
   emailVerifyExpires  DateTime?
-  passwordHash String
+  passwordHash String?
   role         UserRole @default(CLIENT)
   isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
