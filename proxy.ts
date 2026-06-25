@@ -37,7 +37,7 @@ export async function proxy(req: NextRequest) {
 
   // Client routes
   if (!token) return NextResponse.redirect(new URL('/login', req.url))
-  const clientPaths = ['/dashboard', '/invoices', '/documents', '/tickets', '/change-password']
+  const clientPaths = ['/dashboard', '/invoices', '/documents', '/tickets', '/change-password', '/summary']
   if (clientPaths.some((p) => pathname.startsWith(p)) && role !== 'CLIENT' && role !== 'ADMIN') {
     return NextResponse.redirect(new URL('/login', req.url))
   }
@@ -56,5 +56,6 @@ export const config = {
     '/change-password',
     '/profile',
     '/delegates',
+    '/summary',
   ],
 }

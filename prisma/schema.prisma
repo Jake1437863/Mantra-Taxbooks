@@ -38,6 +38,7 @@ model User {
   impersonationTokens   ImpersonationToken[]
   delegationsAsOwner    Delegation[]         @relation("DelegationOwner")
   delegationsAsDelegate Delegation[]         @relation("DelegationDelegate")
+  financialSummary      FinancialSummary?
 
   @@map("users")
 }
@@ -203,4 +204,25 @@ enum DelegationStatus {
   PENDING
   ACTIVE
   REVOKED
+}
+
+model FinancialSummary {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  monthlyIncome        Float    @default(0)
+  monthlyExpenses      Float    @default(0)
+  monthlySavings       Float    @default(0)
+  emergencyFund        Float    @default(0)
+  lifeInsuranceCover   Float    @default(0)
+  healthInsuranceCover Float    @default(0)
+  retirementSavings    Float    @default(0)
+  totalDebt            Float    @default(0)
+  monthlyEmi           Float    @default(0)
+  equityPercentage     Float    @default(0)
+  totalAssets          Float    @default(0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("financial_summaries")
 }

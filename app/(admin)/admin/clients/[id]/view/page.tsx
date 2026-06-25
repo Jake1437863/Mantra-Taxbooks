@@ -2,8 +2,10 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { formatCurrency, formatDate, formatFileSize } from '@/lib/utils'
+import FinancialReport from '@/components/FinancialReport'
+import type { HealthReport, FinancialData } from '@/lib/finance'
 
-const tabs = ['Overview', 'Invoices', 'Documents', 'Tickets']
+const tabs = ['Overview', 'Invoices', 'Documents', 'Tickets', 'Summary']
 
 export default function AdminClientView() {
   const { id } = useParams<{ id: string }>()
@@ -11,6 +13,9 @@ export default function AdminClientView() {
   const [loading, setLoading] = useState(true)
   const [tab, setTab] = useState('Overview')
   const [downloading, setDownloading] = useState<string | null>(null)
+  const [summaryData, setSummaryData] = useState<{ report: HealthReport; data: FinancialData; updatedAt: string; clientName: string } | null>(null)
+  const [summaryLoading, setSummaryLoading] = useState(false)
+  const [summaryNoData, setSummaryNoData] = useState(false)
 
   useEffect(() => {
     fetch(`/api/admin/clients/${id}/overview`)
@@ -18,6 +23,19 @@ export default function AdminClientView() {
       .then(d => { setData(d); setLoading(false) })
       .catch(() => setLoading(false))
   }, [id])
+
+  const loadSummary = () => {
+    if (summaryData || summaryLoading) return
+    setSummaryLoading(true)
+    fetch(`/api/admin/clients/${id}/summary`)
+      .then(r => r.json())
+      .then(d => {
+        setSummaryLoading(false)
+        if (d.noData) { setSummaryNoData(true); return }
+        setSummaryData({ report: d.report, data: d.data, updatedAt: d.updatedAt, clientName: d.client?.name ?? '' })
+      })
+      .catch(() => setSummaryLoading(false))
+  }
 
   const downloadPDF = async (invId: string, invoiceNo: string) => {
     setDownloading(invId)
@@ -60,8 +78,8 @@ export default function AdminClientView() {
       {/* Tabs */}
       <div style={{ display: 'flex', gap: 4, marginBottom: 20, borderBottom: '1px solid var(--border)', flexWrap: 'wrap' }}>
         {tabs.map(t => (
-          <button key={t} onClick={() => setTab(t)} style={{ padding: '9px 20px', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 600, fontSize: '.85rem', color: tab === t ? 'var(--red)' : '#666', borderBottom: tab === t ? '2px solid var(--red)' : '2px solid transparent', marginBottom: -1, fontFamily: 'inherit' }}>
-            {t}
+          <button key={t} onClick={() => { setTab(t); if (t === 'Summary') loadSummary() }} style={{ padding: '9px 20px', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 600, fontSize: '.85rem', color: tab === t ? 'var(--red)' : '#666', borderBottom: tab === t ? '2px solid var(--red)' : '2px solid transparent', marginBottom: -1, fontFamily: 'inherit' }}>
+            {t === 'Summary' && <i className="fas fa-heartbeat" style={{ marginRight: 6 }} />}{t}
           </button>
         ))}
       </div>
@@ -150,6 +168,30 @@ export default function AdminClientView() {
               </tbody>
             </table>
           </div>
+        </div>
+      )}
+
+      {/* Summary Tab */}
+      {tab === 'Summary' && (
+        <div>
+          {summaryLoading && <div style={{ textAlign: 'center', padding: 60 }}><i className="fas fa-spinner fa-spin" style={{ fontSize: '2rem', color: 'var(--red)' }} /></div>}
+          {summaryNoData && !summaryLoading && (
+            <div style={{ textAlign: 'center', padding: 60 }}>
+              <div style={{ width: 64, height: 64, background: 'rgba(196,30,58,.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <i className="fas fa-chart-pie" style={{ fontSize: '1.5rem', color: 'var(--red)' }} />
+              </div>
+              <h3 style={{ fontWeight: 700, margin: '0 0 8px' }}>No Financial Summary Yet</h3>
+              <p style={{ color: '#666', fontSize: '.88rem' }}>This client has not filled in their financial health data yet.</p>
+            </div>
+          )}
+          {summaryData && !summaryLoading && (
+            <FinancialReport
+              report={summaryData.report}
+              data={summaryData.data}
+              updatedAt={summaryData.updatedAt}
+              clientName={summaryData.clientName}
+            />
+          )}
         </div>
       )}
 
