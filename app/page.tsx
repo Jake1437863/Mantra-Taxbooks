@@ -92,9 +92,10 @@ export default function HomePage() {
           </div>
 
           <ul className="lp-nav-links hide-mobile">
-            {[['Home', 'hero'], ['Services', 'services'], ['Pricing', 'pricing'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
+            {[['Home', 'hero'], ['Services', 'services'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
               <li key={id}><button className="lp-nav-btn" onClick={() => scrollTo(id)}>{label}</button></li>
             ))}
+            <li><Link href="/pricing" className="lp-nav-btn" style={{ textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Pricing</Link></li>
           </ul>
 
           <div className="lp-nav-cta">
@@ -112,9 +113,10 @@ export default function HomePage() {
 
         {menuOpen && (
           <div className="lp-mobile-menu">
-            {[['Home', 'hero'], ['Services', 'services'], ['Pricing', 'pricing'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
+            {[['Home', 'hero'], ['Services', 'services'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
               <button key={id} className="lp-mobile-link" onClick={() => scrollTo(id)}>{label}</button>
             ))}
+            <Link href="/pricing" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', display: 'block' }}>Pricing</Link>
             <div className="lp-mobile-auth">
               <Link href="/login" className="btn btn-outline btn-sm" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
                 <i className="fas fa-sign-in-alt" /> Login
@@ -318,7 +320,7 @@ export default function HomePage() {
             <h4>Quick Links</h4>
             <ul>
               <li><button onClick={() => scrollTo('hero')}>Home</button></li>
-              <li><button onClick={() => scrollTo('pricing')}>Pricing</button></li>
+              <li><Link href="/pricing">Pricing</Link></li>
               <li><button onClick={() => scrollTo('about')}>About Us</button></li>
               <li><button onClick={() => scrollTo('contact')}>Contact</button></li>
               <li><Link href="/login">Login</Link></li>
