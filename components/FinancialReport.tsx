@@ -45,10 +45,11 @@ interface Props {
   data: FinancialData
   updatedAt?: string
   clientName?: string
+  pdfUrl?: string
   onEdit?: () => void
 }
 
-export default function FinancialReport({ report, data, updatedAt, clientName, onEdit }: Props) {
+export default function FinancialReport({ report, data, updatedAt, clientName, pdfUrl, onEdit }: Props) {
   const { healthScore, pillars, redFlags, actions, benchmarks, netWorth, monthlySurplus, savingsRate } = report
   const sc = scoreColor(healthScore)
   const dashOffset = CIRC - (healthScore / 100) * CIRC
@@ -72,11 +73,18 @@ export default function FinancialReport({ report, data, updatedAt, clientName, o
           </h2>
           {updatedAt && <p style={{ color: '#888', fontSize: '.78rem', margin: '4px 0 0' }}>Last updated: {new Date(updatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>}
         </div>
-        {onEdit && (
-          <button className="btn btn-secondary btn-sm" onClick={onEdit}>
-            <i className="fas fa-pen" /> Update Details
-          </button>
-        )}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {pdfUrl && (
+            <a href={pdfUrl} download className="btn btn-secondary btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <i className="fas fa-file-pdf" style={{ color: '#E74C3C' }} /> Download PDF
+            </a>
+          )}
+          {onEdit && (
+            <button className="btn btn-secondary btn-sm" onClick={onEdit}>
+              <i className="fas fa-pen" /> Update Details
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Top Metrics */}

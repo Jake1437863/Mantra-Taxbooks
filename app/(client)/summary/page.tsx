@@ -154,6 +154,7 @@ export default function SummaryPage() {
           report={report}
           data={savedData}
           updatedAt={updatedAt}
+          pdfUrl="/api/summary/pdf"
           onEdit={() => { setForm(savedData); setMode('form') }}
         />
       )}

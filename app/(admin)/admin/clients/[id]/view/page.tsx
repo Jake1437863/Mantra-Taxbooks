@@ -190,6 +190,7 @@ export default function AdminClientView() {
               data={summaryData.data}
               updatedAt={summaryData.updatedAt}
               clientName={summaryData.clientName}
+              pdfUrl={`/api/admin/clients/${id}/summary/pdf`}
             />
           )}
         </div>
