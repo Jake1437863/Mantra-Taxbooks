@@ -32,8 +32,9 @@ export async function GET(req: Request) {
 
   if (all && !isAdmin && !isEmployee) return apiError('Forbidden', 403)
 
+  const effectiveClientId = session.user.delegateFor || session.user.id
   const where: any = {}
-  if (!all || session.user.role === 'CLIENT') where.clientId = session.user.id
+  if (!all || session.user.role === 'CLIENT') where.clientId = effectiveClientId
   if (status) where.status = status
 
   const [invoices, total] = await Promise.all([

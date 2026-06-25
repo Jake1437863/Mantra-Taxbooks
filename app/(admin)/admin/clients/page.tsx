@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { formatDate } from '@/lib/utils'
 
 const INDIAN_STATES = [
@@ -18,6 +19,7 @@ const emptyForm = {
 }
 
 export default function AdminClients() {
+  const router = useRouter()
   const [clients, setClients] = useState<any[]>([])
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -27,6 +29,7 @@ export default function AdminClients() {
   const [creating, setCreating] = useState(false)
   const [createErr, setCreateErr] = useState('')
   const [form, setForm] = useState(emptyForm)
+  const [impersonating, setImpersonating] = useState<string | null>(null)
 
   const fetchClients = (q = '') => {
     setLoading(true)
@@ -47,6 +50,15 @@ export default function AdminClients() {
       body: JSON.stringify({ isActive: !current }),
     })
     fetchClients(search)
+  }
+
+  const loginAsClient = async (id: string) => {
+    setImpersonating(id)
+    const res = await fetch(`/api/admin/clients/${id}/impersonate`, { method: 'POST' })
+    const d = await res.json()
+    setImpersonating(null)
+    if (d.token) router.push(`/impersonate?token=${d.token}`)
+    else alert(d.error || 'Failed to impersonate.')
   }
 
   const createClient = async (e: React.FormEvent) => {
@@ -121,9 +133,12 @@ export default function AdminClients() {
                       <td><span className={`badge ${c.isActive ? 'b-active' : 'b-inactive'}`}>{c.isActive ? 'Active' : 'Inactive'}</span></td>
                       <td>{c._count?.invoices ?? 0}</td>
                       <td>{formatDate(c.createdAt)}</td>
-                      <td style={{ display: 'flex', gap: 6 }}>
-                        <button className="btn btn-secondary btn-sm" onClick={() => setViewClient(c)}>
+                      <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                        <button className="btn btn-secondary btn-sm" onClick={() => setViewClient(c)} title="View details">
                           <i className="fas fa-eye" />
+                        </button>
+                        <button className="btn btn-sm" style={{ background: '#1565C0', color: '#fff' }} onClick={() => loginAsClient(c.id)} disabled={impersonating === c.id || !c.isActive} title="Login as this client">
+                          {impersonating === c.id ? <i className="fas fa-spinner fa-spin" /> : <><i className="fas fa-user-secret" /> Login as</>}
                         </button>
                         <button className={`btn btn-sm ${c.isActive ? 'btn-danger' : 'btn-success'}`} onClick={() => toggleActive(c.id, c.isActive)}>
                           {c.isActive ? 'Disable' : 'Enable'}

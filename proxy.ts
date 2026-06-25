@@ -5,8 +5,10 @@ import type { NextRequest } from 'next/server'
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // Admin login page: always accessible
+  // Always accessible auth pages
   if (pathname === '/admin/login') return NextResponse.next()
+  if (pathname === '/impersonate') return NextResponse.next()
+  if (pathname.startsWith('/delegates/accept')) return NextResponse.next()
 
   const token = await getToken({ req })
   const role = token?.role as string | undefined

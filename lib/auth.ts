@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { UserRole } from '@prisma/client'
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -21,14 +22,31 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
+        impersonateToken: { label: 'Impersonate Token', type: 'text' },
       },
       async authorize(credentials) {
+        // Impersonation flow
+        if (credentials?.impersonateToken) {
+          const imp = await prisma.impersonationToken.findUnique({
+            where: { token: credentials.impersonateToken },
+            include: { client: true },
+          })
+          if (!imp || imp.used || imp.expiresAt < new Date()) return null
+          await prisma.impersonationToken.update({ where: { id: imp.id }, data: { used: true } })
+          return {
+            id: imp.clientId,
+            email: imp.client.email,
+            name: imp.client.name,
+            role: 'CLIENT' as UserRole,
+            impersonatedBy: imp.adminId,
+          }
+        }
+
+        // Normal credentials flow
         const parsed = loginSchema.safeParse(credentials)
         if (!parsed.success) return null
 
-        const user = await prisma.user.findUnique({
-          where: { email: parsed.data.email },
-        })
+        const user = await prisma.user.findUnique({ where: { email: parsed.data.email } })
         if (!user || !user.isActive) return null
 
         const valid = await bcrypt.compare(parsed.data.password, user.passwordHash)
@@ -43,6 +61,15 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id
         token.role = user.role
+        if (user.impersonatedBy) {
+          token.impersonatedBy = user.impersonatedBy
+        } else {
+          // Check if this user is an active delegate (only at sign-in)
+          const delegation = await prisma.delegation.findFirst({
+            where: { delegateId: user.id, status: 'ACTIVE' },
+          })
+          if (delegation) token.delegateFor = delegation.ownerId
+        }
       }
       return token
     },
@@ -50,6 +77,8 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user.id = token.id
         session.user.role = token.role
+        if (token.impersonatedBy) session.user.impersonatedBy = token.impersonatedBy as string
+        if (token.delegateFor) session.user.delegateFor = token.delegateFor as string
       }
       return session
     },

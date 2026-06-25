@@ -25,12 +25,15 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  invoices        Invoice[]
-  documents       Document[]
-  ticketsAsClient Ticket[]        @relation("ClientTickets")
-  ticketsAssigned Ticket[]        @relation("AssignedTickets")
-  ticketMessages  TicketMessage[]
-  passwordResets  PasswordReset[]
+  invoices              Invoice[]
+  documents             Document[]
+  ticketsAsClient       Ticket[]             @relation("ClientTickets")
+  ticketsAssigned       Ticket[]             @relation("AssignedTickets")
+  ticketMessages        TicketMessage[]
+  passwordResets        PasswordReset[]
+  impersonationTokens   ImpersonationToken[]
+  delegationsAsOwner    Delegation[]         @relation("DelegationOwner")
+  delegationsAsDelegate Delegation[]         @relation("DelegationDelegate")
 
   @@map("users")
 }
@@ -163,4 +166,37 @@ model CustomRole {
   createdAt   DateTime @default(now())
 
   @@map("custom_roles")
+}
+
+model ImpersonationToken {
+  id        String   @id @default(cuid())
+  adminId   String
+  clientId  String
+  client    User     @relation(fields: [clientId], references: [id])
+  token     String   @unique
+  used      Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("impersonation_tokens")
+}
+
+model Delegation {
+  id         String           @id @default(cuid())
+  ownerId    String
+  owner      User             @relation("DelegationOwner", fields: [ownerId], references: [id])
+  delegateId String?
+  delegate   User?            @relation("DelegationDelegate", fields: [delegateId], references: [id])
+  email      String
+  token      String?          @unique
+  status     DelegationStatus @default(PENDING)
+  createdAt  DateTime         @default(now())
+
+  @@map("delegations")
+}
+
+enum DelegationStatus {
+  PENDING
+  ACTIVE
+  REVOKED
 }

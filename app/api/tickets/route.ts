@@ -23,8 +23,9 @@ export async function GET(req: Request) {
 
   if (all && !isAdmin && !isEmployee) return apiError('Forbidden', 403)
 
+  const effectiveClientId = session.user.delegateFor || session.user.id
   const where: any = {}
-  if (!all || session.user.role === 'CLIENT') where.clientId = session.user.id
+  if (!all || session.user.role === 'CLIENT') where.clientId = effectiveClientId
   if (status) where.status = status
 
   const [tickets, total] = await Promise.all([
@@ -53,17 +54,18 @@ export async function POST(req: Request) {
   const { title, message, priority } = parsed.data
   const count = await prisma.ticket.count()
   const ticketNo = generateTicketNo(count)
+  const effectiveClientId = session.user.delegateFor || session.user.id
 
   const ticket = await prisma.ticket.create({
     data: {
       ticketNo,
-      clientId: session.user.id,
+      clientId: effectiveClientId,
       title,
       priority,
       status: 'OPEN',
       messages: {
         create: {
-          senderId: session.user.id,
+          senderId: session.user.id,  // actual sender (delegate's own id)
           message,
         },
       },

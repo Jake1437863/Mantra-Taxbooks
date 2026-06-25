@@ -64,6 +64,35 @@ export async function sendWelcomeEmail(email: string, name: string, tempPassword
   })
 }
 
+export async function sendDelegateInviteEmail(
+  email: string,
+  ownerName: string,
+  token: string,
+  inviterName: string
+) {
+  const acceptUrl = `${APP_URL}/delegates/accept?token=${token}`
+  await transporter.sendMail({
+    from: FROM,
+    to: email,
+    subject: `You've been invited to access ${ownerName}'s account – Mantra Taxbooks`,
+    html: `
+      <div style="font-family:Inter,Arial,sans-serif;max-width:520px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e0e0e0">
+        <div style="background:linear-gradient(135deg,#8B0000,#C41E3A);padding:28px 32px">
+          <span style="color:#C0C0C0;font-weight:900;font-size:1.1rem;letter-spacing:3px">MANTRA</span>
+          <span style="color:#E8E8E8;font-weight:900;font-size:1.1rem;letter-spacing:3px"> TAXBOOKS</span>
+        </div>
+        <div style="padding:32px">
+          <h2 style="margin:0 0 8px;font-size:1.3rem;color:#1A1A1A">You've Been Invited</h2>
+          <p style="color:#666;margin:0 0 20px"><strong>${inviterName}</strong> has invited you to access their Mantra Taxbooks account. You'll be able to view invoices, documents, and support tickets on their behalf.</p>
+          <a href="${acceptUrl}" style="display:inline-block;background:linear-gradient(135deg,#C41E3A,#8B0000);color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9rem">Accept Invitation</a>
+          <p style="margin:20px 0 0;font-size:.8rem;color:#999">This invitation will expire if not accepted. If you did not expect this invite, you can safely ignore it.</p>
+          <p style="margin:8px 0 0;font-size:.75rem;color:#bbb;word-break:break-all">${acceptUrl}</p>
+        </div>
+      </div>
+    `,
+  })
+}
+
 export async function sendInvoiceEmail(
   email: string,
   name: string,

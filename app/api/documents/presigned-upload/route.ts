@@ -27,8 +27,10 @@ export async function POST(req: Request) {
     return apiError(err.message)
   }
 
-  // Determine clientId (client uploads for themselves; admin can specify)
-  const clientId = session.user.role === 'CLIENT' ? session.user.id : (req.headers.get('x-client-id') || session.user.id)
+  // Delegate uploads on behalf of owner; admin can specify via header
+  const clientId = session.user.role === 'CLIENT'
+    ? (session.user.delegateFor || session.user.id)
+    : (req.headers.get('x-client-id') || session.user.id)
 
   const s3Key = buildS3Key(clientId, filename)
 
