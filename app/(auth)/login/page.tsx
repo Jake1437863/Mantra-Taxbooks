@@ -29,8 +29,11 @@ export default function LoginPage() {
     const me = await meRes.json()
     const role = me?.role
 
-    if (role === 'ADMIN') router.push('/admin/dashboard')
-    else if (role === 'SUPPORT' || role === 'PAYMENTS') router.push('/employee/tickets')
+    if (role === 'ADMIN') {
+      setError('Admin accounts must use the Admin Portal.')
+      return
+    }
+    if (role === 'SUPPORT' || role === 'PAYMENTS') router.push('/employee/tickets')
     else router.push('/dashboard')
   }
 
@@ -80,6 +83,10 @@ export default function LoginPage() {
         <div style={{ textAlign: 'center', marginTop: 18, fontSize: '.85rem', color: '#666' }}>
           New to Mantra Taxbooks?{' '}
           <Link href="/#contact" style={{ color: 'var(--red)', textDecoration: 'none', fontWeight: 600 }}>Contact Us</Link>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 10, fontSize: '.78rem', color: '#aaa' }}>
+          Admin?{' '}
+          <Link href="/admin/login" style={{ color: 'var(--red)', textDecoration: 'none', fontWeight: 600 }}>Admin Portal →</Link>
         </div>
       </div>
     </div>

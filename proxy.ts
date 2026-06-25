@@ -1,45 +1,47 @@
-import { withAuth } from 'next-auth/middleware'
+import { getToken } from 'next-auth/jwt'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export default withAuth(
-  function middleware(req) {
-    const token = req.nextauth.token
-    const { pathname } = req.nextUrl
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl
 
-    if (!token) return NextResponse.redirect(new URL('/login', req.url))
+  // Admin login page: always accessible
+  if (pathname === '/admin/login') return NextResponse.next()
 
-    const role = token.role as string
+  const token = await getToken({ req })
+  const role = token?.role as string | undefined
 
-    if (pathname.startsWith('/admin') && role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/login', req.url))
+  // Admin routes: require ADMIN role, redirect to /admin/login otherwise
+  if (pathname.startsWith('/admin')) {
+    if (!token || role !== 'ADMIN') {
+      return NextResponse.redirect(new URL('/admin/login', req.url))
     }
-
-    if (pathname.startsWith('/employee')) {
-      const allowed = ['ADMIN', 'SUPPORT', 'PAYMENTS']
-      if (!allowed.includes(role)) {
-        return NextResponse.redirect(new URL('/login', req.url))
-      }
-      if (pathname.startsWith('/employee/tickets') && !['ADMIN', 'SUPPORT'].includes(role)) {
-        return NextResponse.redirect(new URL('/login', req.url))
-      }
-      if (pathname.startsWith('/employee/payments') && !['ADMIN', 'PAYMENTS'].includes(role)) {
-        return NextResponse.redirect(new URL('/login', req.url))
-      }
-    }
-
-    const clientPaths = ['/dashboard', '/invoices', '/documents', '/tickets', '/change-password']
-    if (clientPaths.some((p) => pathname.startsWith(p)) && role !== 'CLIENT' && role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/login', req.url))
-    }
-
     return NextResponse.next()
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
   }
-)
+
+  // Employee routes
+  if (pathname.startsWith('/employee')) {
+    if (!token) return NextResponse.redirect(new URL('/login', req.url))
+    const allowed = ['ADMIN', 'SUPPORT', 'PAYMENTS']
+    if (!allowed.includes(role!)) return NextResponse.redirect(new URL('/login', req.url))
+    if (pathname.startsWith('/employee/tickets') && !['ADMIN', 'SUPPORT'].includes(role!)) {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+    if (pathname.startsWith('/employee/payments') && !['ADMIN', 'PAYMENTS'].includes(role!)) {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+    return NextResponse.next()
+  }
+
+  // Client routes
+  if (!token) return NextResponse.redirect(new URL('/login', req.url))
+  const clientPaths = ['/dashboard', '/invoices', '/documents', '/tickets', '/change-password']
+  if (clientPaths.some((p) => pathname.startsWith(p)) && role !== 'CLIENT' && role !== 'ADMIN') {
+    return NextResponse.redirect(new URL('/login', req.url))
+  }
+
+  return NextResponse.next()
+}
 
 export const config = {
   matcher: [

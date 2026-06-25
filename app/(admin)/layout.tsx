@@ -44,7 +44,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
             <span className="hide-mobile">{session?.user?.name}</span>
           </span>
-          <button onClick={() => signOut({ callbackUrl: '/login' })} className="btn btn-secondary btn-sm">
+          <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className="btn btn-secondary btn-sm">
             <i className="fas fa-sign-out-alt" />
           </button>
         </div>
