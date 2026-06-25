@@ -68,6 +68,8 @@ const contactItems = [
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', subject: '', message: '' })
   const [contactStatus, setContactStatus] = useState<'idle' | 'ok' | 'err'>('idle')
 
@@ -92,10 +94,25 @@ export default function HomePage() {
           </div>
 
           <ul className="lp-nav-links hide-mobile">
-            {[['Home', 'hero'], ['Services', 'services'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
-              <li key={id}><button className="lp-nav-btn" onClick={() => scrollTo(id)}>{label}</button></li>
-            ))}
-            <li><Link href="/pricing" className="lp-nav-btn" style={{ textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Pricing</Link></li>
+            <li><button className="lp-nav-btn" onClick={() => scrollTo('hero')}>Home</button></li>
+            <li className="lp-dropdown-wrap" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
+              <button className="lp-nav-btn lp-dropdown-trigger" onClick={() => scrollTo('services')}>
+                Services <i className={`fas fa-chevron-down lp-caret${servicesOpen ? ' open' : ''}`} />
+              </button>
+              {servicesOpen && (
+                <div className="lp-dropdown">
+                  <Link href="/pricing" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
+                    <i className="fas fa-file-invoice-dollar" />
+                    <div>
+                      <div className="lp-dropdown-label">File ITR</div>
+                      <div className="lp-dropdown-sub">CA Reviewed Filing Plans</div>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </li>
+            <li><button className="lp-nav-btn" onClick={() => scrollTo('about')}>About</button></li>
+            <li><button className="lp-nav-btn" onClick={() => scrollTo('contact')}>Contact</button></li>
           </ul>
 
           <div className="lp-nav-cta">
@@ -113,10 +130,17 @@ export default function HomePage() {
 
         {menuOpen && (
           <div className="lp-mobile-menu">
-            {[['Home', 'hero'], ['Services', 'services'], ['About', 'about'], ['Contact', 'contact']].map(([label, id]) => (
-              <button key={id} className="lp-mobile-link" onClick={() => scrollTo(id)}>{label}</button>
-            ))}
-            <Link href="/pricing" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', display: 'block' }}>Pricing</Link>
+            <button className="lp-mobile-link" onClick={() => scrollTo('hero')}>Home</button>
+            <button className="lp-mobile-link" onClick={() => setMobileServicesOpen(!mobileServicesOpen)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+              Services <i className={`fas fa-chevron-${mobileServicesOpen ? 'up' : 'down'}`} style={{ fontSize: '.75rem', color: '#888' }} />
+            </button>
+            {mobileServicesOpen && (
+              <Link href="/pricing" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#E8334A', fontWeight: 600 }}>
+                <i className="fas fa-file-invoice-dollar" style={{ fontSize: '.8rem' }} /> File ITR
+              </Link>
+            )}
+            <button className="lp-mobile-link" onClick={() => scrollTo('about')}>About</button>
+            <button className="lp-mobile-link" onClick={() => scrollTo('contact')}>Contact</button>
             <div className="lp-mobile-auth">
               <Link href="/login" className="btn btn-outline btn-sm" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
                 <i className="fas fa-sign-in-alt" /> Login
@@ -359,6 +383,17 @@ export default function HomePage() {
         .lp-nav-links { display:flex;align-items:center;gap:24px;list-style:none;margin:0;padding:0; }
         .lp-nav-btn { background:none;border:none;color:#ccc;font-size:.875rem;font-weight:500;cursor:pointer;letter-spacing:.3px;font-family:inherit;transition:color .2s; }
         .lp-nav-btn:hover { color:#E8334A; }
+        .lp-dropdown-wrap { position:relative; }
+        .lp-dropdown-trigger { display:flex;align-items:center;gap:6px; }
+        .lp-caret { font-size:.65rem;transition:transform .2s; }
+        .lp-caret.open { transform:rotate(180deg); }
+        .lp-dropdown { position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:#1C1C1C;border:1px solid rgba(196,30,58,.3);border-radius:10px;padding:6px;min-width:220px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:2000; }
+        .lp-dropdown::before { content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#1C1C1C;border-left:1px solid rgba(196,30,58,.3);border-top:1px solid rgba(196,30,58,.3);transform:translateX(-50%) rotate(45deg); }
+        .lp-dropdown-item { display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:#E0E0E0; }
+        .lp-dropdown-item:hover { background:rgba(196,30,58,.12);color:#E8334A; }
+        .lp-dropdown-item .fa-file-invoice-dollar { color:#E8334A;font-size:.95rem;flex-shrink:0; }
+        .lp-dropdown-label { font-weight:700;font-size:.85rem; }
+        .lp-dropdown-sub { font-size:.72rem;color:#888;margin-top:1px; }
         .lp-nav-cta { display:flex;align-items:center;gap:10px;flex-shrink:0; }
         .lp-hamburger { background:none;border:none;color:#ccc;font-size:1.2rem;cursor:pointer; }
         .lp-mobile-menu { background:#1a1a1a;border-top:1px solid rgba(196,30,58,.2);padding:12px 5%; }
