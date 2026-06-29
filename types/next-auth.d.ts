@@ -8,6 +8,7 @@ declare module 'next-auth' {
       email: string
       name: string
       role: UserRole
+      needsTerms?: boolean
       impersonatedBy?: string
       delegateFor?: string
     }
@@ -15,6 +16,7 @@ declare module 'next-auth' {
   interface User {
     id: string
     role: UserRole
+    needsTerms?: boolean
     impersonatedBy?: string
     delegateFor?: string
   }
@@ -24,6 +26,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     id: string
     role: UserRole
+    needsTerms?: boolean
     impersonatedBy?: string
     delegateFor?: string
   }

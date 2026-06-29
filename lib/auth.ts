@@ -96,6 +96,7 @@ export const authOptions: NextAuthOptions = {
         }
         token.id = dbUser.id
         token.role = dbUser.role
+        token.needsTerms = !dbUser.termsAccepted
         return token
       }
 
@@ -118,6 +119,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user.id = token.id
         session.user.role = token.role
+        if (token.needsTerms) session.user.needsTerms = true
         if (token.impersonatedBy) session.user.impersonatedBy = token.impersonatedBy as string
         if (token.delegateFor) session.user.delegateFor = token.delegateFor as string
       }

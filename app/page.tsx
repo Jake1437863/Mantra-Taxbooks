@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
+import { signIn } from 'next-auth/react'
 
 const services = [
   { icon: 'fa-file-invoice-dollar', title: 'Income Tax Return (ITR)', desc: 'CA-reviewed ITR filing for salaried individuals, business owners, NRIs and professionals with all income types.' },
@@ -72,6 +73,8 @@ export default function HomePage() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', subject: '', message: '' })
   const [contactStatus, setContactStatus] = useState<'idle' | 'ok' | 'err'>('idle')
+  const [modalStep, setModalStep] = useState<null | 'choose' | 'google-disclosure'>(null)
+  const [googleLoading, setGoogleLoading] = useState(false)
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -228,9 +231,9 @@ export default function HomePage() {
                   <li key={f}><i className="fas fa-check-circle" /> {f}</li>
                 ))}
               </ul>
-              <Link href="/register" className="btn btn-primary btn-block">
+              <button className="btn btn-primary btn-block" onClick={() => setModalStep('choose')}>
                 <i className="fas fa-file-alt" /> Get Started
-              </Link>
+              </button>
             </div>
           ))}
         </div>
@@ -365,6 +368,112 @@ export default function HomePage() {
           <span>CA Services | Tax Filing | GST | ROC</span>
         </div>
       </footer>
+
+      {/* ── GET STARTED MODAL ── */}
+      {modalStep && (
+        <div className="gs-overlay" onClick={() => { setModalStep(null); setGoogleLoading(false) }}>
+          <div className="gs-modal" onClick={e => e.stopPropagation()}>
+            <button className="gs-close" onClick={() => { setModalStep(null); setGoogleLoading(false) }}>
+              <i className="fas fa-times" />
+            </button>
+
+            {modalStep === 'choose' && (
+              <>
+                <div className="gs-logo">
+                  <span className="logo-m">MANTRA</span>
+                  <span className="logo-t">TAXBOOKS</span>
+                </div>
+                <h2 className="gs-title">Create your account</h2>
+                <p className="gs-sub">Start your CA-reviewed ITR filing today</p>
+
+                <button
+                  className="gs-google-btn"
+                  onClick={() => setModalStep('google-disclosure')}
+                >
+                  <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                  Continue with Google
+                  <i className="fas fa-chevron-right gs-arrow" />
+                </button>
+
+                <div className="gs-divider"><span>or</span></div>
+
+                <Link
+                  href="/register"
+                  className="btn btn-outline btn-block gs-email-btn"
+                  onClick={() => setModalStep(null)}
+                >
+                  <i className="fas fa-envelope" /> Sign up with email
+                </Link>
+
+                <p className="gs-footer-note">
+                  Already have an account?{' '}
+                  <Link href="/login" style={{ color: '#E8334A', textDecoration: 'none', fontWeight: 600 }} onClick={() => setModalStep(null)}>Sign in</Link>
+                </p>
+              </>
+            )}
+
+            {modalStep === 'google-disclosure' && (
+              <>
+                <button className="gs-back" onClick={() => setModalStep('choose')}>
+                  <i className="fas fa-arrow-left" /> Back
+                </button>
+
+                <div className="gs-google-header">
+                  <svg viewBox="0 0 24 24" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                  <h2 className="gs-title" style={{ marginTop: 10 }}>Continue with Google</h2>
+                </div>
+
+                <p className="gs-disclosure-lead">
+                  One tap to sign in. We&apos;ll show you exactly what we use on the next screen before anything is saved.
+                </p>
+
+                <ul className="gs-disclosure-list">
+                  <li>
+                    <span className="gs-disc-icon"><i className="fas fa-user-circle" /></span>
+                    <span>Google shares your <strong>name, email</strong> and <strong>profile photo</strong> with MantraTaxbooks.</span>
+                  </li>
+                  <li>
+                    <span className="gs-disc-icon gs-disc-icon--green"><i className="fas fa-shield-alt" /></span>
+                    <span>We <strong>never</strong> see your Google password. You can revoke access anytime from your Google account.</span>
+                  </li>
+                  <li>
+                    <span className="gs-disc-icon gs-disc-icon--blue"><i className="fas fa-file-contract" /></span>
+                    <span>On the next step you&apos;ll review and accept our <strong>Terms</strong> and <strong>Privacy Policy</strong>.</span>
+                  </li>
+                </ul>
+
+                <button
+                  className="gs-google-btn gs-google-btn--proceed"
+                  disabled={googleLoading}
+                  onClick={() => { setGoogleLoading(true); signIn('google', { callbackUrl: '/terms-accept' }) }}
+                >
+                  {googleLoading ? (
+                    <i className="fas fa-spinner fa-spin" />
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                  )}
+                  {googleLoading ? 'Redirecting...' : 'Continue with Google'}
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* ── FLOAT BUTTONS ── */}
       <div className="float-btns">
@@ -530,6 +639,40 @@ export default function HomePage() {
 
         @media (max-width:380px) {
           .lp-why-grid { grid-template-columns:1fr; }
+        }
+
+        /* GET STARTED MODAL */
+        .gs-overlay { position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px; }
+        .gs-modal { background:#fff;border-radius:18px;padding:36px 32px;width:100%;max-width:420px;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.25);max-height:90vh;overflow-y:auto; }
+        .gs-close { position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.1rem;color:#999;cursor:pointer;padding:4px 8px;border-radius:6px;transition:background .15s; }
+        .gs-close:hover { background:#f0f0f0;color:#333; }
+        .gs-logo { display:flex;align-items:center;gap:6px;justify-content:center;margin-bottom:18px; }
+        .gs-title { font-size:1.35rem;font-weight:800;color:#1A1A1A;text-align:center;margin-bottom:6px; }
+        .gs-sub { font-size:.85rem;color:#666;text-align:center;margin-bottom:26px; }
+        .gs-google-btn { width:100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:13px 20px;background:#fff;border:2px solid #e0e0e0;border-radius:10px;font-size:.95rem;font-weight:600;color:#1A1A1A;cursor:pointer;transition:all .2s;position:relative; }
+        .gs-google-btn:hover { border-color:#4285F4;box-shadow:0 4px 16px rgba(66,133,244,.15); }
+        .gs-google-btn--proceed { background:#1A1A1A;color:#fff;border-color:#1A1A1A;margin-top:8px; }
+        .gs-google-btn--proceed:hover { background:#333;border-color:#333; }
+        .gs-google-btn--proceed:disabled { opacity:.6;cursor:not-allowed; }
+        .gs-arrow { position:absolute;right:16px;font-size:.75rem;color:#bbb; }
+        .gs-divider { display:flex;align-items:center;gap:14px;margin:18px 0;color:#bbb;font-size:.82rem; }
+        .gs-divider::before,.gs-divider::after { content:'';flex:1;height:1px;background:#e8e8e8; }
+        .gs-email-btn { display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#333;border-color:#d0d0d0; }
+        .gs-email-btn:hover { border-color:#C41E3A;color:#C41E3A; }
+        .gs-footer-note { text-align:center;margin-top:18px;font-size:.83rem;color:#888; }
+        .gs-back { display:flex;align-items:center;gap:8px;background:none;border:none;color:#888;font-size:.83rem;cursor:pointer;padding:0;margin-bottom:20px;font-family:inherit;transition:color .15s; }
+        .gs-back:hover { color:#333; }
+        .gs-google-header { display:flex;flex-direction:column;align-items:center;margin-bottom:16px; }
+        .gs-disclosure-lead { font-size:.9rem;color:#444;line-height:1.6;text-align:center;margin-bottom:22px;padding:14px 16px;background:#f8f8f8;border-radius:10px;border-left:3px solid #4285F4; }
+        .gs-disclosure-list { list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:14px; }
+        .gs-disclosure-list li { display:flex;align-items:flex-start;gap:14px;font-size:.87rem;color:#444;line-height:1.6; }
+        .gs-disc-icon { width:34px;height:34px;border-radius:50%;background:rgba(66,133,244,.1);display:flex;align-items:center;justify-content:center;color:#4285F4;font-size:.85rem;flex-shrink:0;margin-top:1px; }
+        .gs-disc-icon--green { background:rgba(39,174,96,.1);color:#27AE60; }
+        .gs-disc-icon--blue { background:rgba(196,30,58,.1);color:#C41E3A; }
+
+        @media (max-width:480px) {
+          .gs-modal { padding:28px 20px; }
+          .gs-title { font-size:1.2rem; }
         }
       `}</style>
     </>
