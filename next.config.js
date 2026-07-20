@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   serverExternalPackages: ['pdfkit'],
   compress: true,
   images: {
@@ -9,16 +8,6 @@ const nextConfig = {
   },
   async headers() {
     return [
-      {
-        // Static JS/CSS Bundles & Fonts (Immutable caching for Vercel CDN Edge)
-        source: '/_next/static/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
       {
         // Media Assets & Video Background (Edge Byte-Range Streaming + Long TTL)
         source: '/:path*.(mp4|webm|jpg|jpeg|png|gif|ico|svg|woff2)',
