@@ -6,6 +6,7 @@
     "dev": "next dev --webpack",
     "clean": "powershell -Command \"Remove-Item -Recurse -Force .next, out, dist -ErrorAction SilentlyContinue\"",
     "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
@@ -22,6 +23,7 @@
     "next-auth": "^4.24.7",
     "nodemailer": "^7.0.7",
     "pdfkit": "^0.15.0",
+    "prisma": "^5.14.0",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.23.8"
@@ -35,7 +37,6 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
-    "prisma": "^5.14.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.15.1",
     "typescript": "^5"
