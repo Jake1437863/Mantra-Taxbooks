@@ -99,16 +99,23 @@ export default function HomePage() {
           <ul className="lp-nav-links hide-mobile">
             <li><button className="lp-nav-btn" onClick={() => scrollTo('hero')}>Home</button></li>
             <li className="lp-dropdown-wrap" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
-              <button className="lp-nav-btn lp-dropdown-trigger" onClick={() => scrollTo('services')}>
+              <Link href="/services" className="lp-nav-btn lp-dropdown-trigger">
                 Services <i className={`fas fa-chevron-down lp-caret${servicesOpen ? ' open' : ''}`} />
-              </button>
+              </Link>
               {servicesOpen && (
                 <div className="lp-dropdown">
-                  <Link href="/file-itr" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
+                  <Link href="/services#file-itr" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
                     <i className="fas fa-file-invoice-dollar" />
                     <div>
                       <div className="lp-dropdown-label">File ITR</div>
-                      <div className="lp-dropdown-sub">CA Reviewed Filing Plans</div>
+                      <div className="lp-dropdown-sub">Why It's Needed &amp; CA Plans</div>
+                    </div>
+                  </Link>
+                  <Link href="/services#company-registration" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
+                    <i className="fas fa-building" />
+                    <div>
+                      <div className="lp-dropdown-label">Company Registration</div>
+                      <div className="lp-dropdown-sub">Pvt Ltd, LLP, OPC &amp; Contact</div>
                     </div>
                   </Link>
                 </div>
@@ -134,14 +141,15 @@ export default function HomePage() {
         {menuOpen && (
           <div className="lp-mobile-menu">
             <button className="lp-mobile-link" onClick={() => scrollTo('hero')}>Home</button>
-            <button className="lp-mobile-link" onClick={() => setMobileServicesOpen(!mobileServicesOpen)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-              Services <i className={`fas fa-chevron-${mobileServicesOpen ? 'up' : 'down'}`} style={{ fontSize: '.75rem', color: '#888' }} />
-            </button>
-            {mobileServicesOpen && (
-              <Link href="/file-itr" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#E8334A', fontWeight: 600 }}>
-                <i className="fas fa-file-invoice-dollar" style={{ fontSize: '.8rem' }} /> File ITR
-              </Link>
-            )}
+            <Link href="/services" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', textDecoration: 'none', color: '#fff' }}>
+              Services <i className="fas fa-chevron-right" style={{ fontSize: '.75rem', color: '#888' }} />
+            </Link>
+            <Link href="/services#file-itr" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#1A56DB', fontWeight: 600 }}>
+              <i className="fas fa-file-invoice-dollar" style={{ fontSize: '.8rem' }} /> File ITR
+            </Link>
+            <Link href="/services#company-registration" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#1A56DB', fontWeight: 600 }}>
+              <i className="fas fa-building" style={{ fontSize: '.8rem' }} /> Company Registration
+            </Link>
             <button className="lp-mobile-link" onClick={() => scrollTo('about')}>About</button>
             <button className="lp-mobile-link" onClick={() => scrollTo('contact')}>Contact</button>
             <div className="lp-mobile-auth">
@@ -158,13 +166,23 @@ export default function HomePage() {
 
       {/* ── HERO ── */}
       <section id="hero" className="lp-hero">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="lp-hero-video"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div className="lp-hero-overlay" />
         <div className="lp-hero-bg" />
         <div className="lp-hero-content">
           <div className="lp-hero-badge">
             <i className="fas fa-shield-alt" /> Trusted CA Firm Since 2010
           </div>
           <h1 className="lp-hero-h1">
-            Expert <span style={{ color: '#E8334A' }}>Tax Filing</span> &amp; Financial Compliance Services
+            Expert <span style={{ color: '#1A56DB' }}>Tax Filing</span> &amp; Financial Compliance Services
           </h1>
           <p className="lp-hero-p">
             CA-reviewed ITR filing, GST compliance, ROC filings, and complete financial services tailored for individuals and businesses across India.
@@ -183,25 +201,6 @@ export default function HomePage() {
             <div key={l} className="lp-stat-card">
               <span className="lp-stat-n">{n}</span>
               <span className="lp-stat-l">{l}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── SERVICES ── */}
-      <section id="services" className="lp-section lp-section-bg">
-        <div className="lp-sec-head">
-          <div className="lp-sec-tag">Our Services</div>
-          <h2>Comprehensive Financial Services</h2>
-          <p>From individual ITR filing to complex corporate compliance — we handle it all with precision and expertise.</p>
-        </div>
-        <div className="lp-services-grid">
-          {services.map((s) => (
-            <div key={s.title} className="lp-svc-card">
-              <div className="lp-svc-bar" />
-              <div className="lp-svc-icon"><i className={`fas ${s.icon}`} /></div>
-              <h3>{s.title}</h3>
-              <p>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -510,16 +509,18 @@ export default function HomePage() {
         .lp-mobile-auth { display:flex;gap:10px;padding-top:14px; }
 
         /* HERO */
-        .lp-hero { min-height:100vh;background:linear-gradient(135deg,#0d0d0d 0%,#2a0810 50%,#0d0d0d 100%);display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden; }
-        .lp-hero-bg { position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(196,30,58,.12) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(192,192,192,.05) 0%,transparent 40%); }
-        .lp-hero-content { position:relative;z-index:1;max-width:600px; }
-        .lp-hero-badge { display:inline-flex;align-items:center;gap:8px;background:rgba(196,30,58,.15);border:1px solid rgba(196,30,58,.4);color:#E8334A;padding:6px 16px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px; }
+        .lp-hero { min-height:100vh;background:linear-gradient(135deg,#0d0d0d 0%,#09152b 50%,#0d0d0d 100%);display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden; }
+        .lp-hero-video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.9; }
+        .lp-hero-overlay { position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,15,30,.45) 0%,rgba(10,30,70,.45) 100%);z-index:1; }
+        .lp-hero-bg { position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(26,86,219,.12) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(192,192,192,.05) 0%,transparent 40%);z-index:1;pointer-events:none; }
+        .lp-hero-content { position:relative;z-index:2;max-width:600px; }
+        .lp-hero-badge { display:inline-flex;align-items:center;gap:8px;background:rgba(26,86,219,.15);border:1px solid rgba(26,86,219,.4);color:#1A56DB;padding:6px 16px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px; }
         .lp-hero-h1 { font-size:clamp(1.8rem,5vw,3rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:20px; }
         .lp-hero-p { font-size:1.05rem;color:#A0A0A0;line-height:1.75;margin-bottom:36px; }
         .lp-hero-actions { display:flex;gap:14px;flex-wrap:wrap; }
-        .lp-hero-stats { position:absolute;right:5%;top:50%;transform:translateY(-50%);display:grid;grid-template-columns:1fr 1fr;gap:14px;z-index:1; }
+        .lp-hero-stats { position:absolute;right:5%;top:50%;transform:translateY(-50%);display:grid;grid-template-columns:1fr 1fr;gap:14px;z-index:2; }
         .lp-stat-card { background:rgba(255,255,255,.04);border:1px solid rgba(192,192,192,.18);border-radius:12px;padding:20px;text-align:center;backdrop-filter:blur(6px); }
-        .lp-stat-n { font-size:2rem;font-weight:900;color:#E8334A;display:block; }
+        .lp-stat-n { font-size:2rem;font-weight:900;color:#1A56DB;display:block; }
         .lp-stat-l { font-size:.72rem;color:#A0A0A0;text-transform:uppercase;letter-spacing:1px;margin-top:4px;display:block; }
 
         /* SECTIONS */
@@ -527,8 +528,8 @@ export default function HomePage() {
         .lp-section-bg { background:#F5F5F5; }
         .lp-section-dark { background:#1A1A1A; }
         .lp-sec-head { text-align:center;margin-bottom:52px; }
-        .lp-sec-tag { display:inline-block;background:rgba(196,30,58,.1);color:#C41E3A;padding:5px 16px;border-radius:20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px; }
-        .lp-sec-tag-dark { background:rgba(196,30,58,.2);color:#E8334A; }
+        .lp-sec-tag { display:inline-block;background:rgba(26,86,219,.1);color:#1A56DB;padding:5px 16px;border-radius:20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px; }
+        .lp-sec-tag-dark { background:rgba(26,86,219,.2);color:#2563EB; }
         .lp-sec-head h2 { font-size:clamp(1.4rem,3vw,2.1rem);font-weight:800;margin-bottom:12px; }
         .lp-sec-head p { color:#666;font-size:1rem;max-width:540px;margin:0 auto;line-height:1.7; }
         .lp-sec-head-dark h2 { color:#fff; }
@@ -537,26 +538,26 @@ export default function HomePage() {
         /* SERVICES */
         .lp-services-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px; }
         .lp-svc-card { background:#fff;border-radius:12px;padding:26px;border:1px solid #E0E0E0;transition:all .3s;position:relative;overflow:hidden; }
-        .lp-svc-card:hover { transform:translateY(-4px);box-shadow:0 12px 32px rgba(196,30,58,.1);border-color:rgba(196,30,58,.25); }
-        .lp-svc-bar { position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#C41E3A,#8B0000); }
-        .lp-svc-icon { width:48px;height:48px;background:linear-gradient(135deg,#C41E3A,#8B0000);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;margin-bottom:14px; }
+        .lp-svc-card:hover { transform:translateY(-4px);box-shadow:0 12px 32px rgba(26,86,219,.1);border-color:rgba(26,86,219,.25); }
+        .lp-svc-bar { position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#1A56DB,#0A2A73); }
+        .lp-svc-icon { width:48px;height:48px;background:linear-gradient(135deg,#1A56DB,#0A2A73);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;margin-bottom:14px; }
         .lp-svc-card h3 { font-size:.95rem;font-weight:700;margin-bottom:8px; }
         .lp-svc-card p { font-size:.83rem;color:#666;line-height:1.6;margin:0; }
 
         /* PRICING */
         .lp-pricing-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px; }
-        .lp-pkg-card { background:rgba(255,255,255,.04);border:1px solid rgba(192,192,192,.15);border-radius:14px;padding:26px;position:relative;transition:all .3s; }
-        .lp-pkg-card.featured { background:linear-gradient(145deg,rgba(196,30,58,.18),rgba(139,0,0,.1));border-color:#C41E3A; }
-        .lp-pkg-card:hover { border-color:#C41E3A;box-shadow:0 8px 28px rgba(196,30,58,.22); }
-        .lp-pkg-badge { position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#C41E3A,#8B0000);color:#fff;padding:3px 14px;border-radius:10px;font-size:.72rem;font-weight:700;white-space:nowrap; }
+        .lp-pkg-card { background:rgba(255,255,255,.04);border:1px solid rgba(192,192,192,.15);border-radius:14px;padding:26px;position:relative;transition:all .3s;display:flex;flex-direction:column; }
+        .lp-pkg-card.featured { background:linear-gradient(145deg,rgba(26,86,219,.18),rgba(10,42,115,.1));border-color:#1A56DB; }
+        .lp-pkg-card:hover { border-color:#1A56DB;box-shadow:0 8px 28px rgba(26,86,219,.22); }
+        .lp-pkg-badge { position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#1A56DB,#0A2A73);color:#fff;padding:3px 14px;border-radius:10px;font-size:.72rem;font-weight:700;white-space:nowrap; }
         .lp-pkg-card h3 { font-size:.95rem;font-weight:700;color:#E8E8E8;margin-bottom:6px; }
         .lp-pkg-price { display:flex;align-items:flex-start;gap:3px;margin:10px 0 3px; }
-        .lp-pkg-cur { font-size:1.1rem;margin-top:5px;color:#E8334A;font-weight:700; }
-        .lp-pkg-amt { font-size:2.2rem;font-weight:900;color:#E8334A; }
+        .lp-pkg-cur { font-size:1.1rem;margin-top:5px;color:#1A56DB;font-weight:700; }
+        .lp-pkg-amt { font-size:2.2rem;font-weight:900;color:#1A56DB; }
         .lp-pkg-per { font-size:.78rem;color:#A0A0A0; }
         .lp-pkg-tax { font-size:.72rem;color:#A0A0A0;opacity:.7;margin-bottom:14px; }
         .lp-pkg-desc { font-size:.78rem;color:#A0A0A0;line-height:1.5;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07); }
-        .lp-pkg-feats { list-style:none;padding:0;margin:0 0 22px; }
+        .lp-pkg-feats { list-style:none;padding:0;margin:0 0 22px;flex:1; }
         .lp-pkg-feats li { display:flex;align-items:flex-start;gap:8px;font-size:.8rem;color:#A0A0A0;margin-bottom:7px; }
         .lp-pkg-feats li i { color:#27AE60;margin-top:2px;flex-shrink:0;font-size:.75rem; }
         .lp-pricing-note { text-align:center;color:#A0A0A0;font-size:.78rem;margin-top:22px; }
@@ -564,7 +565,7 @@ export default function HomePage() {
         /* WHY US */
         .lp-why-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px; }
         .lp-why-card { text-align:center;padding:28px 20px; }
-        .lp-why-icon { width:60px;height:60px;background:linear-gradient(135deg,#C41E3A,#8B0000);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;margin:0 auto 16px; }
+        .lp-why-icon { width:60px;height:60px;background:linear-gradient(135deg,#1A56DB,#0A2A73);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;margin:0 auto 16px; }
         .lp-why-card h3 { font-size:.95rem;font-weight:700;margin-bottom:8px; }
         .lp-why-card p { font-size:.83rem;color:#666;line-height:1.6;margin:0; }
 
@@ -573,7 +574,7 @@ export default function HomePage() {
         .lp-contact-info h3 { font-size:1.4rem;font-weight:700;margin-bottom:14px; }
         .lp-contact-info > p { color:#666;line-height:1.7;margin-bottom:28px;font-size:.9rem; }
         .lp-c-item { display:flex;align-items:flex-start;gap:14px;margin-bottom:18px; }
-        .lp-c-icon { width:40px;height:40px;background:linear-gradient(135deg,#C41E3A,#8B0000);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;flex-shrink:0; }
+        .lp-c-icon { width:40px;height:40px;background:linear-gradient(135deg,#1A56DB,#0A2A73);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;flex-shrink:0; }
         .lp-c-item strong { display:block;font-size:.83rem;font-weight:600;margin-bottom:2px; }
         .lp-c-item span { font-size:.83rem;color:#666; }
         .lp-contact-btns { margin-top:20px;display:flex;gap:10px;flex-wrap:wrap; }
