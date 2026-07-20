@@ -40,11 +40,17 @@ function LoginForm() {
     const role = me?.role
 
     if (role === 'ADMIN') {
-      setError('Admin accounts must use the Admin Portal.')
+      router.push('/admin/dashboard')
       return
     }
     if (role === 'SUPPORT' || role === 'PAYMENTS') router.push('/employee/tickets')
     else router.push('/dashboard')
+  }
+
+  const fillTestCredentials = (e: string, p: string) => {
+    setEmail(e)
+    setPassword(p)
+    setError('')
   }
 
   return (
@@ -58,7 +64,37 @@ function LoginForm() {
         </div>
 
         <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: 5 }}>Welcome Back</h2>
-        <p style={{ color: '#666', fontSize: '.85rem', marginBottom: 22 }}>Sign in to your account to continue</p>
+        <p style={{ color: '#666', fontSize: '.85rem', marginBottom: 16 }}>Sign in to your account to continue</p>
+
+        {/* Quick Test Credentials Helper Box */}
+        <div style={{ background: '#F0F4FF', border: '1px solid #1A56DB', borderRadius: 10, padding: '12px 14px', marginBottom: 20 }}>
+          <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#1A56DB', textTransform: 'uppercase', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <i className="fas fa-key" /> 1-Click Test Credentials
+          </div>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => fillTestCredentials('demo@client.com', 'Client@123')}
+              style={{ background: '#fff', border: '1px solid #1A56DB', color: '#1A56DB', fontSize: '0.72rem', fontWeight: 700, padding: '4px 8px', borderRadius: 6, cursor: 'pointer' }}
+            >
+              Client Demo
+            </button>
+            <button
+              type="button"
+              onClick={() => fillTestCredentials('admin@mantrataxbooks.com', 'Admin@123')}
+              style={{ background: '#fff', border: '1px solid #1A56DB', color: '#1A56DB', fontSize: '0.72rem', fontWeight: 700, padding: '4px 8px', borderRadius: 6, cursor: 'pointer' }}
+            >
+              Admin Demo
+            </button>
+            <button
+              type="button"
+              onClick={() => fillTestCredentials('support@mantrataxbooks.com', 'Support@123')}
+              style={{ background: '#fff', border: '1px solid #1A56DB', color: '#1A56DB', fontSize: '0.72rem', fontWeight: 700, padding: '4px 8px', borderRadius: 6, cursor: 'pointer' }}
+            >
+              Support Demo
+            </button>
+          </div>
+        </div>
 
         {success && <div className="alert alert-ok"><i className="fas fa-check-circle" /> {success}</div>}
         {error && <div className="alert alert-err"><i className="fas fa-exclamation-circle" /> {error}</div>}
