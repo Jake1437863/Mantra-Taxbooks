@@ -27,24 +27,22 @@ function LoginForm() {
     setError('')
     setLoading(true)
 
-    const res = await signIn('credentials', { email, password, redirect: false })
-    setLoading(false)
+    const emailLower = email.trim().toLowerCase()
+    const targetUrl = emailLower.includes('admin')
+      ? '/admin/dashboard'
+      : emailLower.includes('support')
+      ? '/employee/tickets'
+      : '/dashboard'
+
+    const res = await signIn('credentials', { email, password, callbackUrl: targetUrl, redirect: false })
 
     if (res?.error) {
+      setLoading(false)
       setError('Invalid email or password.')
       return
     }
 
-    const meRes = await fetch('/api/auth/me')
-    const me = await meRes.json()
-    const role = me?.role
-
-    if (role === 'ADMIN') {
-      router.push('/admin/dashboard')
-      return
-    }
-    if (role === 'SUPPORT' || role === 'PAYMENTS') router.push('/employee/tickets')
-    else router.push('/dashboard')
+    window.location.href = res?.url || targetUrl
   }
 
   const fillTestCredentials = (e: string, p: string) => {

@@ -16,23 +16,15 @@ export default function AdminLoginPage() {
     setError('')
     setLoading(true)
 
-    const res = await signIn('credentials', { email, password, redirect: false })
-    setLoading(false)
+    const res = await signIn('credentials', { email, password, callbackUrl: '/admin/dashboard', redirect: false })
 
     if (res?.error) {
+      setLoading(false)
       setError('Invalid email or password.')
       return
     }
 
-    const meRes = await fetch('/api/auth/me')
-    const me = await meRes.json()
-
-    if (me?.role !== 'ADMIN') {
-      setError('Access denied. This portal is for administrators only.')
-      return
-    }
-
-    router.push('/admin/dashboard')
+    window.location.href = res?.url || '/admin/dashboard'
   }
 
   return (

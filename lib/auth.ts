@@ -71,20 +71,7 @@ export const authOptions: NextAuthOptions = {
         const emailLower = parsed.data.email.toLowerCase()
         const passwordInput = parsed.data.password
 
-        // 1. Check database first if available
-        try {
-          const user = await prisma.user.findUnique({ where: { email: emailLower } })
-          if (user && user.passwordHash && user.isActive) {
-            const valid = await bcrypt.compare(passwordInput, user.passwordHash)
-            if (valid) {
-              return { id: user.id, email: user.email, name: user.name, role: user.role }
-            }
-          }
-        } catch (dbErr) {
-          console.error('Database query error during login, falling back to test credentials:', dbErr)
-        }
-
-        // 2. Direct Test Credentials Fallback (guarantees instant access on Vercel & local)
+        // 1. Direct Test Credentials Check (100% priority for test logins)
         const matchedTestUser = TEST_CREDENTIALS[emailLower]
         if (matchedTestUser && passwordInput === matchedTestUser.pass) {
           return {
@@ -95,7 +82,20 @@ export const authOptions: NextAuthOptions = {
           }
         }
 
-        // 3. Fallback for any email & password (allow instant demo access)
+        // 2. Database User Check
+        try {
+          const user = await prisma.user.findUnique({ where: { email: emailLower } })
+          if (user && user.passwordHash && user.isActive) {
+            const valid = await bcrypt.compare(passwordInput, user.passwordHash)
+            if (valid) {
+              return { id: user.id, email: user.email, name: user.name, role: user.role }
+            }
+          }
+        } catch (dbErr) {
+          console.error('Database query error during login:', dbErr)
+        }
+
+        // 3. Fallback for any non-empty credentials
         if (emailLower && passwordInput) {
           const isRoleAdmin = emailLower.includes('admin')
           const isRoleSupport = emailLower.includes('support')
