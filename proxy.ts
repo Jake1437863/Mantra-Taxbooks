@@ -34,15 +34,29 @@ function applyCdnHeaders(res: NextResponse, pathname: string): NextResponse {
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // Always accessible auth pages
-  if (pathname === '/admin/login' || pathname === '/impersonate' || pathname.startsWith('/delegates/accept')) {
+  // Publicly accessible pages & assets - NEVER redirect to login
+  const isPublic =
+    pathname === '/' ||
+    pathname === '/login' ||
+    pathname === '/register' ||
+    pathname === '/forgot-password' ||
+    pathname === '/reset-password' ||
+    pathname === '/impersonate' ||
+    pathname.startsWith('/services') ||
+    pathname.startsWith('/admin/login') ||
+    pathname.startsWith('/delegates/accept') ||
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/hero-bg') ||
+    pathname === '/favicon.ico'
+
+  if (isPublic) {
     return applyCdnHeaders(NextResponse.next(), pathname)
   }
 
   const token = await getToken({ req })
   const role = token?.role as string | undefined
 
-  // Admin routes: require ADMIN role, redirect to /admin/login otherwise
+  // Admin routes: require ADMIN role
   if (pathname.startsWith('/admin')) {
     if (!token || role !== 'ADMIN') {
       return NextResponse.redirect(new URL('/admin/login', req.url))
@@ -64,11 +78,16 @@ export async function proxy(req: NextRequest) {
     return applyCdnHeaders(NextResponse.next(), pathname)
   }
 
-  // Client routes
-  if (!token) return NextResponse.redirect(new URL('/login', req.url))
-  const clientPaths = ['/dashboard', '/invoices', '/documents', '/tickets', '/change-password', '/summary', '/file-itr', '/company-registration']
-  if (clientPaths.some((p) => pathname.startsWith(p)) && role !== 'CLIENT' && role !== 'ADMIN') {
-    return NextResponse.redirect(new URL('/login', req.url))
+  // Client routes: require login (token) and valid role
+  const clientPaths = ['/dashboard', '/invoices', '/documents', '/tickets', '/change-password', '/summary', '/file-itr', '/company-registration', '/profile', '/delegates']
+  if (clientPaths.some((p) => pathname.startsWith(p))) {
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+    if (role !== 'CLIENT' && role !== 'ADMIN') {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+    return applyCdnHeaders(NextResponse.next(), pathname)
   }
 
   return applyCdnHeaders(NextResponse.next(), pathname)
