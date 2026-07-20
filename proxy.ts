@@ -53,7 +53,8 @@ export async function proxy(req: NextRequest) {
     return applyCdnHeaders(NextResponse.next(), pathname)
   }
 
-  const token = await getToken({ req })
+  const secret = process.env.NEXTAUTH_SECRET || 'mantra-taxbooks-fallback-secret-2026-key'
+  const token = await getToken({ req, secret })
   const role = token?.role as string | undefined
 
   // Admin routes: require ADMIN role

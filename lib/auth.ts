@@ -28,6 +28,7 @@ const TEST_CREDENTIALS: { [email: string]: { pass: string; name: string; role: U
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || 'mantra-taxbooks-fallback-secret-2026-key',
+  trustHost: true,
   session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
   pages: {
     signIn: '/login',
