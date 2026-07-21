@@ -167,7 +167,7 @@ export default function FileITRDetailsPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg, #0F172A)', color: 'var(--text, #E2E8F0)', paddingBottom: 80 }}>
+    <div style={{ minHeight: '100vh', background: '#0F172A', color: '#E2E8F0', paddingBottom: 80 }}>
       {/* ── TOP NAV BAR WITH WORKING DROPDOWN ── */}
       <div style={{ background: '#09152B', borderBottom: '1px solid #1E293B', padding: '14px 24px', position: 'sticky', top: 0, zIndex: 1000 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -214,12 +214,12 @@ export default function FileITRDetailsPage() {
         {/* ── HERO BANNER ── */}
         <div
           style={{
-            background: 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)',
-            borderTop: '4px solid #3B82F6',
+            background: 'linear-gradient(135deg, #09152B 0%, #1E3A8A 100%)',
+            borderTop: '4px solid #2563EB',
             borderRadius: 16,
             padding: '36px 32px',
-            marginBottom: 40,
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+            marginBottom: 44,
+            boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
           }}
         >
           <div style={{ color: '#60A5FA', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 8 }}>
@@ -336,15 +336,18 @@ export default function FileITRDetailsPage() {
         )}
 
         {/* ── WHY FILE ITR SECTION ── */}
-        <div style={{ marginBottom: 50 }}>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginBottom: 8 }}>
+        <div style={{ marginBottom: 52 }}>
+          <span style={{ display: 'inline-block', background: 'rgba(37,99,235,0.15)', border: '1px solid #2563EB', color: '#60A5FA', padding: '3px 12px', borderRadius: 20, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+            BENEFITS &amp; LEGAL COMPLIANCE
+          </span>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 8px 0', letterSpacing: '-0.3px' }}>
             Why Filing Income Tax Return (ITR) is Crucial
           </h2>
-          <p style={{ fontSize: '0.88rem', color: '#94A3B8', marginBottom: 24 }}>
+          <p style={{ fontSize: '0.92rem', color: '#94A3B8', margin: '0 0 24px 0', lineHeight: 1.5 }}>
             Filing your tax return on time protects your financial freedom, builds legal credibility, and saves money.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 18 }}>
             {whyFileItr.map((w, idx) => (
               <div
                 key={idx}
@@ -352,33 +355,36 @@ export default function FileITRDetailsPage() {
                   background: '#1E293B',
                   border: '1px solid #334155',
                   borderRadius: 12,
-                  padding: 20,
+                  padding: 22,
                   display: 'flex',
                   gap: 16,
                 }}
               >
-                <div style={{ width: 42, height: 42, borderRadius: 10, background: 'rgba(37,99,235,0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(37,99,235,0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem', flexShrink: 0 }}>
                   <i className={`fas ${w.icon}`} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', margin: '0 0 6px 0' }}>{w.title}</h3>
-                  <p style={{ fontSize: '0.82rem', color: '#94A3B8', margin: 0, lineHeight: 1.5 }}>{w.desc}</p>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#FFFFFF', margin: '0 0 6px 0' }}>{w.title}</h3>
+                  <p style={{ fontSize: '0.83rem', color: '#94A3B8', margin: 0, lineHeight: 1.5 }}>{w.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* ── ALL 6 ITR PLANS ── */}
-        <div style={{ marginBottom: 50 }}>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginBottom: 8 }}>
+        {/* ── ALL 6 ITR PLANS SECTION (MATCHING USER SCREENSHOT) ── */}
+        <div style={{ marginBottom: 52 }}>
+          <span style={{ display: 'inline-block', background: 'rgba(37,99,235,0.15)', border: '1px solid #2563EB', color: '#60A5FA', padding: '3px 12px', borderRadius: 20, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+            TRANSPARENT PRICING TIERS
+          </span>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 8px 0', letterSpacing: '-0.3px' }}>
             CA-Reviewed Filing Packages &amp; Pricing
           </h2>
-          <p style={{ fontSize: '0.88rem', color: '#94A3B8', marginBottom: 24 }}>
+          <p style={{ fontSize: '0.92rem', color: '#94A3B8', margin: '0 0 26px 0', lineHeight: 1.5 }}>
             Transparent pricing based on your income sources. All plans include 100% CA verification.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 22 }}>
             {itrPlans.map((plan) => (
               <div
                 key={plan.id}
@@ -390,6 +396,7 @@ export default function FileITRDetailsPage() {
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
+                  boxShadow: plan.badge ? '0 8px 24px rgba(37,99,235,0.25)' : 'none',
                 }}
               >
                 {plan.badge && (
@@ -398,20 +405,20 @@ export default function FileITRDetailsPage() {
                   </span>
                 )}
 
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', margin: '0 0 4px 0' }}>{plan.name}</h3>
-                <p style={{ fontSize: '0.78rem', color: '#94A3B8', margin: '0 0 16px 0' }}>{plan.desc}</p>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#FFFFFF', margin: '0 0 4px 0' }}>{plan.name}</h3>
+                <p style={{ fontSize: '0.8rem', color: '#94A3B8', margin: '0 0 16px 0', lineHeight: 1.4 }}>{plan.desc}</p>
 
                 <div style={{ paddingBottom: 16, borderBottom: '1px solid #334155', marginBottom: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                    <span style={{ fontSize: '2.1rem', fontWeight: 900, color: '#60A5FA' }}>₹{plan.price}</span>
+                    <span style={{ fontSize: '2.2rem', fontWeight: 900, color: '#60A5FA' }}>₹{plan.price}</span>
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: '#94A3B8', marginTop: 2 }}>{plan.per}</div>
+                  <div style={{ fontSize: '0.8rem', color: '#94A3B8', marginTop: 2 }}>{plan.per}</div>
                   <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: 1 }}>{plan.tax}</div>
                 </div>
 
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px 0', flex: 1 }}>
                   {plan.features.map((f, i) => (
-                    <li key={i} style={{ fontSize: '0.82rem', color: '#E2E8F0', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <li key={i} style={{ fontSize: '0.83rem', color: '#E2E8F0', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
                       <i className="fas fa-check" style={{ color: '#27AE60', fontSize: '0.75rem' }} />
                       <span>{f}</span>
                     </li>
@@ -421,7 +428,7 @@ export default function FileITRDetailsPage() {
                 {plan.deliverables && (
                   <div style={{ padding: '12px 14px', background: '#0F172A', borderRadius: 8, border: '1px solid #334155', marginBottom: 16 }}>
                     <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#60A5FA', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8 }}>
-                      Deliverables:
+                      Deliverables Included:
                     </div>
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                       {plan.deliverables.map((d, i) => (
@@ -443,7 +450,7 @@ export default function FileITRDetailsPage() {
                     padding: '10px 16px',
                     borderRadius: 6,
                     textDecoration: 'none',
-                    fontSize: '0.82rem',
+                    fontSize: '0.85rem',
                     fontWeight: 700,
                   }}
                 >
@@ -455,18 +462,21 @@ export default function FileITRDetailsPage() {
         </div>
 
         {/* ── FAQS SECTION ── */}
-        <div style={{ marginBottom: 40 }}>
-          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#FFFFFF', marginBottom: 16 }}>
+        <div style={{ marginBottom: 48 }}>
+          <span style={{ display: 'inline-block', background: 'rgba(37,99,235,0.15)', border: '1px solid #2563EB', color: '#60A5FA', padding: '3px 12px', borderRadius: 20, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+            HELP &amp; SUPPORT
+          </span>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 16px 0', letterSpacing: '-0.3px' }}>
             Frequently Asked Questions (FAQs)
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {faqs.map((f, idx) => (
-              <div key={idx} style={{ background: '#1E293B', border: '1px solid #334155', borderRadius: 10, padding: 18 }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#FFFFFF', margin: '0 0 6px 0' }}>
+              <div key={idx} style={{ background: '#1E293B', border: '1px solid #334155', borderRadius: 10, padding: 20 }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FFFFFF', margin: '0 0 6px 0' }}>
                   {f.q}
                 </h4>
-                <p style={{ fontSize: '0.82rem', color: '#94A3B8', margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.85rem', color: '#94A3B8', margin: 0, lineHeight: 1.6 }}>
                   {f.a}
                 </p>
               </div>
@@ -480,14 +490,14 @@ export default function FileITRDetailsPage() {
             background: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
             border: '1px solid #334155',
             borderRadius: 14,
-            padding: '28px 32px',
+            padding: '32px 36px',
             textAlign: 'center',
           }}
         >
-          <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 8px 0' }}>
+          <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 8px 0' }}>
             Ready to File Your Income Tax Return?
           </h3>
-          <p style={{ fontSize: '0.88rem', color: '#94A3B8', maxWidth: 500, margin: '0 auto 20px' }}>
+          <p style={{ fontSize: '0.9rem', color: '#94A3B8', maxWidth: 520, margin: '0 auto 20px', lineHeight: 1.5 }}>
             Get started in less than 2 minutes. Prepare, upload documents, and let our CAs handle your return.
           </p>
 
@@ -496,12 +506,13 @@ export default function FileITRDetailsPage() {
             style={{
               background: '#2563EB',
               color: '#FFFFFF',
-              padding: '10px 24px',
+              padding: '12px 28px',
               borderRadius: 8,
               textDecoration: 'none',
               fontWeight: 700,
-              fontSize: '0.88rem',
+              fontSize: '0.9rem',
               display: 'inline-block',
+              boxShadow: '0 4px 14px rgba(37,99,235,0.4)',
             }}
           >
             File Your ITR Now
