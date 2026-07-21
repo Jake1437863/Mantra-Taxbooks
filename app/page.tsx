@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { signIn } from 'next-auth/react'
 
 const services = [
@@ -16,40 +16,70 @@ const services = [
 
 const packages = [
   {
-    name: 'Salary (Nil Return)', price: '799', per: 'per year', tax: 'Exclusive of GST',
+    name: 'Salary (Nil Return)',
+    price: '999',
+    per: 'per year',
+    tax: 'Exclusive of GST',
     desc: 'Single salary income with total income ≤ ₹12,75,000',
-    featured: false, badge: null,
+    featured: false,
+    badge: null,
     features: ['Single Employer', 'Income from other sources', 'Total income ≤ ₹12,75,000', 'CA reviewed filing'],
+    deliverables: ['Income tax return acknowledgement', 'Statement of Income', 'Financial health report', 'Tax planning report'],
   },
   {
-    name: 'Salary & Property', price: '1,499', per: 'per year', tax: 'Exclusive of GST',
+    name: 'Salary & Property',
+    price: '2,000',
+    per: 'per year',
+    tax: 'Exclusive of GST',
     desc: 'Salary + House Property income',
-    featured: false, badge: null,
+    featured: false,
+    badge: null,
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Income from other sources', 'CA reviewed filing'],
+    deliverables: ['Income tax return acknowledgement', 'Statement of Income', 'Financial health report', 'Tax planning report'],
   },
   {
-    name: 'Capital Gains', price: '1,999', per: 'per year', tax: 'Exclusive of GST',
+    name: 'Capital Gains',
+    price: '2,500',
+    per: 'per year',
+    tax: 'Exclusive of GST',
     desc: 'Salary + Rent + Capital Gains (shares, MFs, properties)',
-    featured: true, badge: 'Most Popular',
+    featured: true,
+    badge: 'Most Popular',
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes (shares, MFs, properties)', 'Other sources', 'CA reviewed filing'],
+    deliverables: ['Income tax return acknowledgement', 'Statement of Income', 'Financial health report', 'Tax planning report', 'Losses carried forward report'],
   },
   {
-    name: 'Business / Professional Income', price: '2,499', per: 'per year', tax: 'Exclusive of GST',
+    name: 'Business / Professional Income',
+    price: '3,000',
+    per: 'per year',
+    tax: 'Exclusive of GST',
     desc: 'Salary + Rent + Capital Gains + Business/Professional Income',
-    featured: false, badge: null,
+    featured: false,
+    badge: null,
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes', 'Business/Professional Income (Non-Audit) — without B/S & P&L', 'Other sources', 'CA reviewed filing'],
+    deliverables: ['Income tax return acknowledgement', 'Statement of Income', 'Financial health report', 'Tax planning report', 'Losses carried forward report'],
   },
   {
-    name: 'Futures & Options / Cryptocurrency', price: '2,999', per: 'per year', tax: 'Exclusive of GST',
+    name: 'Futures & Options / Cryptocurrency',
+    price: '3,500',
+    per: 'per year',
+    tax: 'Exclusive of GST',
     desc: 'All income types including F&O and Crypto',
-    featured: false, badge: null,
+    featured: false,
+    badge: null,
     features: ['Single or multiple employers', 'Single or multiple house properties', 'Multiple capital gain incomes', 'Business/Professional Income (Non-Audit) — without B/S & P&L', 'Revenue from F&O / Crypto', 'Other sources', 'CA reviewed filing'],
+    deliverables: ['Income tax return acknowledgement', 'Statement of Income', 'Financial health report', 'Tax planning report', 'Losses carried forward report'],
   },
   {
-    name: 'NRI / Foreign Income', price: '5,999', per: 'per year', tax: 'Exclusive of GST',
+    name: 'NRI / Foreign Income',
+    price: '5,000',
+    per: 'per year',
+    tax: 'Exclusive of GST',
     desc: 'NRI with Indian income or Resident with foreign income',
-    featured: false, badge: null,
+    featured: false,
+    badge: null,
     features: ['Single or multiple employers', 'Multiple house properties', 'Multiple capital gain incomes', 'Business & Professional Income (Non-Audit)', 'Revenue from F&O / Crypto', 'DTAA Tax Relief', 'Foreign salary (including foreign tax relief)', 'Other sources', 'CA reviewed filing'],
+    deliverables: ['Income tax return acknowledgement', 'Statement of Income', 'Financial health report', 'Tax planning report', 'Losses carried forward report'],
   },
 ]
 
@@ -75,6 +105,32 @@ export default function HomePage() {
   const [contactStatus, setContactStatus] = useState<'idle' | 'ok' | 'err'>('idle')
   const [modalStep, setModalStep] = useState<null | 'choose' | 'google-disclosure'>(null)
   const [googleLoading, setGoogleLoading] = useState(false)
+  const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const handleServicesMouseEnter = () => {
+    if (servicesTimeoutRef.current) {
+      clearTimeout(servicesTimeoutRef.current)
+      servicesTimeoutRef.current = null
+    }
+    setServicesOpen(true)
+  }
+
+  const handleServicesMouseLeave = () => {
+    if (servicesTimeoutRef.current) {
+      clearTimeout(servicesTimeoutRef.current)
+    }
+    servicesTimeoutRef.current = setTimeout(() => {
+      setServicesOpen(false)
+    }, 5000)
+  }
+
+  const handleServiceItemClick = () => {
+    if (servicesTimeoutRef.current) {
+      clearTimeout(servicesTimeoutRef.current)
+      servicesTimeoutRef.current = null
+    }
+    setServicesOpen(false)
+  }
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -98,20 +154,20 @@ export default function HomePage() {
 
           <ul className="lp-nav-links hide-mobile">
             <li><button className="lp-nav-btn" onClick={() => scrollTo('hero')}>Home</button></li>
-            <li className="lp-dropdown-wrap" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
+            <li className="lp-dropdown-wrap" onMouseEnter={handleServicesMouseEnter} onMouseLeave={handleServicesMouseLeave}>
               <Link href="/services" className="lp-nav-btn lp-dropdown-trigger">
                 Services <i className={`fas fa-chevron-down lp-caret${servicesOpen ? ' open' : ''}`} />
               </Link>
               {servicesOpen && (
-                <div className="lp-dropdown">
-                  <Link href="/services#file-itr" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
+                <div className="lp-dropdown" onMouseEnter={handleServicesMouseEnter} onMouseLeave={handleServicesMouseLeave}>
+                  <Link href="/services/file-itr" className="lp-dropdown-item" onClick={handleServiceItemClick}>
                     <i className="fas fa-file-invoice-dollar" />
                     <div>
                       <div className="lp-dropdown-label">File ITR</div>
                       <div className="lp-dropdown-sub">Why It's Needed &amp; CA Plans</div>
                     </div>
                   </Link>
-                  <Link href="/services#company-registration" className="lp-dropdown-item" onClick={() => setServicesOpen(false)}>
+                  <Link href="/services/company-registration" className="lp-dropdown-item" onClick={handleServiceItemClick}>
                     <i className="fas fa-building" />
                     <div>
                       <div className="lp-dropdown-label">Company Registration</div>
@@ -144,10 +200,10 @@ export default function HomePage() {
             <Link href="/services" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', textDecoration: 'none', color: '#fff' }}>
               Services <i className="fas fa-chevron-right" style={{ fontSize: '.75rem', color: '#888' }} />
             </Link>
-            <Link href="/services#file-itr" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#1A56DB', fontWeight: 600 }}>
+            <Link href="/services/file-itr" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#1A56DB', fontWeight: 600 }}>
               <i className="fas fa-file-invoice-dollar" style={{ fontSize: '.8rem' }} /> File ITR
             </Link>
-            <Link href="/services#company-registration" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#1A56DB', fontWeight: 600 }}>
+            <Link href="/services/company-registration" className="lp-mobile-link" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8, color: '#1A56DB', fontWeight: 600 }}>
               <i className="fas fa-building" style={{ fontSize: '.8rem' }} /> Company Registration
             </Link>
             <button className="lp-mobile-link" onClick={() => scrollTo('about')}>About</button>
@@ -230,6 +286,20 @@ export default function HomePage() {
                   <li key={f}><i className="fas fa-check-circle" /> {f}</li>
                 ))}
               </ul>
+              {pkg.deliverables && (
+                <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.1)', marginBottom: 16 }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#60A5FA', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
+                    Deliverables:
+                  </div>
+                  <ul className="lp-pkg-feats" style={{ margin: 0 }}>
+                    {pkg.deliverables.map((d) => (
+                      <li key={d} style={{ color: '#E2E8F0', marginBottom: 4 }}>
+                        <i className="fas fa-file-download" style={{ color: '#60A5FA' }} /> {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <button className="btn btn-primary btn-block" onClick={() => setModalStep('choose')}>
                 <i className="fas fa-file-alt" /> Get Started
               </button>
@@ -337,9 +407,11 @@ export default function HomePage() {
           <div>
             <h4>Services</h4>
             <ul>
-              {['ITR Filing', 'GST Compliance', 'ROC Filings', 'TDS Compliance', 'PF & ESI'].map(l => (
-                <li key={l}><button onClick={() => scrollTo('services')}>{l}</button></li>
-              ))}
+              <li><Link href="/services/file-itr">ITR Filing</Link></li>
+              <li><Link href="/services/company-registration">Company Registration</Link></li>
+              <li><button onClick={() => scrollTo('services')}>GST Compliance</button></li>
+              <li><button onClick={() => scrollTo('services')}>TDS Compliance</button></li>
+              <li><button onClick={() => scrollTo('services')}>PF &amp; ESI</button></li>
             </ul>
           </div>
           <div>
@@ -411,7 +483,7 @@ export default function HomePage() {
 
                 <p className="gs-footer-note">
                   Already have an account?{' '}
-                  <Link href="/login" style={{ color: '#E8334A', textDecoration: 'none', fontWeight: 600 }} onClick={() => setModalStep(null)}>Sign in</Link>
+                  <Link href="/login" style={{ color: '#2563EB', textDecoration: 'none', fontWeight: 600 }} onClick={() => setModalStep(null)}>Sign in</Link>
                 </p>
               </>
             )}
@@ -486,25 +558,26 @@ export default function HomePage() {
 
       <style>{`
         /* NAV */
-        .lp-nav { position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(20,20,20,.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(196,30,58,.35);box-shadow:0 2px 20px rgba(0,0,0,.4); }
+        .lp-nav { position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(20,20,20,.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(37,99,235,.4);box-shadow:0 2px 20px rgba(0,0,0,.4); }
         .lp-nav-inner { padding:12px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px; }
         .lp-nav-links { display:flex;align-items:center;gap:24px;list-style:none;margin:0;padding:0; }
         .lp-nav-btn { background:none;border:none;color:#ccc;font-size:.875rem;font-weight:500;cursor:pointer;letter-spacing:.3px;font-family:inherit;transition:color .2s; }
-        .lp-nav-btn:hover { color:#E8334A; }
-        .lp-dropdown-wrap { position:relative; }
+        .lp-nav-btn:hover { color:#60A5FA; }
+        .lp-dropdown-wrap { position:relative; padding-top:4px; padding-bottom:4px; }
+        .lp-dropdown-wrap::after { content:''; position:absolute; top:100%; left:-20px; right:-20px; height:14px; }
         .lp-dropdown-trigger { display:flex;align-items:center;gap:6px; }
         .lp-caret { font-size:.65rem;transition:transform .2s; }
         .lp-caret.open { transform:rotate(180deg); }
-        .lp-dropdown { position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:#1C1C1C;border:1px solid rgba(196,30,58,.3);border-radius:10px;padding:6px;min-width:220px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:2000; }
-        .lp-dropdown::before { content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#1C1C1C;border-left:1px solid rgba(196,30,58,.3);border-top:1px solid rgba(196,30,58,.3);transform:translateX(-50%) rotate(45deg); }
-        .lp-dropdown-item { display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:#E0E0E0; }
-        .lp-dropdown-item:hover { background:rgba(196,30,58,.12);color:#E8334A; }
-        .lp-dropdown-item .fa-file-invoice-dollar { color:#E8334A;font-size:.95rem;flex-shrink:0; }
+        .lp-dropdown { position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#1C1C1C;border:1px solid rgba(37,99,235,.4);border-radius:10px;padding:6px;min-width:230px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:2000;pointer-events:auto; }
+        .lp-dropdown::before { content:'';position:absolute;top:-6px;left:50%;width:10px;height:10px;background:#1C1C1C;border-left:1px solid rgba(37,99,235,.4);border-top:1px solid rgba(37,99,235,.4);transform:translateX(-50%) rotate(45deg); }
+        .lp-dropdown-item { display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:#E0E0E0;cursor:pointer; }
+        .lp-dropdown-item:hover { background:rgba(37,99,235,.15);color:#60A5FA; }
+        .lp-dropdown-item .fa-file-invoice-dollar, .lp-dropdown-item .fa-building { color:#60A5FA;font-size:.95rem;flex-shrink:0; }
         .lp-dropdown-label { font-weight:700;font-size:.85rem; }
         .lp-dropdown-sub { font-size:.72rem;color:#888;margin-top:1px; }
         .lp-nav-cta { display:flex;align-items:center;gap:10px;flex-shrink:0; }
         .lp-hamburger { background:none;border:none;color:#ccc;font-size:1.2rem;cursor:pointer; }
-        .lp-mobile-menu { background:#1a1a1a;border-top:1px solid rgba(196,30,58,.2);padding:12px 5%; }
+        .lp-mobile-menu { background:#1a1a1a;border-top:1px solid rgba(37,99,235,.3);padding:12px 5%; }
         .lp-mobile-link { display:block;width:100%;text-align:left;padding:10px 0;background:none;border:none;color:#ccc;font-size:.9rem;cursor:pointer;font-family:inherit;border-bottom:1px solid rgba(255,255,255,.05); }
         .lp-mobile-auth { display:flex;gap:10px;padding-top:14px; }
 
@@ -587,7 +660,7 @@ export default function HomePage() {
         .lp-footer ul { list-style:none;padding:0;margin:0; }
         .lp-footer ul li { margin-bottom:7px; }
         .lp-footer ul li a, .lp-footer ul li button { color:#A0A0A0;text-decoration:none;font-size:.82rem;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;transition:color .2s; }
-        .lp-footer ul li a:hover, .lp-footer ul li button:hover { color:#E8334A; }
+        .lp-footer ul li a:hover, .lp-footer ul li button:hover { color:#60A5FA; }
         .lp-footer-bottom { border-top:1px solid rgba(192,192,192,.1);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.78rem; }
 
         /* SHOW/HIDE HELPERS */
@@ -659,7 +732,7 @@ export default function HomePage() {
         .gs-divider { display:flex;align-items:center;gap:14px;margin:18px 0;color:#bbb;font-size:.82rem; }
         .gs-divider::before,.gs-divider::after { content:'';flex:1;height:1px;background:#e8e8e8; }
         .gs-email-btn { display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#333;border-color:#d0d0d0; }
-        .gs-email-btn:hover { border-color:#C41E3A;color:#C41E3A; }
+        .gs-email-btn:hover { border-color:#2563EB;color:#2563EB; }
         .gs-footer-note { text-align:center;margin-top:18px;font-size:.83rem;color:#888; }
         .gs-back { display:flex;align-items:center;gap:8px;background:none;border:none;color:#888;font-size:.83rem;cursor:pointer;padding:0;margin-bottom:20px;font-family:inherit;transition:color .15s; }
         .gs-back:hover { color:#333; }
@@ -669,7 +742,7 @@ export default function HomePage() {
         .gs-disclosure-list li { display:flex;align-items:flex-start;gap:14px;font-size:.87rem;color:#444;line-height:1.6; }
         .gs-disc-icon { width:34px;height:34px;border-radius:50%;background:rgba(66,133,244,.1);display:flex;align-items:center;justify-content:center;color:#4285F4;font-size:.85rem;flex-shrink:0;margin-top:1px; }
         .gs-disc-icon--green { background:rgba(39,174,96,.1);color:#27AE60; }
-        .gs-disc-icon--blue { background:rgba(196,30,58,.1);color:#C41E3A; }
+        .gs-disc-icon--blue { background:rgba(37,99,235,.1);color:#2563EB; }
 
         @media (max-width:480px) {
           .gs-modal { padding:28px 20px; }
