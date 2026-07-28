@@ -302,84 +302,83 @@ export default function FileITRDetailsPage() {
       </nav>
 
       {/* ── HERO BANNER ── */}
-      <section style={{ position: 'relative', overflow: 'hidden', background: '#070B14', padding: '70px 28px 60px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', background: '#070B14', padding: '60px 28px 50px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <video
           autoPlay
           loop
           muted
           playsInline
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, pointerEvents: 'none', mixBlendMode: 'luminosity' }}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85, pointerEvents: 'none' }}
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, rgba(30, 58, 138, 0.4) 0%, rgba(7, 11, 20, 0.85) 100%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: -100, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 1100, height: 450, background: 'radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(0,0,0,0) 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(9, 21, 43, 0.65) 0%, rgba(7, 11, 20, 0.85) 100%)', pointerEvents: 'none' }} />
         
         <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(37, 99, 235, 0.12)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '6px 18px', borderRadius: 30, fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 22, boxShadow: '0 4px 12px rgba(37,99,235,0.15)' }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(37, 99, 235, 0.25)', border: '1px solid rgba(59, 130, 246, 0.45)', color: '#93C5FD', padding: '5px 14px', borderRadius: 30, fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 18, boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
             Official Chartered Accountant Tax Compliance &amp; Planning Portal
           </div>
           
-          <h1 style={{ fontSize: 'clamp(2.3rem, 4.2vw, 3.6rem)', fontWeight: 900, color: '#FFFFFF', margin: '0 0 20px 0', lineHeight: 1.15, letterSpacing: '-1px' }}>
+          <h1 style={{ fontSize: 'clamp(1.9rem, 3.2vw, 2.6rem)', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', lineHeight: 1.2, letterSpacing: '-0.5px' }}>
             Income Tax Return (ITR) Filing &amp; <span style={{ background: 'linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Senior CA Consultation</span>
           </h1>
           
-          <p style={{ color: '#94A3B8', fontSize: '1.15rem', maxWidth: 880, margin: '0 0 38px 0', lineHeight: 1.7, fontWeight: 400 }}>
+          <p style={{ color: '#CBD5E1', fontSize: '0.98rem', maxWidth: 780, margin: '0 0 32px 0', lineHeight: 1.6, fontWeight: 400 }}>
             Guaranteed 100% tax compliance, maximum refund reclamation, market loss carry-forward, and complete protection against automated AIS &amp; SFT tax scrutiny notices.
           </p>
 
           {/* 3 CORE PILLARS BANNER (FROM PDF PAGE 1) */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20, marginBottom: 42 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 36 }}>
             
-            <div style={{ background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: 16, padding: '22px 24px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }}>
-              <div style={{ width: 50, height: 50, borderRadius: 12, background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0, boxShadow: '0 6px 16px rgba(37,99,235,0.35)' }}>
+            <div style={{ background: 'rgba(15, 23, 42, 0.82)', backdropFilter: 'blur(12px)', border: '1px solid rgba(59, 130, 246, 0.35)', borderRadius: 14, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 10, background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.15rem', flexShrink: 0, boxShadow: '0 4px 12px rgba(37,99,235,0.4)' }}>
                 <i className="fas fa-user-check" />
               </div>
               <div>
-                <h3 style={{ color: '#FFFFFF', fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>CA Reviewed Income Tax Filing</h3>
-                <p style={{ color: '#94A3B8', fontSize: '0.83rem', margin: '4px 0 0 0', lineHeight: 1.4 }}>100% precision &amp; legal accuracy check</p>
+                <h3 style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 800, margin: 0 }}>CA Reviewed Income Tax Filing</h3>
+                <p style={{ color: '#94A3B8', fontSize: '0.78rem', margin: '3px 0 0 0', lineHeight: 1.35 }}>100% precision &amp; legal accuracy check</p>
               </div>
             </div>
 
-            <div style={{ background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: 16, padding: '22px 24px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }}>
-              <div style={{ width: 50, height: 50, borderRadius: 12, background: 'linear-gradient(135deg, #059669, #10B981)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0, boxShadow: '0 6px 16px rgba(16,185,129,0.35)' }}>
+            <div style={{ background: 'rgba(15, 23, 42, 0.82)', backdropFilter: 'blur(12px)', border: '1px solid rgba(16, 185, 129, 0.35)', borderRadius: 14, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 10, background: 'linear-gradient(135deg, #059669, #10B981)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.15rem', flexShrink: 0, boxShadow: '0 4px 12px rgba(16,185,129,0.4)' }}>
                 <i className="fas fa-chart-pie" />
               </div>
               <div>
-                <h3 style={{ color: '#FFFFFF', fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>Generate Tax Planning Report</h3>
-                <p style={{ color: '#94A3B8', fontSize: '0.83rem', margin: '4px 0 0 0', lineHeight: 1.4 }}>Legally structure &amp; minimize future tax</p>
+                <h3 style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 800, margin: 0 }}>Generate Tax Planning Report</h3>
+                <p style={{ color: '#94A3B8', fontSize: '0.78rem', margin: '3px 0 0 0', lineHeight: 1.35 }}>Legally structure &amp; minimize future tax</p>
               </div>
             </div>
 
-            <div style={{ background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(139, 92, 246, 0.3)', borderRadius: 16, padding: '22px 24px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }}>
-              <div style={{ width: 50, height: 50, borderRadius: 12, background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0, boxShadow: '0 6px 16px rgba(139,92,246,0.35)' }}>
+            <div style={{ background: 'rgba(15, 23, 42, 0.82)', backdropFilter: 'blur(12px)', border: '1px solid rgba(139, 92, 246, 0.35)', borderRadius: 14, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 10, background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.15rem', flexShrink: 0, boxShadow: '0 4px 12px rgba(139,92,246,0.4)' }}>
                 <i className="fas fa-heart-pulse" />
               </div>
               <div>
-                <h3 style={{ color: '#FFFFFF', fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>Check Tax Health Report</h3>
-                <p style={{ color: '#94A3B8', fontSize: '0.83rem', margin: '4px 0 0 0', lineHeight: 1.4 }}>Evaluate current investments &amp; savings</p>
+                <h3 style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 800, margin: 0 }}>Check Tax Health Report</h3>
+                <p style={{ color: '#94A3B8', fontSize: '0.78rem', margin: '3px 0 0 0', lineHeight: 1.35 }}>Evaluate current investments &amp; savings</p>
               </div>
             </div>
 
           </div>
 
-          <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
             <button
               onClick={() => setCallbackModal('consultation')}
               style={{
                 background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
                 color: '#FFFFFF',
-                padding: '16px 32px',
-                borderRadius: 12,
+                padding: '13px 26px',
+                borderRadius: 10,
                 border: 'none',
                 fontWeight: 800,
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 12,
-                boxShadow: '0 8px 24px rgba(37,99,235,0.45)',
+                gap: 10,
+                boxShadow: '0 6px 20px rgba(37,99,235,0.45)',
                 transition: 'transform 0.2s',
               }}
             >
@@ -393,18 +392,18 @@ export default function FileITRDetailsPage() {
               style={{
                 background: '#10B981',
                 color: '#FFFFFF',
-                padding: '16px 28px',
-                borderRadius: 12,
+                padding: '13px 24px',
+                borderRadius: 10,
                 textDecoration: 'none',
                 fontWeight: 800,
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 10,
-                boxShadow: '0 8px 24px rgba(16,185,129,0.35)',
+                gap: 8,
+                boxShadow: '0 6px 20px rgba(16,185,129,0.35)',
               }}
             >
-              <i className="fab fa-whatsapp" style={{ fontSize: '1.25rem' }} /> WhatsApp CA Support
+              <i className="fab fa-whatsapp" style={{ fontSize: '1.1rem' }} /> WhatsApp CA Support
             </a>
           </div>
         </div>
