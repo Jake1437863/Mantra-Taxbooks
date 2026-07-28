@@ -302,7 +302,7 @@ export default function FileITRDetailsPage() {
       </nav>
 
       {/* ── HERO BANNER ── */}
-      <section style={{ position: 'relative', overflow: 'hidden', background: '#070B14', padding: '50px 28px 42px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', background: '#070B14', minHeight: '82vh', padding: '110px 28px 90px', display: 'flex', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <video
           autoPlay
           loop
@@ -312,9 +312,9 @@ export default function FileITRDetailsPage() {
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7, 11, 20, 0.25) 0%, rgba(7, 11, 20, 0.60) 100%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7, 11, 20, 0.2) 0%, rgba(7, 11, 20, 0.55) 100%)', pointerEvents: 'none' }} />
         
-        <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(7, 11, 20, 0.75)', backdropFilter: 'blur(8px)', border: '1px solid rgba(59, 130, 246, 0.45)', color: '#93C5FD', padding: '4px 12px', borderRadius: 30, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 14, boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
             Official Chartered Accountant Tax Compliance &amp; Planning Portal
