@@ -985,7 +985,7 @@ export default function FileITRDetailsPage() {
                 <div style={{ width: 48, height: 48, borderRadius: 12, background: 'linear-gradient(135deg, #D97706, #F59E0B)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', boxShadow: '0 4px 14px rgba(245,158,11,0.3)' }}>
                   <i className="fas fa-credit-card" />
                 </div>
-                <h4 style={{ fontSize: '1.25rem', fontWeight 900, color: '#FFFFFF', margin: 0 }}>3. Investment &amp; Expense Triggers (SFT &amp; AIS)</h4>
+                <h4 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#FFFFFF', margin: 0 }}>3. Investment &amp; Expense Triggers (SFT &amp; AIS)</h4>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
