@@ -3,9 +3,153 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
+const itrPlans = [
+  {
+    id: 'salary-nil',
+    name: 'Salary (Nil Return)',
+    price: '999',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    badge: null,
+    desc: 'Single salary income with total income ≤ ₹12,75,000',
+    features: [
+      'Single Employer',
+      'Income from other sources',
+      'Total income ≤ ₹12,75,000',
+      'CA reviewed filing'
+    ],
+    deliverables: [
+      'Income tax return acknowledgement',
+      'Statement of Income',
+      'Financial health report',
+      'Tax planning report'
+    ],
+  },
+  {
+    id: 'salary-property',
+    name: 'Salary & Property',
+    price: '2,000',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    badge: null,
+    desc: 'Salary + House Property income',
+    features: [
+      'Single or multiple employers',
+      'Single or multiple house properties',
+      'Income from other sources',
+      'CA reviewed filing'
+    ],
+    deliverables: [
+      'Income tax return acknowledgement',
+      'Statement of Income',
+      'Financial health report',
+      'Tax planning report'
+    ],
+  },
+  {
+    id: 'capital-gains',
+    name: 'Capital Gains',
+    price: '2,500',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    badge: 'Most Popular',
+    desc: 'Salary + Rent + Capital Gains (shares, MFs, properties)',
+    features: [
+      'Single or multiple employers',
+      'Single or multiple house properties',
+      'Multiple capital gain incomes (shares, MFs, properties)',
+      'Other sources',
+      'CA reviewed filing'
+    ],
+    deliverables: [
+      'Income tax return acknowledgement',
+      'Statement of Income',
+      'Financial health report',
+      'Tax planning report',
+      'Losses carried forward report'
+    ],
+  },
+  {
+    id: 'business',
+    name: 'Business / Professional Income',
+    price: '3,000',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    badge: null,
+    desc: 'Salary + Rent + Capital Gains + Business/Professional Income',
+    features: [
+      'Single or multiple employers',
+      'Single or multiple house properties',
+      'Multiple capital gain incomes',
+      'Business/Professional Income (Non-Audit) — without B/S & P&L',
+      'Other sources',
+      'CA reviewed filing'
+    ],
+    deliverables: [
+      'Income tax return acknowledgement',
+      'Statement of Income',
+      'Financial health report',
+      'Tax planning report',
+      'Losses carried forward report'
+    ],
+  },
+  {
+    id: 'fno-crypto',
+    name: 'Futures & Options / Cryptocurrency',
+    price: '3,500',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    badge: null,
+    desc: 'All income types including F&O and Crypto',
+    features: [
+      'Single or multiple employers',
+      'Single or multiple house properties',
+      'Multiple capital gain incomes',
+      'Business/Professional Income (Non-Audit) — without B/S & P&L',
+      'Revenue from F&O / Crypto',
+      'Other sources',
+      'CA reviewed filing'
+    ],
+    deliverables: [
+      'Income tax return acknowledgement',
+      'Statement of Income',
+      'Financial health report',
+      'Tax planning report',
+      'Losses carried forward report'
+    ],
+  },
+  {
+    id: 'nri-foreign',
+    name: 'NRI / Foreign Income',
+    price: '5,000',
+    per: 'per year',
+    tax: 'Exclusive of GST',
+    badge: null,
+    desc: 'NRI with Indian income or Resident with foreign income',
+    features: [
+      'Single or multiple employers',
+      'Multiple house properties',
+      'Multiple capital gain incomes',
+      'Business & Professional Income (Non-Audit)',
+      'Revenue from F&O / Crypto',
+      'DTAA Tax Relief',
+      'Foreign salary (including foreign tax relief)',
+      'Other sources',
+      'CA reviewed filing'
+    ],
+    deliverables: [
+      'Income tax return acknowledgement',
+      'Statement of Income',
+      'Financial health report',
+      'Tax planning report',
+      'Losses carried forward report'
+    ],
+  },
+]
+
 export default function FileITRDetailsPage() {
   const [servicesOpen, setServicesOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState('mandatory-filing')
+  const [activeTab, setActiveTab] = useState('pricing-plans')
   const [callbackModal, setCallbackModal] = useState<null | 'call' | 'consultation'>(null)
   const [modalForm, setModalForm] = useState({ name: '', email: '', phone: '', incomeType: 'salary' })
   const [modalSuccess, setModalSuccess] = useState(false)
@@ -39,12 +183,12 @@ export default function FileITRDetailsPage() {
     setServicesOpen(false)
   }
 
-  const sectionIds = ['mandatory-filing', 'required-documents', 'benefits', 'why-choose-us', 'notice-triggers']
+  const sectionIds = ['pricing-plans', 'mandatory-filing', 'required-documents', 'benefits', 'why-choose-us', 'notice-triggers']
 
   useEffect(() => {
     const handleScroll = () => {
       const offset = 160
-      let activeId = 'mandatory-filing'
+      let activeId = 'pricing-plans'
       sectionIds.forEach((id) => {
         const el = document.getElementById(id)
         if (el && el.getBoundingClientRect().top <= offset) {
@@ -262,6 +406,9 @@ export default function FileITRDetailsPage() {
           <div ref={tabsRef} style={{ display: 'flex', gap: 28, overflowX: 'auto', position: 'relative', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <span ref={tabLineRef} style={{ position: 'absolute', bottom: 0, height: 3, background: '#3B82F6', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', borderRadius: '3px 3px 0 0' }} />
             
+            <a href="#pricing-plans" onClick={(e) => scrollToTab(e, 'pricing-plans')} style={{ padding: '18px 4px', color: activeTab === 'pricing-plans' ? '#60A5FA' : '#94A3B8', textDecoration: 'none', fontWeight: 800, fontSize: '0.9rem', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <i className="fas fa-tag" /> Filing Plans &amp; Pricing
+            </a>
             <a href="#mandatory-filing" onClick={(e) => scrollToTab(e, 'mandatory-filing')} style={{ padding: '18px 4px', color: activeTab === 'mandatory-filing' ? '#60A5FA' : '#94A3B8', textDecoration: 'none', fontWeight: 800, fontSize: '0.9rem', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 8 }}>
               <i className="fas fa-gavel" /> Statutory Mandates
             </a>
@@ -283,6 +430,110 @@ export default function FileITRDetailsPage() {
 
       {/* ── MAIN CONTENT CANVAS ── */}
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '56px 28px 90px' }}>
+
+        {/* ════════════════════════════════════════════════════════════
+            SECTION 0: PRICING PLANS & PACKAGES (RIGHT BELOW HERO BANNER)
+           ════════════════════════════════════════════════════════════ */}
+        <section id="pricing-plans" style={{ scrollMarginTop: 150, marginBottom: 80 }}>
+          <div style={{ display: 'inline-block', background: 'rgba(37, 99, 235, 0.14)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '5px 16px', borderRadius: 30, fontSize: '0.78rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 14 }}>
+            TRANSPARENT PRICING TIERS
+          </div>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', letterSpacing: '-0.6px' }}>
+            CA-Reviewed Filing Packages &amp; Pricing
+          </h2>
+          <p style={{ color: '#94A3B8', fontSize: '1.05rem', margin: '0 0 36px 0', lineHeight: 1.6 }}>
+            Select the plan that matches your income sources. All plans include 100% Chartered Accountant verification.
+          </p>
+
+          {/* 6 PRICING CARDS GRID */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 24, alignItems: 'stretch' }}>
+            {itrPlans.map((plan) => (
+              <div
+                key={plan.id}
+                style={{
+                  background: '#0F172A',
+                  border: plan.badge ? '2px solid #2563EB' : '1px solid #1E293B',
+                  borderRadius: 20,
+                  padding: '28px 24px',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  boxShadow: plan.badge ? '0 12px 36px rgba(37,99,235,0.3)' : '0 6px 24px rgba(0,0,0,0.4)',
+                }}
+              >
+                {plan.badge && (
+                  <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#FFFFFF', fontSize: '0.75rem', fontWeight: 900, padding: '4px 14px', borderRadius: 20, textTransform: 'uppercase', letterSpacing: 0.5, boxShadow: '0 4px 12px rgba(37,99,235,0.4)' }}>
+                    {plan.badge}
+                  </div>
+                )}
+
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 12px 0' }}>{plan.name}</h3>
+
+                <div style={{ paddingBottom: 16, borderBottom: '1px solid #1E293B', marginBottom: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                    <span style={{ fontSize: '2.4rem', fontWeight: 900, color: '#3B82F6' }}>₹{plan.price}</span>
+                  </div>
+                  <div style={{ fontSize: '0.82rem', color: '#94A3B8', marginTop: 2, fontWeight: 600 }}>{plan.per}</div>
+                  <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: 2 }}>{plan.tax}</div>
+                </div>
+
+                <p style={{ fontSize: '0.85rem', color: '#CBD5E1', margin: '0 0 18px 0', lineHeight: 1.5, minHeight: 38 }}>
+                  {plan.desc}
+                </p>
+
+                {/* FEATURES LIST */}
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {plan.features.map((f, i) => (
+                    <li key={i} style={{ fontSize: '0.85rem', color: '#E2E8F0', display: 'flex', alignItems: 'flex-start', gap: 10, lineHeight: 1.4 }}>
+                      <i className="fas fa-circle-check" style={{ color: '#10B981', fontSize: '0.85rem', marginTop: 3, flexShrink: 0 }} />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* DELIVERABLES INCLUDED */}
+                {plan.deliverables && (
+                  <div style={{ padding: '14px 16px', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 12, border: '1px solid #1E293B', marginBottom: 20 }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 900, color: '#60A5FA', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 10 }}>
+                      DELIVERABLES:
+                    </div>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
+                      {plan.deliverables.map((d, i) => (
+                        <li key={i} style={{ fontSize: '0.8rem', color: '#CBD5E1', display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <i className="fas fa-file-lines" style={{ color: '#60A5FA', fontSize: '0.75rem', flexShrink: 0 }} />
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* GET STARTED CTA BUTTON */}
+                <Link
+                  href="/file-itr"
+                  style={{
+                    background: plan.badge ? 'linear-gradient(135deg, #2563EB, #1D4ED8)' : 'linear-gradient(135deg, #1E40AF, #1E3A8A)',
+                    color: '#FFFFFF',
+                    textAlign: 'center',
+                    padding: '12px 18px',
+                    borderRadius: 10,
+                    textDecoration: 'none',
+                    fontSize: '0.9rem',
+                    fontWeight: 800,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justify: 'center',
+                    gap: 8,
+                    boxShadow: plan.badge ? '0 4px 16px rgba(37,99,235,0.4)' : 'none',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <i className="fas fa-file-lines" /> Get Started
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* ════════════════════════════════════════════════════════════
             SECTION 1: WHEN INCOME TAX RETURN FILING IS MANDATORY
