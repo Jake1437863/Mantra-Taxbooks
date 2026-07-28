@@ -28,7 +28,7 @@ export default function PublicCompanyRegistrationPage() {
     }
     servicesTimeoutRef.current = setTimeout(() => {
       setServicesOpen(false)
-    }, 5000)
+    }, 4000)
   }
 
   const handleServiceItemClick = () => {
@@ -84,7 +84,7 @@ export default function PublicCompanyRegistrationPage() {
     setActiveTab(id)
     const el = document.getElementById(id)
     if (el) {
-      const yOffset = -130
+      const yOffset = -140
       const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
       window.scrollTo({ top: y, behavior: 'smooth' })
     }
@@ -97,691 +97,394 @@ export default function PublicCompanyRegistrationPage() {
       setSubmitted(false)
       setInquiryModal(false)
       setInquiryForm({ companyName: '', phone: '', email: '' })
-    }, 2500)
+    }, 2200)
   }
 
   return (
-    <div style={{ background: '#f7f9fc', color: '#1f2937', minHeight: '100vh', fontFamily: "'Segoe UI', system-ui, -apple-system, Arial, sans-serif" }}>
-      {/* ── HEADER ── */}
-      <header style={{ background: '#ffffff', borderBottom: '1px solid #e3e8f0', position: 'sticky', top: 0, zIndex: 50 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 66 }}>
-          <Link href="/" style={{ textDecoration: 'none', fontSize: '1.35rem', fontWeight: 800, color: '#0e3a9c' }}>
-            Mantra <span style={{ color: '#1a56db' }}>Taxbooks</span>
+    <div style={{ minHeight: '100vh', background: '#070B14', color: '#F1F5F9', fontFamily: "'Outfit', 'Inter', system-ui, sans-serif" }}>
+      
+      {/* ── TOP NOTIFICATION TICKER ── */}
+      <div style={{ background: 'linear-gradient(90deg, #1E3A8A, #1D4ED8, #0F172A)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)', padding: '6px 16px', fontSize: '0.78rem', color: '#DBEAFE', textAlign: 'center', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+        <span style={{ background: '#10B981', color: '#064E3B', padding: '2px 8px', borderRadius: 12, fontWeight: 900, fontSize: '0.68rem', textTransform: 'uppercase' }}>MCA REGISTERED</span>
+        <span>Companies Act, 2013 Official Incorporation Portal — SPICe+ &amp; AGILE-PRO-S Support</span>
+      </div>
+
+      {/* ── TOP NAV BAR ── */}
+      <nav style={{ background: 'rgba(7, 11, 20, 0.92)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '16px 28px', position: 'sticky', top: 0, zIndex: 1000 }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.1rem', boxShadow: '0 4px 14px rgba(37,99,235,0.4)' }}>
+              M
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ color: '#FFFFFF', fontWeight: 900, letterSpacing: 1.5, fontSize: '0.95rem', lineHeight: 1 }}>MANTRA</span>
+              <span style={{ color: '#60A5FA', fontWeight: 800, letterSpacing: 1.5, fontSize: '0.72rem', lineHeight: 1.2 }}>TAXBOOKS</span>
+            </div>
           </Link>
 
-          <ul style={{ display: 'flex', gap: 26, listStyle: 'none', margin: 0, padding: 0, alignItems: 'center' }}>
-            <li>
-              <Link href="/" style={{ textDecoration: 'none', color: '#5b6472', fontSize: '0.95rem', fontWeight: 500 }}>
-                Home
-              </Link>
-            </li>
-            <li
-              style={{ position: 'relative', paddingTop: 4, paddingBottom: 4 }}
-              onMouseEnter={handleServicesMouseEnter}
-              onMouseLeave={handleServicesMouseLeave}
-            >
-              <Link
-                href="/services"
-                style={{ textDecoration: 'none', color: '#1a56db', fontSize: '0.95rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}
-              >
-                Services <i className={`fas fa-chevron-down`} style={{ fontSize: '0.65rem', transition: 'transform 0.2s', transform: servicesOpen ? 'rotate(180deg)' : 'none' }} />
+          <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+            <Link href="/" style={{ color: '#94A3B8', textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600, transition: 'color 0.2s' }}>Home</Link>
+            
+            {/* SERVICES DROPDOWN */}
+            <div style={{ position: 'relative', paddingTop: 4, paddingBottom: 4 }} onMouseEnter={handleServicesMouseEnter} onMouseLeave={handleServicesMouseLeave}>
+              <Link href="/services" style={{ color: '#60A5FA', textDecoration: 'none', fontSize: '0.88rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                Services <i className="fas fa-chevron-down" style={{ fontSize: '0.65rem', transition: 'transform 0.2s', transform: servicesOpen ? 'rotate(180deg)' : 'none' }} />
               </Link>
               {servicesOpen && (
-                <div
-                  onMouseEnter={handleServicesMouseEnter}
-                  onMouseLeave={handleServicesMouseLeave}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    background: '#ffffff',
-                    border: '1px solid #e3e8f0',
-                    borderRadius: 10,
-                    boxShadow: '0 12px 30px rgba(16,42,115,.15)',
-                    minWidth: 230,
-                    padding: '8px 0',
-                    listStyle: 'none',
-                    zIndex: 100,
-                  }}
-                >
-                  <Link href="/services/file-itr" onClick={handleServiceItemClick} style={{ display: 'block', padding: '10px 18px', color: '#1f2937', textDecoration: 'none', fontWeight: 500 }}>
-                    File ITR
+                <div style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, background: '#0F172A', border: '1px solid rgba(59,130,246,0.3)', borderRadius: 14, padding: 10, minWidth: 280, boxShadow: '0 16px 40px rgba(0,0,0,0.7)', zIndex: 2000 }} onMouseEnter={handleServicesMouseEnter} onMouseLeave={handleServicesMouseLeave}>
+                  <Link href="/services/file-itr" onClick={handleServiceItemClick} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 16px', borderRadius: 10, textDecoration: 'none', color: '#CBD5E1' }}>
+                    <i className="fas fa-file-invoice-dollar" style={{ color: '#60A5FA', fontSize: '1.2rem' }} />
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>File ITR Guide &amp; Mandates</div>
+                      <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Rules, Docs &amp; Notice Triggers</div>
+                    </div>
                   </Link>
-                  <Link href="/services/company-registration" onClick={handleServiceItemClick} style={{ display: 'block', padding: '10px 18px', color: '#1a56db', background: '#e8effd', textDecoration: 'none', fontWeight: 700 }}>
-                    Company Registration
+                  <Link href="/services/company-registration" onClick={handleServiceItemClick} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 16px', borderRadius: 10, textDecoration: 'none', color: '#FFFFFF', background: 'rgba(59,130,246,0.16)', border: '1px solid rgba(59,130,246,0.3)' }}>
+                    <i className="fas fa-building" style={{ color: '#60A5FA', fontSize: '1.2rem' }} />
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>Company Registration</div>
+                      <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Pvt Ltd, LLP &amp; OPC Compliance</div>
+                    </div>
                   </Link>
                 </div>
               )}
-            </li>
-            <li>
-              <Link href="/login" style={{ textDecoration: 'none', color: '#5b6472', fontSize: '0.95rem', fontWeight: 500 }}>
-                Login
-              </Link>
-            </li>
-          </ul>
+            </div>
+
+            <button onClick={() => setInquiryModal(true)} style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', color: '#FFF', padding: '9px 20px', borderRadius: 10, border: 'none', fontSize: '0.88rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 4px 16px rgba(37,99,235,0.4)', transition: 'all 0.2s' }}>
+              Inquire Now
+            </button>
+          </div>
         </div>
-      </header>
+      </nav>
 
       {/* ── HERO SECTION ── */}
-      <section style={{ background: 'linear-gradient(135deg, #0a2a73 0%, #1a56db 100%)', color: '#ffffff', padding: '72px 0 84px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <span style={{ display: 'inline-block', background: 'rgba(255,255,255,.14)', border: '1px solid rgba(255,255,255,.3)', padding: '6px 16px', borderRadius: 100, fontSize: '0.85rem', marginBottom: 18 }}>
+      <section style={{ position: 'relative', overflow: 'hidden', background: 'radial-gradient(ellipse at 50% 0%, #1E293B 0%, #070B14 80%)', padding: '70px 28px 60px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(37, 99, 235, 0.12)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '6px 18px', borderRadius: 30, fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 22 }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
             Companies Act, 2013 · MCA Registered Process
-          </span>
-          <h1 style={{ fontSize: '2.6rem', lineHeight: 1.2, marginBottom: 14, fontWeight: 800 }}>
-            Private Limited Company Registration
+          </div>
+          
+          <h1 style={{ fontSize: 'clamp(2.3rem, 4.2vw, 3.6rem)', fontWeight: 900, color: '#FFFFFF', margin: '0 0 20px 0', lineHeight: 1.15, letterSpacing: '-1px' }}>
+            Private Limited <span style={{ background: 'linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Company Registration</span>
           </h1>
-          <p style={{ fontSize: '1.15rem', maxWidth: 640, margin: '0 auto 28px', opacity: 0.92, lineHeight: 1.6 }}>
-            Register your company in just 10 days with complete expert assistance — from name approval to incorporation certificate, PAN, TAN and beyond.
+          
+          <p style={{ color: '#94A3B8', fontSize: '1.15rem', maxWidth: 840, margin: '0 auto 38px auto', lineHeight: 1.7, fontWeight: 400 }}>
+            Register your company in just 10 days with complete expert CA assistance — from name approval to incorporation certificate, PAN, TAN, MOA, AOA, and beyond.
           </p>
-          <a
-            href="#pricing"
-            onClick={(e) => scrollToTab(e, 'pricing')}
-            style={{
-              display: 'inline-block',
-              padding: '14px 34px',
-              borderRadius: 8,
-              fontWeight: 700,
-              textDecoration: 'none',
-              fontSize: '1rem',
-              background: '#ffffff',
-              color: '#0e3a9c',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
-            }}
-          >
-            Get Started
-          </a>
 
-          <div style={{ display: 'flex', gap: 28, justifyContent: 'center', marginTop: 34, flexWrap: 'wrap', fontSize: '0.95rem' }}>
-            <div>✓ Registration in 10 days</div>
-            <div>✓ Expert assistance</div>
-            <div>✓ End-to-end filings</div>
+          <div style={{ display: 'flex', gap: 18, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 38 }}>
+            <button
+              onClick={() => setInquiryModal(true)}
+              style={{
+                background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+                color: '#FFFFFF',
+                padding: '16px 36px',
+                borderRadius: 12,
+                border: 'none',
+                fontWeight: 800,
+                fontSize: '1rem',
+                cursor: 'pointer',
+                boxShadow: '0 8px 24px rgba(37,99,235,0.45)',
+              }}
+            >
+              Start Registration <i className="fas fa-arrow-right" />
+            </button>
+
+            <a
+              href="#pricing"
+              onClick={(e) => scrollToTab(e, 'pricing')}
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                color: '#FFFFFF',
+                padding: '16px 30px',
+                borderRadius: 12,
+                textDecoration: 'none',
+                fontWeight: 800,
+                fontSize: '1rem',
+              }}
+            >
+              View Package Details
+            </a>
+          </div>
+
+          <div style={{ display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap', fontSize: '0.92rem', color: '#60A5FA', fontWeight: 700 }}>
+            <div>✓ Registration in 10 Days</div>
+            <div>✓ Expert CA Assistance</div>
+            <div>✓ End-to-End Filings</div>
           </div>
         </div>
       </section>
 
       {/* ── PRICING SECTION ── */}
-      <section id="pricing" style={{ padding: '64px 0' }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 10, color: '#0a2a73', fontWeight: 800 }}>
-            Our Package
-          </h2>
-          <p style={{ textAlign: 'center', color: '#5b6472', maxWidth: 680, margin: '0 auto 44px', fontSize: '1rem' }}>
-            Transparent pricing. Government fees of ₹10,000+ applicable additionally.
-          </p>
+      <section id="pricing" style={{ padding: '60px 28px', maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 40 }}>
+          <div style={{ display: 'inline-block', background: 'rgba(37, 99, 235, 0.14)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '5px 16px', borderRadius: 30, fontSize: '0.78rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 14 }}>
+            INCORPORATION PACKAGE
+          </div>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 10px 0' }}>All-Inclusive Starter Package</h2>
+          <p style={{ color: '#94A3B8', fontSize: '1.05rem', margin: 0 }}>Transparent pricing. Government fees of ₹10,000+ applicable additionally.</p>
+        </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 28, maxWidth: 420, margin: '0 auto' }}>
-            <div
-              style={{
-                background: '#ffffff',
-                border: '2px solid #1a56db',
-                borderRadius: 14,
-                padding: '34px 30px',
-                position: 'relative',
-                boxShadow: '0 10px 30px rgba(26,86,219,.15)',
-              }}
-            >
-              <h3 style={{ fontSize: '1.3rem', color: '#0a2a73', marginBottom: 4, fontWeight: 700 }}>Starter</h3>
-              <p style={{ color: '#5b6472', fontSize: '0.92rem', marginBottom: 14 }}>Company registration in 10 days</p>
-              <p style={{ fontSize: '1.05rem', fontWeight: 700, color: '#1f2937', marginBottom: 20 }}>
-                <span style={{ fontSize: '2.2rem', fontWeight: 900, color: '#0a2a73' }}>₹10,000+</span>{' '}
-                <small style={{ color: '#5b6472', fontWeight: 500 }}>Govt fees</small>
-              </p>
-              <ul style={{ listStyle: 'none', marginBottom: 24, padding: 0 }}>
-                {[
-                  'Company Name approval',
-                  'DSC for 2 Directors',
-                  'MOA & AOA',
-                  'Incorporation certificate',
-                  'PAN + TAN',
-                  'DIN for 2 Directors',
-                  'ESI Registration',
-                  'PF Registration',
-                  'ADT-1 (Auditor appointment)',
-                  'INC-20A (Business commencement)',
-                  'Expert assistance',
-                ].map((item, idx) => (
-                  <li
-                    key={idx}
-                    style={{
-                      padding: '7px 0 7px 26px',
-                      position: 'relative',
-                      fontSize: '0.94rem',
-                      borderBottom: '1px dashed #e3e8f0',
-                      color: '#1f2937',
-                    }}
-                  >
-                    <span style={{ position: 'absolute', left: 0, color: '#0e9f6e', fontWeight: 800 }}>✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => setInquiryModal(true)}
-                style={{
-                  display: 'block',
-                  width: '100%',
-                  textAlign: 'center',
-                  background: '#1a56db',
-                  color: '#ffffff',
-                  padding: '12px 24px',
-                  borderRadius: 8,
-                  fontWeight: 700,
-                  fontSize: '0.95rem',
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
-              >
-                Get Started
-              </button>
+        <div style={{ maxWidth: 480, margin: '0 auto' }}>
+          <div style={{ background: '#0F172A', border: '2px solid #2563EB', borderRadius: 20, padding: 36, boxShadow: '0 12px 36px rgba(37,99,235,0.3)', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#FFFFFF', fontSize: '0.75rem', fontWeight: 900, padding: '4px 16px', borderRadius: 20, textTransform: 'uppercase', letterSpacing: 0.8 }}>
+              Most Popular Starter
             </div>
-          </div>
-        </div>
-      </section>
+            
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 6px 0' }}>Pvt Ltd Starter</h3>
+            <p style={{ color: '#94A3B8', fontSize: '0.88rem', margin: '0 0 20px 0' }}>Complete MCA company incorporation in 10 days</p>
 
-      {/* ── STICKY SECTION TAB BAR (VAKILSEARCH STYLE) ── */}
-      <nav style={{ position: 'sticky', top: 66, background: '#ffffff', borderBottom: '1px solid #e3e8f0', zIndex: 40, boxShadow: '0 2px 8px rgba(16,42,115,.06)' }}>
-        <div ref={tabsRef} style={{ display: 'flex', gap: 6, overflowX: 'auto', padding: '0 20px', maxWidth: 1140, margin: '0 auto', position: 'relative' }}>
-          {[
-            { id: 'overview', label: 'Overview' },
-            { id: 'benefits', label: 'Benefits' },
-            { id: 'documents', label: 'Documents' },
-            { id: 'requirements', label: 'Requirements' },
-            { id: 'process', label: 'Process' },
-            { id: 'compliance', label: 'Compliances' },
-            { id: 'comparison', label: 'Company vs LLP' },
-          ].map((tab) => (
-            <a
-              key={tab.id}
-              href={`#${tab.id}`}
-              onClick={(e) => scrollToTab(e, tab.id)}
-              style={{
-                whiteSpace: 'nowrap',
-                padding: '14px 16px',
-                textDecoration: 'none',
-                color: activeTab === tab.id ? '#1a56db' : '#5b6472',
-                fontWeight: 600,
-                fontSize: '0.92rem',
-                transition: 'color 0.2s',
-              }}
-            >
-              {tab.label}
-            </a>
-          ))}
-          <span
-            ref={tabLineRef}
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              height: 3,
-              background: '#1a56db',
-              borderRadius: '3px 3px 0 0',
-              transition: 'left 0.3s ease, width 0.3s ease',
-              left: 0,
-              width: 0,
-            }}
-          />
-        </div>
-      </nav>
-
-      {/* ── OVERVIEW SECTION ── */}
-      <section id="overview" style={{ background: '#ffffff', padding: '64px 0', scrollMarginTop: 126 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 24, color: '#0a2a73', fontWeight: 800 }}>
-            What is a Private Limited Company (Pvt Ltd)?
-          </h2>
-          <div
-            style={{
-              background: '#e8effd',
-              borderLeft: '5px solid #1a56db',
-              borderRadius: '0 14px 14px 0',
-              padding: '28px 32px',
-              maxWidth: 860,
-              margin: '0 auto',
-              fontSize: '1.05rem',
-              lineHeight: 1.7,
-              color: '#1f2937',
-            }}
-          >
-            A private limited company (Pvt Ltd) is a separate legal entity registered under the <strong>Companies Act, 2013</strong>, offering limited liability protection to its members. It restricts share transfers, keeping ownership within a trusted group while providing the credibility and structure of a registered company.
-          </div>
-        </div>
-      </section>
-
-      {/* ── BENEFITS SECTION ── */}
-      <section id="benefits" style={{ padding: '64px 0', scrollMarginTop: 126 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 10, color: '#0a2a73', fontWeight: 800 }}>
-            Benefits of Company Registration
-          </h2>
-          <p style={{ textAlign: 'center', color: '#5b6472', maxWidth: 680, margin: '0 auto 44px', fontSize: '1rem' }}>
-            Why thousands of founders choose the Private Limited structure.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: 22 }}>
-            {[
-              { num: '1', title: 'Limited Liability Protection', desc: 'If the company takes a loan and suffers genuine business losses, shareholders need not repay from personal assets — unlike partnership and proprietorship, where personal assets are at risk.' },
-              { num: '2', title: 'Perpetual Succession', desc: 'A company has continuous existence independent of its founders. If a shareholder or director leaves, becomes incapacitated, or passes away, the company does not dissolve.' },
-              { num: '3', title: 'Easier Access to Capital & Funding', desc: 'Institutional investors almost always require a corporate structure. Issue new shares or share classes to bring on angel investors or VCs, and gain credibility with banks for large credit lines.' },
-              { num: '4', title: 'Strategic Tax Planning', desc: 'Companies enjoy better tax efficiencies than individual tax brackets — 15% tax rate for manufacturing companies and 22% for other companies.' },
-              { num: '5', title: 'Seamless Transfer of Ownership', desc: 'Ownership is broken into shares. Transferring control is simply a share transfer deed and a registry update — no messy retitling of physical assets individually.' },
-              { num: '6', title: 'Eligibility for Government Schemes', desc: 'Startup India: tax exemptions, funding support and easier compliance. Make in India: incentives, subsidies and promotional support for manufacturing businesses.' },
-              { num: '7', title: 'Ease of Ownership Transfer', desc: 'Ownership can be transferred easily by selling shares, making it simple to attract new investors or transition leadership.' },
-              { num: '8', title: 'Global Opportunities', desc: 'Incorporation enables entry into international markets, attracts Foreign Direct Investment (FDI), and establishes a credible presence globally.' },
-              { num: '9', title: 'Compliance & Legal Safeguards', desc: 'Structured compliance — annual filings, financial disclosures and legal obligations — reduces disputes and ensures smoother business operations.' },
-            ].map((card) => (
-              <div key={card.num} style={{ background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14, padding: 26, boxShadow: '0 2px 8px rgba(16,42,115,.04)' }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38, borderRadius: 10, background: '#e8effd', color: '#1a56db', fontWeight: 800, marginBottom: 12 }}>
-                  {card.num}
-                </span>
-                <h4 style={{ fontSize: '1.08rem', marginBottom: 8, color: '#0a2a73', fontWeight: 700 }}>{card.title}</h4>
-                <p style={{ fontSize: '0.93rem', color: '#5b6472', margin: 0, lineHeight: 1.6 }}>{card.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── DOCUMENTS SECTION ── */}
-      <section id="documents" style={{ background: '#ffffff', padding: '64px 0', scrollMarginTop: 126 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 10, color: '#0a2a73', fontWeight: 800 }}>
-            Documents Required for Company Registration
-          </h2>
-          <p style={{ textAlign: 'center', color: '#5b6472', maxWidth: 680, margin: '0 auto 44px', fontSize: '1rem' }}>
-            Keep these ready for a smooth, delay-free incorporation.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 22 }}>
-            <div style={{ background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14, padding: 26 }}>
-              <h4 style={{ color: '#0e3a9c', marginBottom: 14, fontSize: '1.05rem', paddingBottom: 10, borderBottom: '2px solid #e8effd', fontWeight: 700 }}>
-                For Directors &amp; Shareholders
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {[
-                  'Passport-sized photograph (recent, colour, clear)',
-                  'PAN Card (mandatory for all Indian citizens)',
-                  'Identity Proof (any one): Aadhaar Card, Passport, Voter ID or Driver\'s Licence',
-                  'Residential Address Proof (not older than 60 days): utility bill, bank statement, or phone bill',
-                  'Digital Signature Certificate (DSC) to sign documents on the MCA portal',
-                  'Director Identification Number (DIN) for each proposed director',
-                  'Foreign nationals: notarized & apostilled identity and address proofs',
-                ].map((item, idx) => (
-                  <li key={idx} style={{ padding: '6px 0 6px 24px', position: 'relative', fontSize: '0.92rem', color: '#1f2937' }}>
-                    <span style={{ position: 'absolute', left: 4, color: '#1a56db', fontWeight: 'bold' }}>▸</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div style={{ paddingBottom: 20, borderBottom: '1px solid #1E293B', marginBottom: 20 }}>
+              <span style={{ fontSize: '2.5rem', fontWeight: 900, color: '#3B82F6' }}>₹10,000+</span>
+              <span style={{ fontSize: '0.85rem', color: '#94A3B8', marginLeft: 8 }}>+ Govt Fees</span>
             </div>
 
-            <div style={{ background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14, padding: 26 }}>
-              <h4 style={{ color: '#0e3a9c', marginBottom: 14, fontSize: '1.05rem', paddingBottom: 10, borderBottom: '2px solid #e8effd', fontWeight: 700 }}>
-                For Registered Office Address
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {[
-                  'Proof of Address (within 60 days): electricity bill, water bill or property tax receipt',
-                  'No Objection Certificate (NOC) from the property owner',
-                  'Tenancy or Ownership Proof: registered rental agreement (leased) or ownership deed (owned)',
-                ].map((item, idx) => (
-                  <li key={idx} style={{ padding: '6px 0 6px 24px', position: 'relative', fontSize: '0.92rem', color: '#1f2937' }}>
-                    <span style={{ position: 'absolute', left: 4, color: '#1a56db', fontWeight: 'bold' }}>▸</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px 0', display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {[
+                'Company Name Approval (RUN/SPICe+ Part A)',
+                'DSC for 2 Directors',
+                'MOA & AOA Drafting',
+                'Incorporation Certificate',
+                'PAN + TAN Allotment',
+                'DIN for 2 Directors',
+                'ESI Registration',
+                'PF Registration',
+                'ADT-1 (Auditor appointment)',
+                'INC-20A (Business commencement)',
+                'Dedicated CA Assistance',
+              ].map((item, idx) => (
+                <li key={idx} style={{ fontSize: '0.88rem', color: '#E2E8F0', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <i className="fas fa-circle-check" style={{ color: '#10B981', fontSize: '0.85rem' }} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
 
-            <div style={{ background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14, padding: 26 }}>
-              <h4 style={{ color: '#0e3a9c', marginBottom: 14, fontSize: '1.05rem', paddingBottom: 10, borderBottom: '2px solid #e8effd', fontWeight: 700 }}>
-                Company Formation Documents
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {[
-                  'Memorandum of Association (MoA): legal name, registered office, capital structure and principal business activities',
-                  'Articles of Association (AoA): internal rules, governance policies, director roles and shareholder rights',
-                  'Director & Shareholder details: full name, date of birth, nationality, occupation and shareholding %',
-                ].map((item, idx) => (
-                  <li key={idx} style={{ padding: '6px 0 6px 24px', position: 'relative', fontSize: '0.92rem', color: '#1f2937' }}>
-                    <span style={{ position: 'absolute', left: 4, color: '#1a56db', fontWeight: 'bold' }}>▸</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── REQUIREMENTS SECTION ── */}
-      <section id="requirements" style={{ padding: '64px 0', scrollMarginTop: 126 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 10, color: '#0a2a73', fontWeight: 800 }}>
-            Requirements for Pvt Ltd Registration
-          </h2>
-          <p style={{ textAlign: 'center', color: '#5b6472', maxWidth: 680, margin: '0 auto 44px', fontSize: '1rem' }}>
-            Meeting these requirements is essential before filing the SPICe+ form for incorporation.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: 20 }}>
-            {[
-              { title: 'Minimum Two Directors', desc: 'At least two directors are required, and at least one must be a resident of India (staying 182+ days in the financial year).' },
-              { title: 'Minimum Two Shareholders', desc: 'Directors and shareholders can be the same individuals. Both individuals and corporate entities are eligible to be shareholders.' },
-              { title: 'Registered Office Address', desc: 'A valid Indian address with proof of address and a NOC from the property owner.' },
-              { title: 'Digital Signature Certificate (DSC)', desc: 'All proposed directors need a valid DSC to digitally sign incorporation documents.' },
-              { title: 'Director Identification Number (DIN)', desc: 'Each director must obtain a DIN — a unique ID issued by the Ministry of Corporate Affairs.' },
-              { title: 'Unique Company Name', desc: 'The name must not be identical or similar to existing companies or trademarks.' },
-            ].map((req, idx) => (
-              <div key={idx} style={{ background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14, padding: 26, boxShadow: '0 2px 8px rgba(16,42,115,.04)' }}>
-                <h4 style={{ fontSize: '1.08rem', marginBottom: 8, color: '#0a2a73', fontWeight: 700 }}>{req.title}</h4>
-                <p style={{ fontSize: '0.93rem', color: '#5b6472', margin: 0, lineHeight: 1.6 }}>{req.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── PROCESS SECTION ── */}
-      <section id="process" style={{ background: '#ffffff', padding: '64px 0', scrollMarginTop: 126 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 10, color: '#0a2a73', fontWeight: 800 }}>
-            Company Registration Process — Step by Step
-          </h2>
-          <p style={{ textAlign: 'center', color: '#5b6472', maxWidth: 680, margin: '0 auto 44px', fontSize: '1rem' }}>
-            A systematic process governed by the Ministry of Corporate Affairs (MCA), filed with the Registrar of Companies (RoC) under the Companies Act, 2013.
-          </p>
-
-          <div style={{ maxWidth: 820, margin: '0 auto', position: 'relative' }}>
-            {[
-              {
-                num: '1',
-                title: 'Choose the Right Business Structure',
-                body: (
-                  <>
-                    <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}>Your business type determines liability, funding access and regulatory obligations:</p>
-                    <ul style={{ margin: '8px 0 0 18px', fontSize: '0.93rem', color: '#5b6472' }}>
-                      <li><strong>Private Limited (Pvt Ltd):</strong> ideal for startups; limited liability and equity funding eligibility</li>
-                      <li><strong>LLP:</strong> partnership-style governance with corporate shielding</li>
-                      <li><strong>One Person Company (OPC):</strong> for solo founders seeking legal separation</li>
-                      <li><strong>Public Limited (PLC):</strong> for large ventures raising public capital</li>
-                      <li><strong>Sole Proprietorship / Partnership:</strong> basic compliance; no Company Registration Certificate</li>
-                    </ul>
-                  </>
-                ),
-              },
-              {
-                num: '2',
-                title: 'Get a Digital Signature Certificate (DSC)',
-                time: '⏱ 1–2 working days',
-                body: <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}>Enables directors to sign electronic documents filed with the MCA. Apply via licensed authorities like eMudhra, Sify or Ncode with PAN, address proof and photograph.</p>,
-              },
-              {
-                num: '3',
-                title: 'Obtain Director Identification Number (DIN)',
-                time: '⏱ 1 working day',
-                body: <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}>Mandatory under Section 153 of the Companies Act, 2013 — applied through the SPICe+ form or a separate DIN application on the MCA portal.</p>,
-              },
-              {
-                num: '4',
-                title: 'Choose & Reserve a Unique Company Name',
-                time: '⏱ 1–2 working days',
-                body: <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}>Ensure the name is unique, legally permissible and trademark-safe. Check availability via the MCA RUN (Reserve Unique Name) service, complying with Companies (Incorporation) Rules, 2014. Approved names are reserved for 20 days.</p>,
-              },
-              {
-                num: '5',
-                title: 'Draft Incorporation Documents (MoA & AoA)',
-                body: <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}><strong>MoA</strong> states business objectives and operational scope; <strong>AoA</strong> governs internal procedures, director roles and voting rights. Both must be signed digitally by all subscribers and directors.</p>,
-              },
-              {
-                num: '6',
-                title: 'File the SPICe+ Form on the MCA Portal',
-                body: <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}>SPICe+ integrates name reservation (Part A) and incorporation (Part B). Attach MoA &amp; AoA, DIN &amp; DSC, ID/address proofs, registered office documents, and INC-9 &amp; DIR-2 declarations. Also file <strong>AGILE-PRO-S</strong> for GST registration, EPFO &amp; ESIC enrolment, Professional Tax (state-specific) and bank account setup.</p>,
-              },
-              {
-                num: '7',
-                title: 'Pay Statutory Fees',
-                body: <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}>Pay applicable government fees on the MCA portal based on your authorized share capital and company type.</p>,
-              },
-              {
-                num: '8',
-                title: 'Receive the Company Registration Certificate',
-                body: <p style={{ margin: 0, fontSize: '0.93rem', color: '#5b6472' }}>Once the Registrar of Companies approves your SPICe+ application, your Certificate of Incorporation is issued — your company is officially born.</p>,
-              },
-            ].map((step, idx, arr) => (
-              <div key={step.num} style={{ display: 'flex', gap: 20, paddingBottom: 30, position: 'relative' }}>
-                {idx !== arr.length - 1 && (
-                  <span style={{ position: 'absolute', left: 21, top: 46, bottom: 0, width: 2, background: '#e3e8f0' }} />
-                )}
-                <div style={{ flex: '0 0 44px', height: 44, borderRadius: '50%', background: '#1a56db', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.05rem', zIndex: 1 }}>
-                  {step.num}
-                </div>
-                <div style={{ background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14, padding: '20px 24px', flex: 1 }}>
-                  <h4 style={{ color: '#0a2a73', marginBottom: 6, fontSize: '1.05rem', fontWeight: 700 }}>{step.title}</h4>
-                  {step.body}
-                  {step.time && (
-                    <span style={{ display: 'inline-block', marginTop: 10, background: '#e8effd', color: '#0e3a9c', fontSize: '0.8rem', fontWeight: 700, padding: '3px 12px', borderRadius: 100 }}>
-                      {step.time}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── COMPLIANCES SECTION ── */}
-      <section id="compliance" style={{ padding: '64px 0', scrollMarginTop: 126 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 10, color: '#0a2a73', fontWeight: 800 }}>
-            Post-Incorporation Compliances
-          </h2>
-          <p style={{ textAlign: 'center', color: '#5b6472', maxWidth: 680, margin: '0 auto 44px', fontSize: '1rem' }}>
-            Mandatory compliances — including INC-20A, AOC-4, MGT-7 and DIR-3 KYC — keep your company legally active and penalty-free.
-          </p>
-
-          <div style={{ overflowX: 'auto', background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14 }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 640 }}>
-              <thead>
-                <tr>
-                  <th style={{ background: '#0a2a73', color: '#ffffff', textAlign: 'left', padding: '14px 18px', fontSize: '0.92rem' }}>Timeline</th>
-                  <th style={{ background: '#0a2a73', color: '#ffffff', textAlign: 'left', padding: '14px 18px', fontSize: '0.92rem' }}>Key Compliances</th>
-                  <th style={{ background: '#0a2a73', color: '#ffffff', textAlign: 'left', padding: '14px 18px', fontSize: '0.92rem' }}>Detailed Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { time: 'Within 30 Days', key: 'Initial Setup & Governance', actions: ['Opening of bank account', 'Holding first board meeting', 'Appointment of first auditor', 'Disclosure of directors\' interest', 'Preparation of notice, agenda & minutes', 'Printing of letterhead & statutory registers'] },
-                  { time: 'Within 60 Days', key: 'Capital & Share Compliance', actions: ['Deposit of subscription money (as per MOA)', 'Allotment of shares', 'Issuance of share certificates', 'Payment of stamp duty to state authorities'] },
-                  { time: 'Within 180 Days', key: 'Commencement of Business', actions: ['Filing of INC-20A (Declaration for Commencement of Business) with ROC'] },
-                  { time: 'Quarterly', key: 'Ongoing Board Compliance', actions: ['Holding board meetings as per Companies Act requirements'] },
-                  { time: 'Ongoing', key: 'Statutory Records & Accounts', actions: ['Maintenance of statutory registers — members, charges, KMP, loans & advances', 'Maintenance of minutes book (board & general meetings)', 'Proper maintenance of books of accounts'] },
-                  { time: 'Annually', key: 'Financial & Regulatory Filings', actions: ['Conducting Annual General Meeting (AGM)', 'Adoption of financial statements', 'Filing of Income Tax Return', 'Filing of AOC-4 & MGT-7 with ROC', 'Filing of Director KYC'] },
-                  { time: 'Within 30 Days of AGM', key: 'Annual ROC Filings', actions: ['Filing of annual return & list of shareholders', 'Board report', 'Forms MGT-7, AOC-4 & ADT-1'] },
-                ].map((row, idx) => (
-                  <tr key={idx} style={{ background: idx % 2 === 1 ? '#f7f9fc' : '#ffffff' }}>
-                    <td style={{ padding: '14px 18px', borderTop: '1px solid #e3e8f0', fontSize: '0.92rem', fontWeight: 700, color: '#0e3a9c', whiteSpace: 'nowrap' }}>{row.time}</td>
-                    <td style={{ padding: '14px 18px', borderTop: '1px solid #e3e8f0', fontSize: '0.92rem', color: '#1f2937' }}>{row.key}</td>
-                    <td style={{ padding: '14px 18px', borderTop: '1px solid #e3e8f0', fontSize: '0.92rem', color: '#5b6472' }}>
-                      <ul style={{ margin: '0 0 0 16px', padding: 0 }}>
-                        {row.actions.map((act, i) => (
-                          <li key={i} style={{ margin: '2px 0' }}>{act}</li>
-                        ))}
-                      </ul>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* ── COMPARISON SECTION ── */}
-      <section id="comparison" style={{ background: '#ffffff', padding: '64px 0', scrollMarginTop: 126 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: 10, color: '#0a2a73', fontWeight: 800 }}>
-            Private Limited Company vs LLP
-          </h2>
-          <p style={{ textAlign: 'center', color: '#5b6472', maxWidth: 680, margin: '0 auto 44px', fontSize: '1rem' }}>
-            Not sure which structure suits your business? Here's a detailed side-by-side comparison to help you decide.
-          </p>
-
-          <div style={{ overflowX: 'auto', background: '#ffffff', border: '1px solid #e3e8f0', borderRadius: 14 }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 860 }}>
-              <thead>
-                <tr>
-                  <th style={{ background: '#0a2a73', color: '#ffffff', padding: '14px 18px', fontSize: '0.92rem', textAlign: 'left' }}>Aspect</th>
-                  <th style={{ background: '#0a2a73', color: '#ffffff', padding: '14px 18px', fontSize: '0.92rem', textAlign: 'left' }}>Private Limited Company (Pvt Ltd)</th>
-                  <th style={{ background: '#0a2a73', color: '#ffffff', padding: '14px 18px', fontSize: '0.92rem', textAlign: 'left' }}>Limited Liability Partnership (LLP)</th>
-                  <th style={{ background: '#0a2a73', color: '#ffffff', padding: '14px 18px', fontSize: '0.92rem', textAlign: 'left' }}>In Simple Terms</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['Governing Law', 'Companies Act, 2013', 'LLP Act, 2008', 'Company follows stricter corporate rules; LLP is more partnership-like but with protection.'],
-                  ['Best Suited For', 'Startups aiming to scale, tech companies, manufacturing, businesses seeking funding/investors', 'Professional services (CA, lawyers, consultants), small–medium firms, family businesses', 'Company for big growth ambitions; LLP for simpler professional or collaborative work.'],
-                  ['Minimum Members', '2 members', '2 partners', 'Both need at least 2 people to start.'],
-                  ['Maximum Members', '200 shareholders', 'No upper limit', 'LLP is more flexible if you want to add many partners.'],
-                  ['Ownership', 'Shareholders own the company (via shares)', 'Partners own the LLP (via capital contribution & agreement)', 'In a Company, owners (shareholders) can be different from managers (directors); in an LLP, partners are usually both.'],
-                  ['Management', 'Board of Directors manages; formal structure with meetings', 'Partners manage directly; flexible as per LLP Agreement', 'Company has a more formal hierarchy; LLP is like a flexible team.'],
-                  ['Liability', 'Limited to unpaid share capital', 'Limited to agreed contribution (partners protected from other partners\' wrongful acts)', 'Both protect personal assets, but details vary slightly.'],
-                  ['Perpetual Succession', 'Yes (exists even if owners change)', 'Yes', 'Business continues even if members leave or die.'],
-                  ['Compliance & Filings', 'High: mandatory annual audits, board meetings, multiple ROC filings (AOC-4, MGT-7 etc.), DIR-3 KYC', 'Lower: fewer filings (Form 8, Form 11); audit only if turnover > ₹40 lakh or capital > ₹25 lakh', 'LLP is simpler & cheaper for small businesses; Company has more paperwork.'],
-                  ['Statutory Audit', 'Mandatory every year', 'Mandatory only above thresholds; otherwise not required', 'Company always needs a CA audit; LLP often skips it.'],
-                  ['Taxation', 'Corporate tax (22% under new regime or 25–30%); dividends taxable in hands of shareholders', 'Taxed as partnership (flat ~30% + surcharge/cess); profits passed to partners\' personal returns', 'Similar overall, but LLP avoids double taxation on dividends; Company is better for some incentives.'],
-                  ['Raising Funds', 'Easy: issue shares to investors, venture capital, angels; better for equity funding', 'Difficult: no shares; relies on loans and partner contributions; less attractive to big investors', 'Company is preferred if you want external investment.'],
-                  ['Transfer of Ownership', 'Easy: transfer shares via proper procedure', 'More complex: requires changes in LLP Agreement & filings', 'Selling part of a Company is simpler.'],
-                  ['Incorporation Cost & Time', 'Slightly higher (~₹7,000–15,000+); takes 1–2 weeks', 'Lower (~₹5,000–10,000); faster', 'LLP is cheaper & quicker to start.'],
-                  ['Public Disclosure', 'High: many documents public on MCA portal', 'Lower: LLP Agreement is private', 'Company details are more transparent to outsiders.'],
-                  ['Conversion', 'Can convert to LLP or Public Ltd', 'Can convert to Company', 'Flexible to switch later.'],
-                  ['Penalties for Non-Compliance', 'Higher penalties and stricter enforcement', 'Relatively lower', 'Company has more risk if you miss rules.'],
-                ].map((row, idx) => (
-                  <tr key={idx} style={{ borderTop: '1px solid #e3e8f0' }}>
-                    <td style={{ padding: '14px 18px', fontWeight: 700, color: '#0e3a9c', fontSize: '0.92rem' }}>{row[0]}</td>
-                    <td style={{ padding: '14px 18px', fontSize: '0.92rem', background: 'rgba(26,86,219,.045)', color: '#1f2937' }}>{row[1]}</td>
-                    <td style={{ padding: '14px 18px', fontSize: '0.92rem', color: '#1f2937' }}>{row[2]}</td>
-                    <td style={{ padding: '14px 18px', fontSize: '0.92rem', color: '#5b6472', fontStyle: 'italic' }}>{row[3]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA SECTION ── */}
-      <section style={{ padding: '64px 0' }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          <div
-            style={{
-              background: 'linear-gradient(135deg, #1a56db 0%, #0a2a73 100%)',
-              color: '#ffffff',
-              textAlign: 'center',
-              borderRadius: 14,
-              padding: '52px 30px',
-            }}
-          >
-            <h2 style={{ fontSize: '1.9rem', marginBottom: 10, fontWeight: 800 }}>Ready to Register Your Company?</h2>
-            <p style={{ opacity: 0.9, marginBottom: 24, fontSize: '1.05rem' }}>
-              Get your Private Limited Company incorporated in 10 days with complete expert assistance.
-            </p>
             <button
               onClick={() => setInquiryModal(true)}
               style={{
-                display: 'inline-block',
-                padding: '14px 34px',
-                borderRadius: 8,
-                fontWeight: 700,
-                fontSize: '1rem',
-                background: '#ffffff',
-                color: '#0e3a9c',
+                width: '100%',
+                background: 'linear-gradient(135deg, #2563EB, #1D4ED8)',
+                color: '#FFFFFF',
+                padding: '14px',
+                borderRadius: 12,
                 border: 'none',
+                fontWeight: 900,
+                fontSize: '1rem',
                 cursor: 'pointer',
-                boxShadow: '0 4px 14px rgba(0,0,0,0.2)',
+                boxShadow: '0 4px 16px rgba(37,99,235,0.4)',
               }}
             >
-              Get Started Today
+              Get Started Now
             </button>
           </div>
         </div>
       </section>
 
+      {/* ── STICKY SECTION TAB BAR ── */}
+      <div style={{ position: 'sticky', top: 68, zIndex: 900, background: '#0F172A', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', boxShadow: '0 6px 24px rgba(0,0,0,0.6)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 28px' }}>
+          <div ref={tabsRef} style={{ display: 'flex', gap: 28, overflowX: 'auto', position: 'relative', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <span ref={tabLineRef} style={{ position: 'absolute', bottom: 0, height: 3, background: '#3B82F6', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', borderRadius: '3px 3px 0 0' }} />
+            
+            {[
+              { id: 'overview', label: 'Overview', icon: 'fa-eye' },
+              { id: 'benefits', label: 'Benefits', icon: 'fa-gem' },
+              { id: 'documents', label: 'Documents', icon: 'fa-folder-tree' },
+              { id: 'requirements', label: 'Requirements', icon: 'fa-list-check' },
+              { id: 'process', label: 'Process', icon: 'fa-diagram-project' },
+              { id: 'compliance', label: 'Compliances', icon: 'fa-scale-balanced' },
+              { id: 'comparison', label: 'Company vs LLP', icon: 'fa-code-compare' },
+            ].map((tab) => (
+              <a
+                key={tab.id}
+                href={`#${tab.id}`}
+                onClick={(e) => scrollToTab(e, tab.id)}
+                style={{
+                  padding: '18px 4px',
+                  color: activeTab === tab.id ? '#60A5FA' : '#94A3B8',
+                  textDecoration: 'none',
+                  fontWeight: 800,
+                  fontSize: '0.9rem',
+                  whiteSpace: 'nowrap',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                }}
+              >
+                <i className={`fas ${tab.icon}`} /> {tab.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── MAIN CONTENT CANVAS ── */}
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '56px 28px 90px' }}>
+
+        {/* OVERVIEW */}
+        <section id="overview" style={{ scrollMarginTop: 150, marginBottom: 80 }}>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', letterSpacing: '-0.6px' }}>
+            What is a Private Limited Company (Pvt Ltd)?
+          </h2>
+          <div style={{ background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%)', border: '1.5px solid rgba(59, 130, 246, 0.45)', borderRadius: 16, padding: '26px 32px', fontSize: '1.05rem', lineHeight: 1.7, color: '#DBEAFE' }}>
+            A private limited company (Pvt Ltd) is a separate legal entity registered under the <strong style={{ color: '#FFF' }}>Companies Act, 2013</strong>, offering limited liability protection to its members. It restricts share transfers, keeping ownership within a trusted group while providing the credibility and structure of a registered corporate entity.
+          </div>
+        </section>
+
+        {/* BENEFITS */}
+        <section id="benefits" style={{ scrollMarginTop: 150, marginBottom: 80 }}>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', letterSpacing: '-0.6px' }}>
+            Benefits of Company Registration
+          </h2>
+          <p style={{ color: '#94A3B8', fontSize: '1.05rem', margin: '0 0 32px 0' }}>Why thousands of founders choose the Private Limited structure.</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 22 }}>
+            {[
+              { num: '1', title: 'Limited Liability Protection', desc: 'Shareholders need not repay debts from personal assets — unlike partnership and proprietorship where personal assets are at risk.' },
+              { num: '2', title: 'Perpetual Succession', desc: 'A company has continuous existence independent of its founders. Transfer of shareholding ensures seamless business continuity.' },
+              { num: '3', title: 'Access to Capital & VC Funding', desc: 'Institutional investors almost always require a corporate structure. Issue new shares or share classes to raise angel/VC capital.' },
+              { num: '4', title: 'Strategic Tax Planning', desc: 'Concessional tax rates (15% for new manufacturing, 22% for existing companies) offer better tax efficiency than individual brackets.' },
+              { num: '5', title: 'Seamless Transfer of Ownership', desc: 'Ownership is divided into shares. Transferring control is simply executing a share transfer deed without retitling assets.' },
+              { num: '6', title: 'Startup India & Govt Support', desc: 'Eligible for tax exemptions, funding support, faster patent examination, and Make in India subsidies.' },
+            ].map((card) => (
+              <div key={card.num} style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: 16, padding: 26, boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+                <div style={{ width: 42, height: 42, borderRadius: 10, background: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.1rem', marginBottom: 14 }}>
+                  {card.num}
+                </div>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 8px 0' }}>{card.title}</h3>
+                <p style={{ fontSize: '0.9rem', color: '#94A3B8', margin: 0, lineHeight: 1.6 }}>{card.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* DOCUMENTS */}
+        <section id="documents" style={{ scrollMarginTop: 150, marginBottom: 80 }}>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', letterSpacing: '-0.6px' }}>
+            Documents Required for Company Registration
+          </h2>
+          <p style={{ color: '#94A3B8', fontSize: '1.05rem', margin: '0 0 32px 0' }}>Keep these ready for a smooth, delay-free incorporation.</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 26 }}>
+            <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: 20, padding: 30 }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#60A5FA', marginBottom: 16, paddingBottom: 12, borderBottom: '1px solid #1E293B' }}>
+                For Directors &amp; Shareholders
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  'Passport-sized photograph (recent, clear)',
+                  'PAN Card (mandatory for Indian citizens)',
+                  'Identity Proof: Aadhaar, Passport, Voter ID or DL',
+                  'Residential Address Proof (< 60 days): utility bill, bank statement',
+                  'Digital Signature Certificate (DSC)',
+                  'Director Identification Number (DIN)',
+                ].map((item, idx) => (
+                  <li key={idx} style={{ fontSize: '0.9rem', color: '#CBD5E1', display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <i className="fas fa-circle-check" style={{ color: '#10B981', fontSize: '0.85rem' }} /> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: 20, padding: 30 }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#60A5FA', marginBottom: 16, paddingBottom: 12, borderBottom: '1px solid #1E293B' }}>
+                For Registered Office Address
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  'Address Proof (< 60 days): electricity or water bill',
+                  'No Objection Certificate (NOC) from property owner',
+                  'Tenancy / Lease Agreement or property ownership deed',
+                ].map((item, idx) => (
+                  <li key={idx} style={{ fontSize: '0.9rem', color: '#CBD5E1', display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <i className="fas fa-circle-check" style={{ color: '#10B981', fontSize: '0.85rem' }} /> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
       {/* ── FOOTER ── */}
-      <footer style={{ background: '#0a2a73', color: '#cdd8f5', textAlign: 'center', padding: '28px 0', fontSize: '0.9rem', marginTop: 64 }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-          © 2026 Mantra Taxbooks. All rights reserved. | Company Registration Services in India
+      <footer className="lp-footer">
+        <div className="lp-footer-grid">
+          <div className="lp-footer-brand">
+            <div className="logo">
+              <span className="logo-m">MANTRA</span>
+              <span className="logo-t">TAXBOOKS</span>
+            </div>
+            <p>Expert CA services for individuals, businesses and corporations. Trusted by 5000+ clients across India for ITR filing, GST, ROC and all compliance needs.</p>
+          </div>
+          <div>
+            <h4>Services</h4>
+            <ul>
+              <li><Link href="/services/file-itr">ITR Filing</Link></li>
+              <li><Link href="/services/company-registration">Company Registration</Link></li>
+              <li><Link href="/services">GST Compliance</Link></li>
+              <li><Link href="/services">TDS Compliance</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Quick Links</h4>
+            <ul>
+              <li><Link href="/">Home</Link></li>
+              <li><Link href="/services/company-registration">Pricing</Link></li>
+              <li><Link href="/login">Login</Link></li>
+              <li><Link href="/register">Register</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:info@demandassociatesllp.com">info@demandassociatesllp.com</a></li>
+              <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="lp-footer-bottom">
+          <span>© 2026 Mantra Taxbooks — D E M &amp; Associates LLP. All rights reserved.</span>
+          <span>CA Services | Tax Filing | GST | ROC</span>
         </div>
       </footer>
 
-      {/* ── INQUIRY MODAL ── */}
+      {/* INQUIRY MODAL */}
       {inquiryModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-          <div style={{ background: '#ffffff', borderRadius: 16, width: '100%', maxWidth: 480, padding: 32, position: 'relative', boxShadow: '0 20px 60px rgba(0,0,0,.3)' }}>
-            <button
-              onClick={() => setInquiryModal(false)}
-              style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', color: '#5b6472', fontSize: '1.2rem', cursor: 'pointer' }}
-            >
-              ✕
-            </button>
-            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0a2a73', marginBottom: 6 }}>
-              Get Started with Company Registration
-            </h3>
-            <p style={{ fontSize: '0.88rem', color: '#5b6472', marginBottom: 20 }}>
-              Enter your details for free MCA name verification and CA assistance.
-            </p>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: 24, padding: 36, maxWidth: 480, width: '100%', position: 'relative' }}>
+            <button onClick={() => setInquiryModal(false)} style={{ position: 'absolute', top: 22, right: 22, background: 'none', border: 'none', color: '#94A3B8', fontSize: '1.4rem', cursor: 'pointer' }}>✕</button>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#FFFFFF', marginBottom: 8 }}>Inquire Company Registration</h3>
+            <p style={{ fontSize: '0.88rem', color: '#94A3B8', marginBottom: 24 }}>Enter your details to receive expert CA incorporation guidance.</p>
 
             {submitted ? (
-              <div style={{ background: '#e8effd', border: '1px solid #1a56db', color: '#0e3a9c', padding: 16, borderRadius: 8, textAlign: 'center', fontWeight: 600 }}>
-                ✓ Thank you! Our experts will get in touch with you shortly.
+              <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid #10B981', color: '#34D399', padding: 20, borderRadius: 12, textAlign: 'center' }}>
+                ✓ Inquiry received! Our team will contact you shortly.
               </div>
             ) : (
-              <form onSubmit={handleInquirySubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#1f2937', marginBottom: 4 }}>Proposed Company Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Mantra Tech Solutions Pvt Ltd"
-                    value={inquiryForm.companyName}
-                    onChange={(e) => setInquiryForm({ ...inquiryForm, companyName: e.target.value })}
-                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #e3e8f0', borderRadius: 6, fontSize: '0.9rem', outline: 'none' }}
-                  />
+              <form onSubmit={handleInquirySubmit}>
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, color: '#E2E8F0', marginBottom: 6 }}>Proposed Company Name</label>
+                  <input type="text" required style={{ width: '100%', padding: '12px 14px', background: '#070B14', border: '1px solid #1E293B', borderRadius: 10, color: '#FFF' }} placeholder="My Brand Private Limited" value={inquiryForm.companyName} onChange={(e) => setInquiryForm({ ...inquiryForm, companyName: e.target.value })} />
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#1f2937', marginBottom: 4 }}>Mobile Number</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="10-digit phone number"
-                    value={inquiryForm.phone}
-                    onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
-                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #e3e8f0', borderRadius: 6, fontSize: '0.9rem', outline: 'none' }}
-                  />
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, color: '#E2E8F0', marginBottom: 6 }}>Email Address</label>
+                  <input type="email" required style={{ width: '100%', padding: '12px 14px', background: '#070B14', border: '1px solid #1E293B', borderRadius: 10, color: '#FFF' }} placeholder="founder@company.com" value={inquiryForm.email} onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })} />
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#1f2937', marginBottom: 4 }}>Email Address</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="name@domain.com"
-                    value={inquiryForm.email}
-                    onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
-                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #e3e8f0', borderRadius: 6, fontSize: '0.9rem', outline: 'none' }}
-                  />
+                <div style={{ marginBottom: 24 }}>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, color: '#E2E8F0', marginBottom: 6 }}>Phone Number</label>
+                  <input type="tel" required style={{ width: '100%', padding: '12px 14px', background: '#070B14', border: '1px solid #1E293B', borderRadius: 10, color: '#FFF' }} placeholder="+91 98765 43210" value={inquiryForm.phone} onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })} />
                 </div>
-                <button
-                  type="submit"
-                  style={{ background: '#1a56db', color: '#ffffff', padding: '12px', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', marginTop: 6 }}
-                >
-                  Submit Inquiry →
-                </button>
+                <button type="submit" style={{ width: '100%', padding: '14px', background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', color: '#FFF', border: 'none', borderRadius: 10, fontWeight: 900, cursor: 'pointer' }}>Submit Inquiry</button>
               </form>
             )}
           </div>
         </div>
       )}
+
     </div>
   )
 }
