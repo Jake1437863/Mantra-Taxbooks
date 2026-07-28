@@ -308,11 +308,11 @@ export default function FileITRDetailsPage() {
           loop
           muted
           playsInline
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 1.0, zIndex: 0, pointerEvents: 'none' }}
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8, zIndex: 0, pointerEvents: 'none' }}
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10, 30, 75, 0.35) 0%, rgba(7, 11, 20, 0.65) 100%)', zIndex: 1, pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10, 30, 75, 0.3) 0%, rgba(7, 11, 20, 0.55) 100%)', zIndex: 1, pointerEvents: 'none' }} />
         
         <div style={{ maxWidth: 1280, margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(7, 11, 20, 0.75)', backdropFilter: 'blur(8px)', border: '1px solid rgba(59, 130, 246, 0.45)', color: '#93C5FD', padding: '4px 12px', borderRadius: 30, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 14, boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}>
