@@ -222,16 +222,6 @@ export default function HomePage() {
 
       {/* ── HERO ── */}
       <section id="hero" className="lp-hero">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="lp-hero-video"
-        >
-          <source src="/hero-bg.mp4" type="video/mp4" />
-        </video>
-        <div className="lp-hero-overlay" />
         <div className="lp-hero-bg" />
         <div className="lp-hero-content">
           <div className="lp-hero-badge">

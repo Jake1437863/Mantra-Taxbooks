@@ -302,7 +302,17 @@ export default function FileITRDetailsPage() {
       </nav>
 
       {/* ── HERO BANNER ── */}
-      <section style={{ position: 'relative', overflow: 'hidden', background: 'radial-gradient(ellipse at 50% 0%, #1E293B 0%, #070B14 80%)', padding: '70px 28px 60px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', background: '#070B14', padding: '70px 28px 60px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, pointerEvents: 'none', mixBlendMode: 'luminosity' }}
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, rgba(30, 58, 138, 0.4) 0%, rgba(7, 11, 20, 0.85) 100%)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', top: -100, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 1100, height: 450, background: 'radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(0,0,0,0) 70%)', pointerEvents: 'none' }} />
         
         <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
