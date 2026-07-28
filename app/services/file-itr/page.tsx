@@ -443,27 +443,27 @@ export default function FileITRDetailsPage() {
         {/* ════════════════════════════════════════════════════════════
             SECTION 0: PRICING PLANS & PACKAGES (RIGHT BELOW HERO BANNER)
            ════════════════════════════════════════════════════════════ */}
-        <section id="pricing-plans" style={{ scrollMarginTop: 150, marginBottom: 80 }}>
-          <div style={{ display: 'inline-block', background: 'rgba(37, 99, 235, 0.14)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '5px 16px', borderRadius: 30, fontSize: '0.78rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 14 }}>
+        <section id="pricing-plans" style={{ scrollMarginTop: 150, marginBottom: 70 }}>
+          <div style={{ display: 'inline-block', background: 'rgba(37, 99, 235, 0.14)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '4px 12px', borderRadius: 30, fontSize: '0.72rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>
             TRANSPARENT PRICING TIERS
           </div>
-          <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', letterSpacing: '-0.6px' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 8px 0', letterSpacing: '-0.4px' }}>
             CA-Reviewed Filing Packages &amp; Pricing
           </h2>
-          <p style={{ color: '#94A3B8', fontSize: '1.05rem', margin: '0 0 36px 0', lineHeight: 1.6 }}>
+          <p style={{ color: '#94A3B8', fontSize: '0.9rem', margin: '0 0 28px 0', lineHeight: 1.5 }}>
             Select the plan that matches your income sources. All plans include 100% Chartered Accountant verification.
           </p>
 
           {/* 6 PRICING CARDS GRID */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 24, alignItems: 'stretch' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 20, alignItems: 'stretch' }}>
             {itrPlans.map((plan) => (
               <div
                 key={plan.id}
                 style={{
                   background: '#0F172A',
                   border: plan.badge ? '2px solid #2563EB' : '1px solid #1E293B',
-                  borderRadius: 20,
-                  padding: '28px 24px',
+                  borderRadius: 18,
+                  padding: '24px 20px',
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
@@ -471,30 +471,30 @@ export default function FileITRDetailsPage() {
                 }}
               >
                 {plan.badge && (
-                  <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#FFFFFF', fontSize: '0.75rem', fontWeight: 900, padding: '4px 14px', borderRadius: 20, textTransform: 'uppercase', letterSpacing: 0.5, boxShadow: '0 4px 12px rgba(37,99,235,0.4)' }}>
+                  <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#FFFFFF', fontSize: '0.68rem', fontWeight: 900, padding: '3px 12px', borderRadius: 20, textTransform: 'uppercase', letterSpacing: 0.5, boxShadow: '0 4px 12px rgba(37,99,235,0.4)' }}>
                     {plan.badge}
                   </div>
                 )}
 
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 12px 0' }}>{plan.name}</h3>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 10px 0' }}>{plan.name}</h3>
 
-                <div style={{ paddingBottom: 16, borderBottom: '1px solid #1E293B', marginBottom: 16 }}>
+                <div style={{ paddingBottom: 12, borderBottom: '1px solid #1E293B', marginBottom: 14 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                    <span style={{ fontSize: '2.4rem', fontWeight: 900, color: '#3B82F6' }}>₹{plan.price}</span>
+                    <span style={{ fontSize: '1.85rem', fontWeight: 900, color: '#3B82F6' }}>₹{plan.price}</span>
                   </div>
-                  <div style={{ fontSize: '0.82rem', color: '#94A3B8', marginTop: 2, fontWeight: 600 }}>{plan.per}</div>
-                  <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: 2 }}>{plan.tax}</div>
+                  <div style={{ fontSize: '0.76rem', color: '#94A3B8', marginTop: 1, fontWeight: 600 }}>{plan.per}</div>
+                  <div style={{ fontSize: '0.7rem', color: '#64748B', marginTop: 1 }}>{plan.tax}</div>
                 </div>
 
-                <p style={{ fontSize: '0.85rem', color: '#CBD5E1', margin: '0 0 18px 0', lineHeight: 1.5, minHeight: 38 }}>
+                <p style={{ fontSize: '0.78rem', color: '#CBD5E1', margin: '0 0 14px 0', lineHeight: 1.45, minHeight: 34 }}>
                   {plan.desc}
                 </p>
 
                 {/* FEATURES LIST */}
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {plan.features.map((f, i) => (
-                    <li key={i} style={{ fontSize: '0.85rem', color: '#E2E8F0', display: 'flex', alignItems: 'flex-start', gap: 10, lineHeight: 1.4 }}>
-                      <i className="fas fa-circle-check" style={{ color: '#10B981', fontSize: '0.85rem', marginTop: 3, flexShrink: 0 }} />
+                    <li key={i} style={{ fontSize: '0.78rem', color: '#E2E8F0', display: 'flex', alignItems: 'flex-start', gap: 8, lineHeight: 1.35 }}>
+                      <i className="fas fa-circle-check" style={{ color: '#10B981', fontSize: '0.78rem', marginTop: 2, flexShrink: 0 }} />
                       <span>{f}</span>
                     </li>
                   ))}
@@ -502,14 +502,14 @@ export default function FileITRDetailsPage() {
 
                 {/* DELIVERABLES INCLUDED */}
                 {plan.deliverables && (
-                  <div style={{ padding: '14px 16px', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 12, border: '1px solid #1E293B', marginBottom: 20 }}>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 900, color: '#60A5FA', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 10 }}>
+                  <div style={{ padding: '12px 14px', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 10, border: '1px solid #1E293B', marginBottom: 16 }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 900, color: '#60A5FA', textTransform: 'uppercase', letterSpacing: 0.6, marginBottom: 8 }}>
                       DELIVERABLES:
                     </div>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
                       {plan.deliverables.map((d, i) => (
-                        <li key={i} style={{ fontSize: '0.8rem', color: '#CBD5E1', display: 'flex', alignItems: 'center', gap: 8 }}>
-                          <i className="fas fa-file-lines" style={{ color: '#60A5FA', fontSize: '0.75rem', flexShrink: 0 }} />
+                        <li key={i} style={{ fontSize: '0.73rem', color: '#CBD5E1', display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <i className="fas fa-file-lines" style={{ color: '#60A5FA', fontSize: '0.7rem', flexShrink: 0 }} />
                           <span>{d}</span>
                         </li>
                       ))}
@@ -524,15 +524,15 @@ export default function FileITRDetailsPage() {
                     background: plan.badge ? 'linear-gradient(135deg, #2563EB, #1D4ED8)' : 'linear-gradient(135deg, #1E40AF, #1E3A8A)',
                     color: '#FFFFFF',
                     textAlign: 'center',
-                    padding: '12px 18px',
-                    borderRadius: 10,
+                    padding: '10px 14px',
+                    borderRadius: 8,
                     textDecoration: 'none',
-                    fontSize: '0.9rem',
+                    fontSize: '0.82rem',
                     fontWeight: 800,
                     display: 'flex',
                     alignItems: 'center',
                     justify: 'center',
-                    gap: 8,
+                    gap: 6,
                     boxShadow: plan.badge ? '0 4px 16px rgba(37,99,235,0.4)' : 'none',
                     transition: 'all 0.2s',
                   }}
