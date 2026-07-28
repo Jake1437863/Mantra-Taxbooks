@@ -6,7 +6,6 @@ import Link from 'next/link'
 export default function FileITRDetailsPage() {
   const [servicesOpen, setServicesOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('mandatory-filing')
-  const [docCategory, setDocCategory] = useState('all')
   const [callbackModal, setCallbackModal] = useState<null | 'call' | 'consultation'>(null)
   const [modalForm, setModalForm] = useState({ name: '', email: '', phone: '', incomeType: 'salary' })
   const [modalSuccess, setModalSuccess] = useState(false)
@@ -276,7 +275,7 @@ export default function FileITRDetailsPage() {
               <i className="fas fa-award" /> Why Mantra Taxbooks
             </a>
             <a href="#notice-triggers" onClick={(e) => scrollToTab(e, 'notice-triggers')} style={{ padding: '18px 4px', color: activeTab === 'notice-triggers' ? '#60A5FA' : '#94A3B8', textDecoration: 'none', fontWeight: 800, fontSize: '0.9rem', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <i className="fas fa-triangle-exclamation" style={{ color: '#F59E0B' }} /> AIS Notice Triggers
+              <i className="fas fa-circle-info" style={{ color: '#60A5FA' }} /> AIS Notice Triggers
             </a>
           </div>
         </div>
@@ -289,7 +288,7 @@ export default function FileITRDetailsPage() {
             SECTION 1: WHEN INCOME TAX RETURN FILING IS MANDATORY
            ════════════════════════════════════════════════════════════ */}
         <section id="mandatory-filing" style={{ scrollMarginTop: 150, marginBottom: 80 }}>
-          <div style={{ display: 'inline-block', background: 'rgba(239, 68, 68, 0.14)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#F87171', padding: '5px 16px', borderRadius: 30, fontSize: '0.78rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 14 }}>
+          <div style={{ display: 'inline-block', background: 'rgba(37, 99, 235, 0.14)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '5px 16px', borderRadius: 30, fontSize: '0.78rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 14 }}>
             GOVERNMENT STATUTORY MANDATE
           </div>
           <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', letterSpacing: '-0.6px' }}>
@@ -299,14 +298,14 @@ export default function FileITRDetailsPage() {
             According to the Income Tax Act, filing is compulsory under specific financial triggers regardless of tax owed.
           </p>
           
-          {/* CRITICAL STATUTORY ALERT BOX */}
-          <div style={{ background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(185, 28, 28, 0.12) 100%)', border: '1.5px solid rgba(239, 68, 68, 0.45)', borderRadius: 16, padding: '22px 28px', marginBottom: 36, display: 'flex', alignItems: 'center', gap: 20, boxShadow: '0 8px 24px rgba(239,68,68,0.12)' }}>
-            <div style={{ width: 48, height: 48, borderRadius: 12, background: '#EF4444', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0, boxShadow: '0 4px 14px rgba(239,68,68,0.4)' }}>
-              <i className="fas fa-exclamation-triangle" />
+          {/* CRITICAL STATUTORY ALERT BOX (BLUE THEME) */}
+          <div style={{ background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%)', border: '1.5px solid rgba(59, 130, 246, 0.45)', borderRadius: 16, padding: '22px 28px', marginBottom: 36, display: 'flex', alignItems: 'center', gap: 20, boxShadow: '0 8px 24px rgba(37,99,235,0.15)' }}>
+            <div style={{ width: 48, height: 48, borderRadius: 12, background: '#2563EB', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0, boxShadow: '0 4px 14px rgba(37,99,235,0.4)' }}>
+              <i className="fas fa-circle-info" />
             </div>
             <div>
-              <h4 style={{ color: '#FCA5A5', fontSize: '1.1rem', fontWeight: 800, margin: 0 }}>Statutory Notice Rule</h4>
-              <p style={{ color: '#FECACA', fontSize: '0.98rem', margin: '4px 0 0 0', lineHeight: 1.6, fontWeight: 500 }}>
+              <h4 style={{ color: '#93C5FD', fontSize: '1.1rem', fontWeight: 800, margin: 0 }}>Statutory Notice Rule</h4>
+              <p style={{ color: '#DBEAFE', fontSize: '0.98rem', margin: '4px 0 0 0', lineHeight: 1.6, fontWeight: 500 }}>
                 Income tax return filing is <strong style={{ textDecoration: 'underline', color: '#FFF' }}>mandatory</strong> even with <strong style={{ color: '#FFF' }}>Nil tax liability</strong> and <strong style={{ color: '#FFF' }}>zero refund</strong> if you meet any of the specified conditions below.
               </p>
             </div>
@@ -739,7 +738,7 @@ export default function FileITRDetailsPage() {
                   <tr style={{ background: 'rgba(30, 41, 59, 0.3)' }}>
                     <td style={{ padding: '22px 28px', verticalAlign: 'top' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                        <div style={{ width: 42, height: 42, borderRadius: 10, background: 'rgba(239, 68, 68, 0.15)', color: '#F87171', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>
+                        <div style={{ width: 42, height: 42, borderRadius: 10, background: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>
                           <i className="fas fa-scale-balanced" />
                         </div>
                         <strong style={{ color: '#FFFFFF', fontSize: '1rem', fontWeight: 800 }}>Legal Compliance</strong>
@@ -814,7 +813,7 @@ export default function FileITRDetailsPage() {
 
             <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: 20, padding: 30, position: 'relative', gridColumn: '1 / -1' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-                <div style={{ width: 60, height: 60, borderRadius: 16, background: 'linear-gradient(135deg, #DC2626, #EF4444)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', flexShrink: 0, boxShadow: '0 6px 20px rgba(239,68,68,0.35)' }}>
+                <div style={{ width: 60, height: 60, borderRadius: 16, background: 'linear-gradient(135deg, #1E40AF, #3B82F6)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', flexShrink: 0, boxShadow: '0 6px 20px rgba(59,130,246,0.35)' }}>
                   <i className="fas fa-gavel" />
                 </div>
                 <div style={{ flex: 1 }}>
@@ -833,7 +832,7 @@ export default function FileITRDetailsPage() {
             SECTION 5: INCOME TAX NOTICE TRIGGERS & AIS SCRUTINY
            ════════════════════════════════════════════════════════════ */}
         <section id="notice-triggers" style={{ scrollMarginTop: 150, marginBottom: 60 }}>
-          <div style={{ display: 'inline-block', background: 'rgba(239, 68, 68, 0.14)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#F87171', padding: '5px 16px', borderRadius: 30, fontSize: '0.78rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 14 }}>
+          <div style={{ display: 'inline-block', background: 'rgba(37, 99, 235, 0.14)', border: '1px solid rgba(59, 130, 246, 0.35)', color: '#60A5FA', padding: '5px 16px', borderRadius: 30, fontSize: '0.78rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 14 }}>
             AUTOMATED SCRUTINY &amp; COMPLIANCE
           </div>
           <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', margin: '0 0 14px 0', letterSpacing: '-0.6px' }}>
@@ -843,7 +842,7 @@ export default function FileITRDetailsPage() {
             High-value financial transactions are automatically cross-checked by IT Department software against non-filers.
           </p>
 
-          {/* QUICK TRIGGER SUMMARY STRIP (FROM PDF PAGE 4 SUMMARY) */}
+          {/* QUICK TRIGGER SUMMARY STRIP (BLUE THEME) */}
           <div style={{ background: 'linear-gradient(135deg, #0F172A, #070B14)', border: '1px solid #1E293B', borderRadius: 18, padding: '24px 28px', marginBottom: 44, boxShadow: '0 8px 30px rgba(0,0,0,0.4)' }}>
             <h4 style={{ color: '#60A5FA', fontSize: '0.88rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.2, margin: '0 0 16px 0' }}>
               <i className="fas fa-bolt" /> Direct Trigger Events for Non-Filers:
@@ -856,8 +855,8 @@ export default function FileITRDetailsPage() {
                 'trading in crypto',
                 'trading in Futures & options'
               ].map((item, idx) => (
-                <div key={idx} style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.28)', color: '#FCA5A5', padding: '10px 16px', borderRadius: 10, fontSize: '0.85rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <i className="fas fa-triangle-exclamation" style={{ color: '#F87171', fontSize: '0.85rem' }} />
+                <div key={idx} style={{ background: 'rgba(30, 58, 138, 0.35)', border: '1px solid rgba(59, 130, 246, 0.3)', color: '#93C5FD', padding: '10px 16px', borderRadius: 10, fontSize: '0.85rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <i className="fas fa-circle-info" style={{ color: '#60A5FA', fontSize: '0.85rem' }} />
                   {item}
                 </div>
               ))}
@@ -986,7 +985,7 @@ export default function FileITRDetailsPage() {
                 <div style={{ width: 48, height: 48, borderRadius: 12, background: 'linear-gradient(135deg, #D97706, #F59E0B)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', boxShadow: '0 4px 14px rgba(245,158,11,0.3)' }}>
                   <i className="fas fa-credit-card" />
                 </div>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#FFFFFF', margin: 0 }}>3. Investment &amp; Expense Triggers (SFT &amp; AIS)</h4>
+                <h4 style={{ fontSize: '1.25rem', fontWeight 900, color: '#FFFFFF', margin: 0 }}>3. Investment &amp; Expense Triggers (SFT &amp; AIS)</h4>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -1032,17 +1031,17 @@ export default function FileITRDetailsPage() {
 
           </div>
 
-          {/* CRITICAL TAKEAWAY WARNING BOX (FROM PDF PAGE 5 TAKEAWAY) */}
-          <div style={{ background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.28) 0%, rgba(153, 27, 27, 0.22) 100%)', border: '2px solid #EF4444', borderRadius: 20, padding: '32px 36px', boxShadow: '0 16px 40px rgba(239, 68, 68, 0.25)', position: 'relative' }}>
+          {/* CRITICAL TAKEAWAY WARNING BOX (BLUE THEME) */}
+          <div style={{ background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.5) 0%, rgba(15, 23, 42, 0.9) 100%)', border: '2px solid #3B82F6', borderRadius: 20, padding: '32px 36px', boxShadow: '0 16px 40px rgba(37, 99, 235, 0.25)', position: 'relative' }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
-              <div style={{ width: 56, height: 56, borderRadius: 14, background: '#DC2626', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', flexShrink: 0, boxShadow: '0 6px 18px rgba(220,38,38,0.5)' }}>
-                <i className="fas fa-triangle-exclamation" />
+              <div style={{ width: 56, height: 56, borderRadius: 14, background: '#2563EB', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', flexShrink: 0, boxShadow: '0 6px 18px rgba(37,99,235,0.45)' }}>
+                <i className="fas fa-circle-info" />
               </div>
               <div>
-                <h4 style={{ color: '#FCA5A5', fontSize: '1.25rem', fontWeight: 900, margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: 0.6 }}>
+                <h4 style={{ color: '#93C5FD', fontSize: '1.25rem', fontWeight: 900, margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: 0.6 }}>
                   Key Takeaway: Automated AIS Non-Compliance Warning
                 </h4>
-                <p style={{ color: '#FEE2E2', fontSize: '1.02rem', margin: 0, lineHeight: 1.75, fontWeight: 500 }}>
+                <p style={{ color: '#E0F2FE', fontSize: '1.02rem', margin: 0, lineHeight: 1.75, fontWeight: 500 }}>
                   The Income Tax Department matches data from <strong style={{ color: '#FFF', textDecoration: 'underline' }}>AIS (Annual Information Statement)</strong>, banks, brokers, and registrars using your PAN. If your AIS shows any of the above transactions and no ITR is filed, an automated non-compliance notice under <strong style={{ color: '#FFF', background: 'rgba(0,0,0,0.35)', padding: '3px 10px', borderRadius: 6 }}>Section 142(1)</strong> or <strong style={{ color: '#FFF', background: 'rgba(0,0,0,0.35)', padding: '3px 10px', borderRadius: 6 }}>Section 148</strong> is generated.
                 </p>
               </div>
